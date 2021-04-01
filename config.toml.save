@@ -1,0 +1,9 @@
+baseURL = "http://zeroday.ir/"
+languageCode = "ar"
+DefaultContentLanguage = "ar"
+title = "دست نوشته های یک تازه کار"
+theme = "dimension"
+rtl = "true"
+[Params]
+	Author = "مهدی بخشی"
+        disqusShortname = "Comment"
