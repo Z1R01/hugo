@@ -1,5 +1,5 @@
 baseurl = "https://ziroday.com/"  # Include trailing slash
-title = "Hugo Themes"
+title = "Wellcome To My Website"
 theme = "swift"
 # theme = "swift"
 author = "Steve Francia"
