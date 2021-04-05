@@ -1,4 +1,4 @@
-baseurl = "https://ziroday.com/"  # Include trailing slash
+baseurl = "http://ziroday.ir"  # Include trailing slash
 title = "Wellcome To My Website"
 theme = "swift"
 # theme = "swift"
