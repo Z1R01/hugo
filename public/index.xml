@@ -1,12 +1,71 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hugo Themes</title><link>https://ziroday.com/</link><description>Recent content on Hugo Themes</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2020–2021, Mahdi Bakhshi Author; all rights reserved.</copyright><lastBuildDate>Sun, 28 Sep 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://ziroday.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Creating a New Theme</title><link>https://ziroday.com/post/creating-a-new-theme/</link><pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate><guid>https://ziroday.com/post/creating-a-new-theme/</guid><description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
-We&amp;rsquo;ll start with creating a new site with a very basic template.</description></item><item><title>About Hugo</title><link>https://ziroday.com/about/</link><pubDate>Wed, 09 Apr 2014 00:00:00 +0000</pubDate><guid>https://ziroday.com/about/</guid><description>Hugo is the world’s fastest framework for building websites. It is written in Go.
-It makes use of a variety of open source projects including:
-https://github.com/russross/blackfriday https://github.com/alecthomas/chroma https://github.com/muesli/smartcrop https://github.com/spf13/cobra https://github.com/spf13/viper Learn more and contribute on GitHub.</description></item><item><title>(Hu)go Template Primer</title><link>https://ziroday.com/post/goisforlovers/</link><pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate><guid>https://ziroday.com/post/goisforlovers/</guid><description>Hugo uses the excellent Go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in Go templates.
-This document is a brief primer on using Go templates.</description></item><item><title>Getting Started with Hugo</title><link>https://ziroday.com/post/hugoisforlovers/</link><pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate><guid>https://ziroday.com/post/hugoisforlovers/</guid><description>Step 1. Install Hugo Go to Hugo releases and download the appropriate version for your OS and architecture.
-Save it somewhere specific as we will be using it in the next step.
-More complete instructions are available at Install Hugo
-Step 2. Build the Docs Hugo has its own example site which happens to also be the documentation site you are reading right now.
-Follow the following steps:
-Clone the Hugo repository Go into the repo Run hugo in server mode and build the docs Open your browser to http://localhost:1313 Corresponding pseudo commands:</description></item><item><title>Migrate to Hugo from Jekyll</title><link>https://ziroday.com/post/migrate-from-jekyll/</link><pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate><guid>https://ziroday.com/post/migrate-from-jekyll/</guid><description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
-▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png should become
-▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> Zeroday </title>
+    <link>https://ziroday.ir/</link>
+    <description>Recent content on  Zeroday </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2020–2021, Mahdi Bakhshi Author; all rights reserved.</copyright>
+    <lastBuildDate>Mon, 08 Feb 2021 19:57:23 +0330</lastBuildDate><atom:link href="https://ziroday.ir/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Vsftpd Installation</title>
+      <link>https://ziroday.ir/post/vsftpd/</link>
+      <pubDate>Mon, 08 Feb 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/post/vsftpd/</guid>
+      <description>سرور FTP مخفف (File Transfer Protocol) است كه یک پروتکل شبکه استاندارد بوده و برای انتقال فايل ها به شبکه از راه دور استفاده می شود. برای انتقال امن تر و سریع تر داده ها ، از SCP یا SFTP استفاده کنید. بسیاری از سرورهای منبع باز FTP برای لینوکس در دسترس هستند. محبوب ترین و پرکاربردترین آنها PureFTPd ، ProFTPD و vsftpd است.
+در این مقاله ، نحوه نصب و پیکربندی سرور FTP با VSFTPD در Debian را آموزش مي دهيم.</description>
+    </item>
+    
+    <item>
+      <title>Increase Swap</title>
+      <link>https://ziroday.ir/post/swap/</link>
+      <pubDate>Sun, 07 Feb 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/post/swap/</guid>
+      <description>یه موقع هایی هست که برای انجام کارهای سنگینتون با کامپیوتر رم کم میارید و نیاز شدیدی به فضای بیشتر دارید، اگر هارد ssd داشتیه باشید شما میتونید ازش کمک بگیرید و فضای نسبتا کوچکی رو از هاردتون به رم قرض بدید (با اون قسمت از هارد مثل رم برخورد خواهد شد) که بتونه روش بنویسه و بخونه، اگر هاردتون ssd نیست اصلا بهش فکر نکنید، چون سرعت خواندن و نوشتن رم خیلی فراتر از هارد دیسکی هست و سیستم شما کند میشه.</description>
+    </item>
+    
+    <item>
+      <title>Ansible Role</title>
+      <link>https://ziroday.ir/post/ansible-role/</link>
+      <pubDate>Sat, 06 Feb 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/post/ansible-role/</guid>
+      <description>Ansible ابزاری برای مدیریت و پیکربندی سرورها است که برای کنترل و اتوماسیون task ها برای ادمین ها و تیم های عملیاتی طراحی شده است. با Ansible می توانید از یک سرور مرکزی واحد برای کنترل و پیکربندی سیستم های مختلف از راه دور با استفاده از پروتکل SSH استفاده کنید.
+مقدمه ای بر ansible role : هرچه تعداد و تنوع سیستم ها بیشتر شود.مدیریت و کنترل node ها در ansible پیچیده تر می شود.</description>
+    </item>
+    
+    <item>
+      <title>HAproxy Detect Attack</title>
+      <link>https://ziroday.ir/post/haproxy-attack/</link>
+      <pubDate>Sat, 06 Feb 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/post/haproxy-attack/</guid>
+      <description>HAproxy ابزاری قدرتمند است که در زمینه load balancing استفاده می شود. اما اگر بتوانید به درستی آن را کانفیگ کنید می توانید بسیاری از حملاتی که در بستر وب به سرور های شما می شود را با یک کانفیگ صحیح شناسایی کنید و سرورهای خودرا امن نگه دارید.
+در این مستند قرار است درباره دستورات و تنظیمات درون HAproxy صحبت کنیم که به شما کمک شایانی برای حفظ امنیت سرورهای خود می کند.</description>
+    </item>
+    
+    <item>
+      <title>Master &amp; Slave</title>
+      <link>https://ziroday.ir/post/master_slave/</link>
+      <pubDate>Sat, 06 Feb 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/post/master_slave/</guid>
+      <description>MySQL Replication چیست؟ فرآیندی است که به‌کمک آن می‌توان از اطلاعات دیتابیس به صورت اتوماتیک کپی گرفت و به‌صورت بک‌آپ ذخیره کرد. استفاده از این نسخه اطلاعات سبب می‌شود تا رجوع به دیتابیس اصلی نیاز نباشد. در این بحث با توجه به آدرس (IP) های زیر چند نمونه از این فرآیند را بررسی می‌کنیم. (Master Slave Replication) در MySQL به شرح زیر است
+۱۲.۳۴.۵۶.۷۸۹- Master Database ۱۲.۲۳.۳۴.۴۵۶- Slave Database تنظیمات پیش از شروع از دسترسی Sudo و همچنین نصب MySQL بر روی سیستم‌عامل مطمئن شوید.</description>
+    </item>
+    
+    <item>
+      <title>Galera Gcache</title>
+      <link>https://ziroday.ir/post/galera_gcache/</link>
+      <pubDate>Fri, 05 Feb 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/post/galera_gcache/</guid>
+      <description>در این مقاله قرار است عمیق تر به ساختار galera cluster بپردازیم. قبل از اینکه بخواهیم با مفهومی تحت عنوان gcache آشنا شویم. نیازمند این هستیم که با چند اصطلاح و روندکاری در galera آشنا شویم.
+در هنگام کلاسترینگ دیتابیس بین تمام node ها galera برای انتقال دیتای خود از دو روش زیر استفاده می کند.
+1- SST: State Snapshot Transfer 2- IST: Incremental State Transfer SST: در این روش گلرا برای sync کردن و برقرای replication دیتا بین node اهدا کننده یا مستر به node دریافت کننده یک کپی از تمام دیتا موجود خود می گیرد سپس عملیات انتقال را انجام می دهد این فرایند در پس زمینه به طور خودکار انجام می شود و روند کاری همانند پشتیان گیری بین slave و master است.</description>
+    </item>
+    
+  </channel>
+</rss>

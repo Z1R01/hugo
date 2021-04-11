@@ -1,8 +1,8 @@
-baseurl = "https://ziroday.com/"  # Include trailing slash
-title = "Wellcome To My Website"
+baseurl = "https://ziroday.ir"  # Include trailing slash
+#title = "Wellcome To My Website"
+title = " Zeroday "
 theme = "swift"
-# theme = "swift"
-author = "Steve Francia"
+author = "Mahdi Bakhshi"
 copyright = "Copyright © 2020–2021, Mahdi Bakhshi Author; all rights reserved."
 canonifyurls = true
 paginate = 4
@@ -55,6 +55,6 @@ pygmentsCodefencesGuessSyntax = true
     url = "categories/golang/"
     weight = 4
   [[menu.main]]
-    name = "Go"
-    url = "tags/go/"
+    name = "Database"
+    url = "tags/Ansible/"
     weight = 5

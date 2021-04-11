@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang='en'><head>
+  <title>Ansible Role |  Zeroday </title>
+  <meta charset='utf-8'>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+  <meta http-equiv = 'X-UA-Compatible' content = 'IE=edge'>
+<meta property = 'og:locale' content = 'en_US' />
+<meta property="og:type" content="article">
+<meta property = 'og:title' content = 'Ansible Role' />
+<meta name="description" content="Ansible ابزاری برای مدیریت و پیکربندی سرورها است که برای کنترل و اتوماسیون task ها برای ادمین ها و تیم های عملیاتی طراحی شده است. با Ansible می توانید از یک …">
+<meta property = 'og:description' content = 'Ansible ابزاری برای مدیریت و پیکربندی سرورها است که برای کنترل و اتوماسیون task ها برای ادمین ها و تیم های عملیاتی طراحی شده است. با Ansible می توانید از یک …'>
+<meta property = 'og:url' content = 'https://ziroday.ir/post/ansible-role/' />
+<meta property = 'og:image' content = 'https://ziroday.ir/images/ansible.jpg'/>
+<meta name = 'twitter:card' content = 'summary_large_image' />
+<meta name = 'twitter:creator' content = ''>
+<meta name = 'twitter:title' content = 'Ansible Role' />
+<meta property = 'twitter:description'  content = 'Ansible ابزاری برای مدیریت و پیکربندی سرورها است که برای کنترل و اتوماسیون task ها برای ادمین ها و تیم های عملیاتی طراحی شده است. با Ansible می توانید از یک …'/>
+<meta name = 'twitter:image' content = 'https://ziroday.ir/images/ansible.jpg' />
+<link rel='apple-touch-icon' sizes='180x180' href='https://ziroday.ir/images/icons/apple-touch-icon.png'>
+<link rel='icon' type='image/png' sizes='32x32' href='https://ziroday.ir/images/icons/favicon-32x32.png'>
+<link rel='icon' type='image/png' sizes='16x16' href='https://ziroday.ir/images/icons/favicon-16x16.png'>
+<link rel='manifest' href='https://ziroday.ir/images/icons/site.webmanifest'>
+
+  <link rel='canonical' href='https://ziroday.ir/post/ansible-role/'>
+  <link rel = 'stylesheet' href = 'https://ziroday.ir/css/styles.4531cbcd5877eddc9e43fb5754e281c9df181abb3653cd3c64bda43d50abb037c17eea8b1743733d9b651b0b380fec4d53d319000a7ac55940210cb746297dd3.css' integrity = 'sha512-RTHLzVh37dyeQ/tXVOKByd8YGrs2U808ZL2kPVCrsDfBfuqLF0NzPZtlGws4D&#43;xNU9MZAAp6xVlAIQy3Ril90w=='>
+</head>
+
+  <body><div class = 'nav-drop'>
+  <div class = 'nav-body'>
+    
+      <a href = 'https://ziroday.ir/about/' class = 'nav_item'>About</a>
+      <a href = 'https://ziroday.ir/categories/development/' class = 'nav_item'>Proxmox</a>
+      <a href = 'https://ziroday.ir/categories/golang/' class = 'nav_item'>Ansible</a>
+      <a href = 'https://ziroday.ir/tags/Ansible/' class = 'nav_item'>Database</a>
+    <div class = 'nav-close'></div>
+  </div>
+</div><header class = 'nav' >
+  <nav class = 'nav-menu'>
+    <a href='https://ziroday.ir' class = 'nav-brand nav_item'> Zeroday </a>
+    <div class = 'nav_bar-wrap'>
+      <div class = 'nav_bar'></div>
+    </div>
+  </nav>
+</header>
+
+
+    <main>
+
+<section class = 'post_header' style = 'background-image:url(https://ziroday.ir/images/ansible.jpg);'>
+  <h1 class='post_title'>Ansible Role</h1>
+</section>
+<div class = 'post'>
+  <article class='post_content'><p>Ansible ابزاری برای مدیریت و پیکربندی سرورها است که برای کنترل و اتوماسیون task ها برای ادمین ها و تیم های عملیاتی طراحی شده است. با Ansible می توانید از یک سرور مرکزی واحد برای کنترل و پیکربندی سیستم های مختلف از راه دور با استفاده از پروتکل SSH استفاده کنید.</p>
+<h3 id="مقدمه-ای-بر-ansible-role-">مقدمه ای بر ansible role :</h3>
+<p>هرچه تعداد و تنوع سیستم ها بیشتر شود.مدیریت و کنترل node ها در ansible پیچیده تر می شود. اگر با ansible آشنا باشید منطقی است که باید task ها را با هم در playbook انسیبل تعریف کنیم. با استفاده از playbook ، دیگر نیازی به اجرای بسیاری از کارهای جداگانه روی سیستم های از راه دور نیست ، در عوض به شما امکان می دهد تمام محیط ها را همزمان با یک فایل پیکربندی کنید.</p>
+<p>با این حال ، playbook ها هم میتوانند به مرور پیچیده و سخت شوند هنگامی که سیستم های متفاوت با task های مختلف تعریف شوند، بنابراین Ansible به شما این امکان را می دهد وظایف را در یک ساختار دایرکتوری به نام Role سازماندهی کنید.</p>
+<p>در این پیکربندی ، playbook ها به جای وظایف ، role ها را فراخوانی می کنند ، بنابراین می توانید وظایف را با هم گروه بندی کنید و سپس از role ها در سایر playbook ها دوباره استفاده کنید. role ها همچنین به شما امکان می دهند الگوها ، پرونده های ثابت و متغیرها را به همراه وظایف خود در یک قالب جمع آوری کنید.</p>
+<p>بگذارید این را با یک مثال توضیح دهم. فرض کنید شما می خواهید playbook ای را ایجاد کنید که 10 وظیفه مختلف را بر روی 5 سیستم مختلف انجام دهد ، آیا برای این کار از یک playbook استفاده می کنید؟ خیر ، استفاده از یک playbook  گیج کننده و مستعد اشتباه است. در عوض ، می توانید 10 نقش مختلف ایجاد کنید ، جایی که هر نقش یک وظیفه را انجام دهد. سپس ، تنها کاری که شما باید انجام دهید این است که نام نقش را در داخل playbook ذکر کنید تا آنها را فراخوانی کنید.</p>
+<h3 id="قابلیت-استفاده-مجدد-از-ansible-role-">قابلیت استفاده مجدد از ansible role :</h3>
+<p>ansible role ها مستقل از یکدیگر می باشند و اجرای هر role وابسته به دیگر role ها نمی باشد لذا شما می توانید طبق خواسته و نیاز تان role ها را هر زمان تغییر و شخصی سازی کنید.
+این کار  وظیفه ما را برای نوشتن مجدد یک بخش کامل از کد که هر بار به آن نیاز داریم کاهش می دهد ، در نتیجه کار ما ساده تر می شود.
+برای مثال شما برای تنظیم LAMP stack باید یک playbook بنویسید و 4 نقش ایجاد کنید  اگر playbook دیگری برای تنظیم LAMP stack و همچنین نصب وردپرس بخواهید ، آیا دوباره role های جدیدی برای LAMP stack و WordPress ایجاد خواهید کرد؟ نه شما می توانید به سادگی از role های قدیمی (که برای LAMP stack ایجاد کردید) دوباره استفاده کنید و علاوه بر این role جدیدی را برای وردپرس ایجاد می کنید.</p>
+<h3 id="ساختار-دایرکتوری-role-ها-">ساختار دایرکتوری role ها :</h3>
+<p>Ansible ویژگی به نام Ansible Galaxy را فراهم می کند که به شما کمک می کن تا با نقش ها بازی کنید. اگر ansible را نصب دارید به مسیر /etc/ansible بروید سپس وارد پوشه roles می شوید و اگر نبود آنرا ایجاد می کنید سپس برای ایجاد یک role جدید دستور زیر را می زنیم:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo ansible-galaxy init &lt;role-name&gt;
+
+</code></pre></div><p>شما می توانید role های دیگری نیز در همین دایرکتوری ایجاد کنید.
+حال با دستور tree دایرکتوری هایی که ایجاد شده است می توانیم مشاهده کنیم که در ادامه به آنها می پردازیم</p>
+<p><img src="https://ziroday.ir/images/tree1.png" alt="tree1"></p>
+<p><strong>Task</strong></p>
+<p>شامل کلیه وظایفی است که قرار است توسط role ها اجرا شوند بدین معنی که تمام task های خودمان را در این مسیر تعریف می کنیم.</p>
+<p><strong>Handlers</strong></p>
+<p>شامل کاربرانی است که ممکن است توسط role جاری یا در هر جای دیگر از role جاری استفاده شود.</p>
+<p><strong>Defaults</strong></p>
+<p>شامل متغیرهای پیش فرضی است که قرار است توسط این role استفاده شود.</p>
+<p><strong>Vars</strong></p>
+<p>این دایرکتوری شامل متغیرهای دیگری است که قرار است توسط این role استفاده شوند. این متغیرها را می توان در playbook نیز تعریف کرد ، اما تعریف آنها در این بخش بهتر است.</p>
+<p><strong>Files</strong></p>
+<p>شامل کلیه فایل هایی است که می خواهید توسط این role ایجاد شوند. این شامل فایل هایی است که هنگام پیکربندی role باید به میزبانان ارسال شود.</p>
+<p><strong>Meta</strong></p>
+<p>metadate ها را برای این role تعریف می کند. اساساً ، فایل هایی است که وابستگی های role را ایجاد می کنند.</p>
+<p>دقت داشته باشید که هر دایرکتوری باید از یک فایل main.yml تشکیل شود که در آن کد واقعی برای آن نقش خاص نوشته شده است.</p>
+<p><img src="https://ziroday.ir/images/tree2.png" alt="tree1"></p>
+<p>بیاید برای درک بهتر role ها در ansible با هم سناریویی را پیاده سازی کنیم.</p>
+<h3 id="نصب-mean-stack-با-ansible-role-">نصب MEAN Stack با ansible role :</h3>
+<p>برای پیاده سازی این سناریو نیاز به ایجاد سه role داریم.</p>
+<p>1.نصب پیش نیاز ها</p>
+<p>2.نصب MongoDB</p>
+<p>3.نصب NodeJS</p>
+<p><strong>قدم اول:</strong></p>
+<p>به مسیر /etc/ansible/roles/ می رویم و دستورات زیر را می زنیم:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd /etc/ansible/roles
+sudo ansible-galaxy init prerequisites
+sudo ansible-galaxy init mongodb
+sudo ansible-galaxy init nodejs
+</code></pre></div><p>خب پس از زدن دستورات بالا سه پوشه در دایرکتوری role ایجاد خواهد شد.</p>
+<p><img src="https://ziroday.ir/images/tree3.png" alt="tree1"></p>
+<p><strong>قدم دوم:</strong></p>
+<p>نصب git برای role prerequisites با نوشتن در فایل /tasks/main.yml/</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">cd prerequisites/tasks/main.yml</span>
+---
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Install git</span>
+  <span style="color:#f92672">apt</span>:
+     <span style="color:#f92672">name</span>: <span style="color:#ae81ff">git</span>
+     <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present</span>
+     <span style="color:#f92672">update_cache</span>: <span style="color:#66d9ef">yes</span>
+</code></pre></div><p><strong>قدم سوم:</strong></p>
+<p>دستورات زیر را  در فایل main.yml برای MongoDB role اضافه می کنیم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">cd /mongodb/tasks/main.yml</span>
+---
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">MongoDB - Import public key</span>
+  <span style="color:#f92672">apt_key</span>:
+    <span style="color:#f92672">keyserver</span>: <span style="color:#ae81ff">hkp://keyserver.ubuntu.com:80</span>
+    <span style="color:#f92672">id</span>: <span style="color:#ae81ff">EA312927</span>
+ 
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">MongoDB - Add repository</span>
+  <span style="color:#f92672">apt_repository</span>:
+    <span style="color:#f92672">filename</span>: <span style="color:#e6db74">&#39;/etc/apt/sources.list.d/mongodb-org-3.2.list&#39;</span>
+    <span style="color:#f92672">repo</span>: <span style="color:#e6db74">&#39;deb &lt;a href=&#34;http://repo.mongodb.org/apt/ubuntu&#34;&gt;http://repo.mongodb.org/apt/ubuntu&lt;/a&gt; trusty/mongodb-org/3.2 multiverse&#39;</span>
+  <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present</span>
+  <span style="color:#f92672">update_cache</span>: <span style="color:#66d9ef">yes</span>
+ 
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">MongoDB - Install MongoDB</span>
+  <span style="color:#f92672">apt</span>:
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mongodb-org</span>
+    <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present</span>
+    <span style="color:#f92672">update_cache</span>: <span style="color:#66d9ef">yes</span>
+ 
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Start mongod</span>
+  <span style="color:#f92672">shell</span>: <span style="color:#e6db74">&#34;mongod &amp;&#34;</span>
+
+</code></pre></div><p><strong>قدم چهارم:</strong></p>
+<p>دستورات زیر را در فایل main.yml برای nodjs role اضافه می کنیم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">cd nodejs/tasks/main.yml</span>
+
+---
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Node.js - Get script</span>
+  <span style="color:#f92672">get_url</span>:
+    <span style="color:#f92672">url</span>: <span style="color:#e6db74">&#34;&lt;a href=&#34;</span><span style="color:#ae81ff">http://deb.nodesource.com/setup_6.x&#34;&gt;http://deb.nodesource.com/setup_6.x&lt;/a&gt;&#34;</span>
+    <span style="color:#f92672">dest</span>: <span style="color:#e6db74">&#34;{{ var_node }}/nodejs.sh&#34;</span>
+ 
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Node.js - Set execution permission to script</span>
+  <span style="color:#f92672">file</span>:
+    <span style="color:#f92672">path</span>: <span style="color:#e6db74">&#34;{{ var_node }}/nodejs.sh&#34;</span>
+    <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#34;u+x&#34;</span>
+ 
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Node.js - Execute installation script</span>
+  <span style="color:#f92672">shell</span>: <span style="color:#e6db74">&#34;{{ var_node }}/nodejs.sh&#34;</span>
+ 
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Node.js - Remove installation script</span>
+  <span style="color:#f92672">file</span>:
+    <span style="color:#f92672">path</span>: <span style="color:#e6db74">&#34;{{ var_node}}/nodejs.sh&#34;</span>
+    <span style="color:#f92672">state</span>: <span style="color:#ae81ff">absent</span>
+ 
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Node.js - Install Node.js</span>
+  <span style="color:#f92672">apt</span>: <span style="color:#ae81ff">name={{ item }} state=present update_cache=yes</span>
+  <span style="color:#f92672">with_items</span>:
+    - <span style="color:#ae81ff">build-essential</span>
+    - <span style="color:#ae81ff">nodejs</span>
+ 
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Node.js - Install bower and gulp globally</span>
+  <span style="color:#f92672">npm</span>: <span style="color:#ae81ff">name={{ item }} state=present global=yes</span>
+  <span style="color:#f92672">with_items</span>:
+    - <span style="color:#ae81ff">bower</span>
+    - <span style="color:#ae81ff">gulp</span>
+
+</code></pre></div><p><strong>قدم پنجم:</strong></p>
+<p>خب پس از تکمیل شدن مراحل بالا نیاز داریم یک playbook ایجاد کنیم و role هارا در آن فراخوانی کنیم. پس به مسیر /etc/ansible/ می رویم و فایلی تحت عنوان playbook.yml ایجاد می کنیم و محتویات زیر را وارد می کنیم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">nodes</span>
+  <span style="color:#f92672">remote_user</span>: <span style="color:#ae81ff">ansible</span>
+  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">yes</span>
+  <span style="color:#f92672">become_method</span>: <span style="color:#ae81ff">sudo</span>
+  <span style="color:#f92672">vars</span>:
+    <span style="color:#75715e">#variable needed during node installation</span>
+    <span style="color:#f92672">var_node</span>: <span style="color:#ae81ff">/tmp</span>
+  <span style="color:#f92672">roles</span>:
+      - <span style="color:#ae81ff">prerequisites</span>
+      - <span style="color:#ae81ff">mongodb</span>
+      - <span style="color:#ae81ff">nodejs</span>
+</code></pre></div><p>پس از تکمیل مراحل بالا برای deploy کردن آنها نیاز داریم که playbook خودمان را برای سرور هایی که در inventory تعریف کریم اجرا کنیم. با استفاده از دستور زیر playbook خودمان را run می کنیم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">sudo ansible-playbook /etc/ansible/playbook.yml -K
+
+</code></pre></div><p><img src="https://ziroday.ir/images/tree4.png" alt="tree1"></p>
+<p>همانطور که می بینید ، همه task ها اجرا شده و وضعیت آنها تغییر کرده است. این بدان معناست که تغییرات playbook روی سرور و همچنین میزبان اعمال شده است.
+نصب MEAN Stack فقط یک مثال بود. شما می توانید با استفاده از ansible role به معنای واقعی کلمه هر چیزی را  در هر جایی تنظیم کنید.</p>
+<p><strong>منابع :</strong></p>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ansible-roles-to-abstract-your-infrastructure-environment">https://www.digitalocean.com</a></p>
+<p><a href="https://www.learnitguide.net/2018/02/ansible-roles-explained-with-examples.html">https://www.learnitguide.net</a></p>
+<p><a href="https://www.edureka.co/blog/ansible-roles-setup-mean-stack">https://www.edureka.co</a></p>
+<p><a href="https://medium.com/@mitesh_shamra/ansible-roles-1d1954f9932a">https://medium.com</a></p>
+
+    
+    <div class = 'post_extra'><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+
+    
+  </article>
+  
+  <aside><h3>More from  Zeroday </h3>
+<ul class='posts aside'>
+<li class = 'post_item'>
+  <a class = 'post_card' href='https://ziroday.ir/post/vsftpd/' title = 'Vsftpd Installation' style = 'background-image: url(https://ziroday.ir/images/vsftpd.jpg);'>
+  </a>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_meta'>
+      <a href = 'https://ziroday.ir/tags/linux' class = 'post_tag'>Linux
+      </a><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+    <h3 class = 'post_link'>
+      <a href='https://ziroday.ir/post/vsftpd/'>Vsftpd Installation</a>
+    </h3>
+    <p class = 'pale'>سرور FTP مخفف (File Transfer Protocol) است كه یک پروتکل شبکه استاندارد بوده و برای انتقال …</p>
+  </div>
+</li>
+
+<li class = 'post_item'>
+  <a class = 'post_card' href='https://ziroday.ir/post/swap/' title = 'Increase Swap' style = 'background-image: url(https://ziroday.ir/images/swap.jpg);'>
+  </a>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_meta'>
+      <a href = 'https://ziroday.ir/tags/linux' class = 'post_tag'>Linux
+      </a><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+    <h3 class = 'post_link'>
+      <a href='https://ziroday.ir/post/swap/'>Increase Swap</a>
+    </h3>
+    <p class = 'pale'>یه موقع هایی هست که برای انجام کارهای سنگینتون با کامپیوتر رم کم میارید و نیاز شدیدی به …</p>
+  </div>
+</li>
+
+</ul>
+
+  </aside>
+  
+</div>
+<script src = 'https://ziroday.ir/js/autosize.min.js'></script>
+<script src = 'https://ziroday.ir/js/timeago.js'></script>
+    </main><svg width="0" height="0" class="hidden">
+  <symbol viewBox="0 0 699.428 699.428" xmlns="http://www.w3.org/2000/svg" id="copy">
+    <path d="M502.714 0H240.428C194.178 0 153 42.425 153 87.429l-25.267.59c-46.228 0-84.019 41.834-84.019 86.838V612c0 45.004 41.179 87.428 87.429 87.428H459c46.249 0 87.428-42.424 87.428-87.428h21.857c46.25 0 87.429-42.424 87.429-87.428v-349.19zM459 655.715H131.143c-22.95 0-43.714-21.441-43.714-43.715V174.857c0-22.272 18.688-42.993 41.638-42.993l23.933-.721v393.429C153 569.576 194.178 612 240.428 612h262.286c0 22.273-20.765 43.715-43.714 43.715zm153-131.143c0 22.271-20.765 43.713-43.715 43.713H240.428c-22.95 0-43.714-21.441-43.714-43.713V87.429c0-22.272 20.764-43.714 43.714-43.714H459c-.351 50.337 0 87.975 0 87.975 0 45.419 40.872 86.882 87.428 86.882H612zm-65.572-349.715c-23.277 0-43.714-42.293-43.714-64.981V44.348L612 174.857zm-43.714 131.537H306c-12.065 0-21.857 9.77-21.857 21.835s9.792 21.835 21.857 21.835h196.714c12.065 0 21.857-9.771 21.857-21.835 0-12.065-9.792-21.835-21.857-21.835zm0 109.176H306c-12.065 0-21.857 9.77-21.857 21.834 0 12.066 9.792 21.836 21.857 21.836h196.714c12.065 0 21.857-9.77 21.857-21.836 0-12.064-9.792-21.834-21.857-21.834z"
+    ></path>
+  </symbol>
+  <symbol viewBox="0 0 60.015 60.015" xmlns="http://www.w3.org/2000/svg" id="reply">
+    <path d="M42.007 0h-24c-9.925 0-18 8.075-18 18v14c0 9.59 7.538 17.452 17 17.973v8.344a1.694 1.694 0 0 0 1.699 1.698c.44 0 .873-.173 1.198-.498l1.876-1.876C26.708 52.713 33.259 50 40.227 50h1.78c9.925 0 18-8.075 18-18V18c0-9.925-8.075-18-18-18zm16 32c0 8.822-7.178 16-16 16h-1.78c-7.502 0-14.556 2.921-19.86 8.226l-1.359 1.359V44a1 1 0 1 0-2 0v3.949c-8.356-.52-15-7.465-15-15.949V18c0-8.822 7.178-16 16-16h24c8.822 0 16 7.178 16 16v14z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="scan">
+    <path d="M456.66 0H385c-8.284 0-15 6.716-15 15s6.716 15 15 15h71.66C470.632 30 482 41.368 482 55.341V127c0 8.284 6.716 15 15 15s15-6.716 15-15V55.341C512 24.826 487.174 0 456.66 0zM15 142c8.284 0 15-6.716 15-15V55.341C30 41.368 41.368 30 55.34 30H127c8.284 0 15-6.716 15-15s-6.716-15-15-15H55.34C24.826 0 0 24.826 0 55.341V127c0 8.284 6.716 15 15 15zm112 340H55.34C41.368 482 30 470.632 30 456.659V385c0-8.284-6.716-15-15-15s-15 6.716-15 15v71.659C0 487.174 24.826 512 55.34 512H127c8.284 0 15-6.716 15-15s-6.716-15-15-15zm370-112c-8.284 0-15 6.716-15 15v71.659C482 470.632 470.632 482 456.66 482H385c-8.284 0-15 6.716-15 15s6.716 15 15 15h71.66c30.515 0 55.34-24.826 55.34-55.341V385c0-8.284-6.716-15-15-15zM341.643 110h47.575c6.497 0 11.782 5.285 11.782 11.782v47.574c0 8.284 6.716 15 15 15s15-6.716 15-15v-47.574C431 98.743 412.256 80 389.218 80h-47.575c-8.284 0-15 6.716-15 15s6.716 15 15 15zM81 121.782v47.574c0 8.284 6.716 15 15 15s15-6.716 15-15v-47.574c0-6.497 5.286-11.782 11.782-11.782h47.575c8.284 0 15-6.716 15-15s-6.716-15-15-15h-47.575C99.744 80 81 98.743 81 121.782zM170.357 400h-47.575c-6.497 0-11.782-5.285-11.782-11.782v-47.574c0-8.284-6.716-15-15-15s-15 6.716-15 15v47.574C81 411.257 99.744 430 122.782 430h47.575c8.284 0 15-6.716 15-15s-6.716-15-15-15zM431 388.218v-47.574c0-8.284-6.716-15-15-15s-15 6.716-15 15v47.574c0 6.497-5.286 11.782-11.782 11.782h-47.575c-8.284 0-15 6.716-15 15s6.716 15 15 15h47.575C412.256 430 431 411.257 431 388.218zM1 256c0 8.284 6.716 15 15 15h480c8.284 0 15-6.716 15-15s-6.716-15-15-15H16c-8.284 0-15 6.716-15 15z"></path>
+  </symbol>
+</svg>
+<footer class="footer">
+  <div class="footer_inner wrap pale">
+    <p>&copy;&nbsp;<span class="year"></span>&nbsp; Zeroday .
+    Designed by  <a href = 'https://www.linkedin.com/in/mhdbkhshi/' title = 'Linkedin Profile'>M.bakhshi</a></p>
+  </div>
+</footer><script type="text/javascript" src="https://ziroday.ir/js/bundle.5e0b4c85114cf0b04ee873e699248fdc25fe576c7696dfa64e769392358047c54a5d3cd146642878b99a54694bfafde61088d7a1e98279124e539098db6e557e.js" integrity="sha512-XgtMhRFM8LBO6HPmmSSP3CX&#43;V2x2lt&#43;mTnaTkjWAR8VKXTzRRmQoeLmaVGlL&#43;v3mEIjXoemCeRJOU5CY225Vfg==" crossorigin="anonymous"></script>
+  </body>
+</html>

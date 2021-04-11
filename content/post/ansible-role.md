@@ -8,7 +8,6 @@ tags:
   - Ansible
 dir : "rtl"
 ---
-
 Ansible ابزاری برای مدیریت و پیکربندی سرورها است که برای کنترل و اتوماسیون task ها برای ادمین ها و تیم های عملیاتی طراحی شده است. با Ansible می توانید از یک سرور مرکزی واحد برای کنترل و پیکربندی سیستم های مختلف از راه دور با استفاده از پروتکل SSH استفاده کنید.
 
 ### مقدمه ای بر ansible role : 
@@ -31,7 +30,7 @@ ansible role ها مستقل از یکدیگر می باشند و اجرای ه�
 
  Ansible ویژگی به نام Ansible Galaxy را فراهم می کند که به شما کمک می کن تا با نقش ها بازی کنید. اگر ansible را نصب دارید به مسیر /etc/ansible بروید سپس وارد پوشه roles می شوید و اگر نبود آنرا ایجاد می کنید سپس برای ایجاد یک role جدید دستور زیر را می زنیم:
 
-```
+```bash
 sudo ansible-galaxy init <role-name>
 
 ```
@@ -84,7 +83,7 @@ metadate ها را برای این role تعریف می کند. اساساً ، 
 
 به مسیر /etc/ansible/roles/ می رویم و دستورات زیر را می زنیم:
 
-```
+```bash
 cd /etc/ansible/roles
 sudo ansible-galaxy init prerequisites
 sudo ansible-galaxy init mongodb
@@ -99,7 +98,7 @@ sudo ansible-galaxy init nodejs
 
 نصب git برای role prerequisites با نوشتن در فایل /tasks/main.yml/ 
 
-```
+```yaml
 cd prerequisites/tasks/main.yml
 ---
 - name: Install git
@@ -112,7 +111,7 @@ cd prerequisites/tasks/main.yml
 
 دستورات زیر را  در فایل main.yml برای MongoDB role اضافه می کنیم.
 
-```
+```yaml
 cd /mongodb/tasks/main.yml
 ---
 - name: MongoDB - Import public key
@@ -142,7 +141,7 @@ cd /mongodb/tasks/main.yml
 
  دستورات زیر را در فایل main.yml برای nodjs role اضافه می کنیم.
 
-```
+```yaml
 cd nodejs/tasks/main.yml
 
 ---
@@ -181,7 +180,7 @@ cd nodejs/tasks/main.yml
 
 خب پس از تکمیل شدن مراحل بالا نیاز داریم یک playbook ایجاد کنیم و role هارا در آن فراخوانی کنیم. پس به مسیر /etc/ansible/ می رویم و فایلی تحت عنوان playbook.yml ایجاد می کنیم و محتویات زیر را وارد می کنیم.
 
-```
+```yaml
 ---
 - hosts: nodes
   remote_user: ansible
@@ -210,10 +209,11 @@ sudo ansible-playbook /etc/ansible/playbook.yml -K
 
 **منابع :**
 
-https://www.digitalocean.com/community/tutorials/how-to-use-ansible-roles-to-abstract-your-infrastructure-environment
+[https://www.digitalocean.com](https://www.digitalocean.com/community/tutorials/how-to-use-ansible-roles-to-abstract-your-infrastructure-environment)
 
-https://www.learnitguide.net/2018/02/ansible-roles-explained-with-examples.html
+[https://www.learnitguide.net](https://www.learnitguide.net/2018/02/ansible-roles-explained-with-examples.html)
 
-https://www.edureka.co/blog/ansible-roles-setup-mean-stack
+[https://www.edureka.co](https://www.edureka.co/blog/ansible-roles-setup-mean-stack)
 
-https://medium.com/@mitesh_shamra/ansible-roles-1d1954f9932a
+[https://medium.com](https://medium.com/@mitesh_shamra/ansible-roles-1d1954f9932a)
+

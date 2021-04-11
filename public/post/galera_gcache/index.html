@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang='en'><head>
+  <title>Galera Gcache |  Zeroday </title>
+  <meta charset='utf-8'>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+  <meta http-equiv = 'X-UA-Compatible' content = 'IE=edge'>
+<meta property = 'og:locale' content = 'en_US' />
+<meta property="og:type" content="article">
+<meta property = 'og:title' content = 'Galera Gcache' />
+<meta name="description" content="در این مقاله قرار است عمیق تر به ساختار galera cluster بپردازیم. قبل از اینکه بخواهیم با مفهومی تحت عنوان gcache آشنا شویم. نیازمند این هستیم که با چند اصطلاح و …">
+<meta property = 'og:description' content = 'در این مقاله قرار است عمیق تر به ساختار galera cluster بپردازیم. قبل از اینکه بخواهیم با مفهومی تحت عنوان gcache آشنا شویم. نیازمند این هستیم که با چند اصطلاح و …'>
+<meta property = 'og:url' content = 'https://ziroday.ir/post/galera_gcache/' />
+<meta property = 'og:image' content = 'https://ziroday.ir/images/Galera.jpg'/>
+<meta name = 'twitter:card' content = 'summary_large_image' />
+<meta name = 'twitter:creator' content = ''>
+<meta name = 'twitter:title' content = 'Galera Gcache' />
+<meta property = 'twitter:description'  content = 'در این مقاله قرار است عمیق تر به ساختار galera cluster بپردازیم. قبل از اینکه بخواهیم با مفهومی تحت عنوان gcache آشنا شویم. نیازمند این هستیم که با چند اصطلاح و …'/>
+<meta name = 'twitter:image' content = 'https://ziroday.ir/images/Galera.jpg' />
+<link rel='apple-touch-icon' sizes='180x180' href='https://ziroday.ir/images/icons/apple-touch-icon.png'>
+<link rel='icon' type='image/png' sizes='32x32' href='https://ziroday.ir/images/icons/favicon-32x32.png'>
+<link rel='icon' type='image/png' sizes='16x16' href='https://ziroday.ir/images/icons/favicon-16x16.png'>
+<link rel='manifest' href='https://ziroday.ir/images/icons/site.webmanifest'>
+
+  <link rel='canonical' href='https://ziroday.ir/post/galera_gcache/'>
+  <link rel = 'stylesheet' href = 'https://ziroday.ir/css/styles.4531cbcd5877eddc9e43fb5754e281c9df181abb3653cd3c64bda43d50abb037c17eea8b1743733d9b651b0b380fec4d53d319000a7ac55940210cb746297dd3.css' integrity = 'sha512-RTHLzVh37dyeQ/tXVOKByd8YGrs2U808ZL2kPVCrsDfBfuqLF0NzPZtlGws4D&#43;xNU9MZAAp6xVlAIQy3Ril90w=='>
+</head>
+
+  <body><div class = 'nav-drop'>
+  <div class = 'nav-body'>
+    
+      <a href = 'https://ziroday.ir/about/' class = 'nav_item'>About</a>
+      <a href = 'https://ziroday.ir/categories/development/' class = 'nav_item'>Proxmox</a>
+      <a href = 'https://ziroday.ir/categories/golang/' class = 'nav_item'>Ansible</a>
+      <a href = 'https://ziroday.ir/tags/Ansible/' class = 'nav_item'>Database</a>
+    <div class = 'nav-close'></div>
+  </div>
+</div><header class = 'nav' >
+  <nav class = 'nav-menu'>
+    <a href='https://ziroday.ir' class = 'nav-brand nav_item'> Zeroday </a>
+    <div class = 'nav_bar-wrap'>
+      <div class = 'nav_bar'></div>
+    </div>
+  </nav>
+</header>
+
+
+    <main>
+
+<section class = 'post_header' style = 'background-image:url(https://ziroday.ir/images/Galera.jpg);'>
+  <h1 class='post_title'>Galera Gcache</h1>
+</section>
+<div class = 'post'>
+  <article class='post_content'><p>در این مقاله قرار است عمیق تر به ساختار galera cluster بپردازیم. قبل از اینکه بخواهیم با مفهومی تحت عنوان gcache آشنا شویم. نیازمند این هستیم که با چند اصطلاح و روندکاری در galera آشنا شویم.</p>
+<p>در هنگام کلاسترینگ دیتابیس بین تمام node ها galera  برای انتقال دیتای خود از دو روش زیر استفاده می کند.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">1- SST: State Snapshot Transfer
+
+2- IST: Incremental State Transfer
+</code></pre></div><h2 id="sst">SST:</h2>
+<p>در این روش گلرا برای sync کردن و برقرای replication دیتا بین node اهدا کننده یا مستر به node دریافت کننده یک کپی از تمام دیتا موجود خود می گیرد سپس عملیات انتقال را انجام می دهد این فرایند در پس زمینه به طور خودکار انجام می شود و روند کاری همانند پشتیان گیری بین slave و master است.
+این روش در بعضی اوقات می تواند خطرناک باشد زیرا هنگام انتقال node اهداکننده را قفل می کند و فشار زیادی هنگام بک آپ گیری و اتصال به node ها انجام می شود. همچنین اگر دیتا شما حجم سنگینی داشته باشد و بخواهید انتقال را بر رروی wan انجام دهید استفاده از این روش توصیه نمی شود.</p>
+<p><img src="https://ziroday.ir/images/gcach.png" alt="tree1"></p>
+<p>خب اما برای جلوگیری از این موضوع باید چه کنیم؟ پس با ما همراه باشید.</p>
+<h3 id="ist">IST:</h3>
+<p>برای بهبود این وضعیت از روش IST و gcache استفاده می کنیم. IST روشی است که برای انتقال دیتا به node joiner فقط مقادیر نوشتاری گمشده بین دو node را ارسال میکند.</p>
+<p>برای اینکار فایلی تحت عنوان gcache وجود دارد که یک کپی از تمام نوشتار های موجود را درخود ذخیره می کند.
+IST بسیار سریعتر از SST می باشد زیرا هیچگونه تغییرات performanc در node اهدا کننده ایجاد نمی شود و هنگام انتقال می توان بر روی گره rw را انجام داد.
+برای پیاده سازی به روش IST نیازمند این هستیم که انتخاب درست و آگاهانه از مقدار سایز gcache داشته باشیم.</p>
+<h3 id="بررسی-gache_size-">بررسی gache_size :</h3>
+<p>گلرا به صورت پیش فرض از مقدار 128 مگابایت برای ذخیره در gcache استفاده میکند و این وظیفه یک DBA است که با توجه به دارایی و کارکرد دیتابیس خود مقدار صحیح برای gcache انتخاب کند.
+برای اینکار می توانیم با زدن قطعه کد زیر در کنسول mysql به انتخاب آگاهانه تر دست یابیم:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">mysql&gt; set @start := (select sum(VARIABLE_VALUE/1024/1024) from information_schema.global_status where VARIABLE_NAME like &#39;WSREP%bytes&#39;); do sleep(60); set @end := (select sum(VARIABLE_VALUE/1024/1024) from information_schema.global_status where VARIABLE_NAME like &#39;WSREP%bytes&#39;); set @gcache := (select SUBSTRING_INDEX(SUBSTRING_INDEX(@@GLOBAL.wsrep_provider_options,&#39;gcache.size = &#39;,-1), &#39;M&#39;, 1)); select round((@end - @start),2) as `MB/min`, round((@end - @start),2) * 60 as `MB/hour`, @gcache as `gcache Size(MB)`, round(@gcache/round((@end - @start),2),2) as `Time to full(minutes)`;
+ 
++--------+---------+-----------------+-----------------------+
+| MB/min | MB/hour | gcache Size(MB) | Time to full(minutes) |
++--------+---------+-----------------+-----------------------+
+|   7.95 |  477.00 |  128        	|             	16.10 |
++--------+---------+-----------------+-----------------------+
+
+</code></pre></div><p>همانطور که مشاهده می کنید یک node گلرا می تواند تقریبا 16 دقیقه بدون درخواست SST برای join خاموش و از دسترس خارج باشد. اگر این زمان بسیار کوتاهی است و فضا کافی بر روی node های خود دارید می توانید آنرا تغییر دهید.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">wsrep_provider_options=”gcache.size=&lt;value&gt;” 
+</code></pre></div><p>برای مثال اگر مقدار را به 1 گیگابایت تغییر دهیم  تا 2 ساعت می تواند node در حالت downtime باشد تا از روش IST هنگام rejoin شدن استفاده کند.</p>
+<p><img src="https://ziroday.ir/images/gcach2.png" alt="tree1"></p>
+<p>مطابق شکل همانطور که مشاهده میفرمایید اگر در هنگام اتصال node اهدا کننده به node متصل شونده مقادیر writeset داخل gcache سایز موجود باشد آنگاه از روش IST برای انتقال ارسال می کند و اگر gcache مقادیر موجود نباشد آنگاه از روش SST استفاده می کند</p>
+<h3 id="gcache-دارای-سه-نوع-فضای-ذخیره-سازی-است">GCache دارای سه نوع فضای ذخیره سازی است:</h3>
+<p><strong>Permanent In-Memory Store</strong></p>
+<p>در اینجا مجموعه فایل های نوشتاری در  حافظه پیش فرضی که برای سیستم عامل اختصاص می یابد ذخیره می شود. این روش در سیستم هایی که حافظه RAM اضافی دارند مفید است.
+به طور پیش فرض این روش غیر فعال است.</p>
+<p><strong>Permanent Ring-Buffer</strong></p>
+<p>گلرا از این روش بصورت پیش فرض برای ذخیره سازی استفاده می کند در این روش مقدار حافظه را از قبل تعیین می کنید و اندازه آن 128 مگابایت است.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">wsrep_provider_options=&#34;gcache.size=number”
+</code></pre></div><p><strong>On-Demand Page Store</strong></p>
+<p>در اینجا مجموعه فایل های نوشتاری به فایلهای صفحه  به صفحه تقسیم می شود. به طور پیش فرض ، اندازه آن 128 مگابایت است و تعداد صفحه هارا می توان تعیین کرد` که بسته به نیاز می توانیم مقدار آن را افزایش دهیم. Galera Cluster پرونده های صفحه را هنگام استفاده حذف می کند ، اما می توانید برای نگهداری از اندازه کلی پرونده های صفحه محدودیت تعیین کنید.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">wsrep_provider_options=&#34;gcache.recover=yes&#34; wsrep_provider_options=&#34;gcache.page_size=1G&#34;
+</code></pre></div><h3 id="انتخاب-درست-gcache-size-">انتخاب درست gcache size :</h3>
+<p>برای اینکار ابتدا نیاز است که مقادیر ورودی در برحسب بایت را در هر دقیقه بر روی سرویس mysql خود محاسبه کنیم. بدین منظور دستورات زیر را در mysql وارد می کنیم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">wsrep_replicated_bytes
+</code></pre></div><p>مجموع writeset های ارسالی را بر حسب بایت نشان می دهد.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">wsrep_received_bytes
+</code></pre></div><p>مجموع writeset های دریافتی را بر حسب بایت نشان می دهد.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">
+mysql&gt; show global status like &#39;wsrep_received_bytes&#39;; 
+show global status like &#39;wsrep_replicated_bytes&#39;; 
+select sleep(60); 
+show global status like &#39;wsrep_received_bytes&#39;; 
+show global status like &#39;wsrep_replicated_bytes&#39;;
+
++----------------------+----------+
+| Variable_name        | Value    |
++----------------------+----------+
+| wsrep_received_bytes | 83976571 |
++----------------------+----------+
++------------------------+-------+
+| Variable_name          | Value |
++------------------------+-------+
+| wsrep_replicated_bytes | 0     |
++------------------------+-------+
+
+[...]
+
++----------------------+----------+
+| Variable_name        | Value    |
++----------------------+----------+
+| wsrep_received_bytes | 90576957 |
++----------------------+----------+
++------------------------+-------+
+| Variable_name          | Value |
++------------------------+-------+
+| wsrep_replicated_bytes | 800   |
++------------------------+-------+
+
+</code></pre></div><p>مطابق مثال بالا برای محاسبه تعداد بایت ها در هر دقیقه داریم:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">(second wsrep_received_bytes – first wsrep_received_bytes) + (second wsrep_replicated_bytes – first wsrep_replicated_bytes)
+
+(90576957 – 83976571) + (800 – 0) = 6601186 bytes or 6 MB per minute.
+
+</code></pre></div><p>و برای محاسبه تعداد بایت ها در هر ساعت داریم :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">6MB * 60 minutes = 360 MB per hour of writesets received by the cluster.
+</code></pre></div><p>بنابر این طبق مثال بالا اگر می خواهید یک ساعت از گره را نگهداری کنید (یا زمان خاموش) ، باید gcache را به360 مگ افزایش دهید و اگر زمان بیشتری می خواهید ، فقط باید  آن را بزرگتر کنید که برای اینکار قطعه کد زیر را در فایل تنظیمات galera اضافه می کنیم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">wsrep_provider_options=&#34;gcache.size=1G&#34;
+</code></pre></div>
+    
+    <div class = 'post_extra'><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+
+    
+  </article>
+  
+  <aside><h3>More from  Zeroday </h3>
+<ul class='posts aside'>
+<li class = 'post_item'>
+  <a class = 'post_card' href='https://ziroday.ir/post/master_slave/' title = 'Master &amp; Slave' style = 'background-image: url(https://ziroday.ir/images/slave.png);'>
+  </a>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_meta'>
+      <a href = 'https://ziroday.ir/tags/database' class = 'post_tag'>Database
+      </a><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+    <h3 class = 'post_link'>
+      <a href='https://ziroday.ir/post/master_slave/'>Master &amp; Slave</a>
+    </h3>
+    <p class = 'pale'>MySQL Replication چیست؟ فرآیندی است که به‌کمک آن می‌توان از اطلاعات دیتابیس به صورت …</p>
+  </div>
+</li>
+
+</ul>
+
+  </aside>
+  
+</div>
+<script src = 'https://ziroday.ir/js/autosize.min.js'></script>
+<script src = 'https://ziroday.ir/js/timeago.js'></script>
+    </main><svg width="0" height="0" class="hidden">
+  <symbol viewBox="0 0 699.428 699.428" xmlns="http://www.w3.org/2000/svg" id="copy">
+    <path d="M502.714 0H240.428C194.178 0 153 42.425 153 87.429l-25.267.59c-46.228 0-84.019 41.834-84.019 86.838V612c0 45.004 41.179 87.428 87.429 87.428H459c46.249 0 87.428-42.424 87.428-87.428h21.857c46.25 0 87.429-42.424 87.429-87.428v-349.19zM459 655.715H131.143c-22.95 0-43.714-21.441-43.714-43.715V174.857c0-22.272 18.688-42.993 41.638-42.993l23.933-.721v393.429C153 569.576 194.178 612 240.428 612h262.286c0 22.273-20.765 43.715-43.714 43.715zm153-131.143c0 22.271-20.765 43.713-43.715 43.713H240.428c-22.95 0-43.714-21.441-43.714-43.713V87.429c0-22.272 20.764-43.714 43.714-43.714H459c-.351 50.337 0 87.975 0 87.975 0 45.419 40.872 86.882 87.428 86.882H612zm-65.572-349.715c-23.277 0-43.714-42.293-43.714-64.981V44.348L612 174.857zm-43.714 131.537H306c-12.065 0-21.857 9.77-21.857 21.835s9.792 21.835 21.857 21.835h196.714c12.065 0 21.857-9.771 21.857-21.835 0-12.065-9.792-21.835-21.857-21.835zm0 109.176H306c-12.065 0-21.857 9.77-21.857 21.834 0 12.066 9.792 21.836 21.857 21.836h196.714c12.065 0 21.857-9.77 21.857-21.836 0-12.064-9.792-21.834-21.857-21.834z"
+    ></path>
+  </symbol>
+  <symbol viewBox="0 0 60.015 60.015" xmlns="http://www.w3.org/2000/svg" id="reply">
+    <path d="M42.007 0h-24c-9.925 0-18 8.075-18 18v14c0 9.59 7.538 17.452 17 17.973v8.344a1.694 1.694 0 0 0 1.699 1.698c.44 0 .873-.173 1.198-.498l1.876-1.876C26.708 52.713 33.259 50 40.227 50h1.78c9.925 0 18-8.075 18-18V18c0-9.925-8.075-18-18-18zm16 32c0 8.822-7.178 16-16 16h-1.78c-7.502 0-14.556 2.921-19.86 8.226l-1.359 1.359V44a1 1 0 1 0-2 0v3.949c-8.356-.52-15-7.465-15-15.949V18c0-8.822 7.178-16 16-16h24c8.822 0 16 7.178 16 16v14z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="scan">
+    <path d="M456.66 0H385c-8.284 0-15 6.716-15 15s6.716 15 15 15h71.66C470.632 30 482 41.368 482 55.341V127c0 8.284 6.716 15 15 15s15-6.716 15-15V55.341C512 24.826 487.174 0 456.66 0zM15 142c8.284 0 15-6.716 15-15V55.341C30 41.368 41.368 30 55.34 30H127c8.284 0 15-6.716 15-15s-6.716-15-15-15H55.34C24.826 0 0 24.826 0 55.341V127c0 8.284 6.716 15 15 15zm112 340H55.34C41.368 482 30 470.632 30 456.659V385c0-8.284-6.716-15-15-15s-15 6.716-15 15v71.659C0 487.174 24.826 512 55.34 512H127c8.284 0 15-6.716 15-15s-6.716-15-15-15zm370-112c-8.284 0-15 6.716-15 15v71.659C482 470.632 470.632 482 456.66 482H385c-8.284 0-15 6.716-15 15s6.716 15 15 15h71.66c30.515 0 55.34-24.826 55.34-55.341V385c0-8.284-6.716-15-15-15zM341.643 110h47.575c6.497 0 11.782 5.285 11.782 11.782v47.574c0 8.284 6.716 15 15 15s15-6.716 15-15v-47.574C431 98.743 412.256 80 389.218 80h-47.575c-8.284 0-15 6.716-15 15s6.716 15 15 15zM81 121.782v47.574c0 8.284 6.716 15 15 15s15-6.716 15-15v-47.574c0-6.497 5.286-11.782 11.782-11.782h47.575c8.284 0 15-6.716 15-15s-6.716-15-15-15h-47.575C99.744 80 81 98.743 81 121.782zM170.357 400h-47.575c-6.497 0-11.782-5.285-11.782-11.782v-47.574c0-8.284-6.716-15-15-15s-15 6.716-15 15v47.574C81 411.257 99.744 430 122.782 430h47.575c8.284 0 15-6.716 15-15s-6.716-15-15-15zM431 388.218v-47.574c0-8.284-6.716-15-15-15s-15 6.716-15 15v47.574c0 6.497-5.286 11.782-11.782 11.782h-47.575c-8.284 0-15 6.716-15 15s6.716 15 15 15h47.575C412.256 430 431 411.257 431 388.218zM1 256c0 8.284 6.716 15 15 15h480c8.284 0 15-6.716 15-15s-6.716-15-15-15H16c-8.284 0-15 6.716-15 15z"></path>
+  </symbol>
+</svg>
+<footer class="footer">
+  <div class="footer_inner wrap pale">
+    <p>&copy;&nbsp;<span class="year"></span>&nbsp; Zeroday .
+    Designed by  <a href = 'https://www.linkedin.com/in/mhdbkhshi/' title = 'Linkedin Profile'>M.bakhshi</a></p>
+  </div>
+</footer><script type="text/javascript" src="https://ziroday.ir/js/bundle.5e0b4c85114cf0b04ee873e699248fdc25fe576c7696dfa64e769392358047c54a5d3cd146642878b99a54694bfafde61088d7a1e98279124e539098db6e557e.js" integrity="sha512-XgtMhRFM8LBO6HPmmSSP3CX&#43;V2x2lt&#43;mTnaTkjWAR8VKXTzRRmQoeLmaVGlL&#43;v3mEIjXoemCeRJOU5CY225Vfg==" crossorigin="anonymous"></script>
+  </body>
+</html>

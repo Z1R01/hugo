@@ -1,1 +1,47 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tags on Hugo Themes</title><link>https://ziroday.com/tags/</link><description>Recent content in Tags on Hugo Themes</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2020–2021, Mahdi Bakhshi Author; all rights reserved.</copyright><lastBuildDate>Wed, 02 Apr 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://ziroday.com/tags/index.xml" rel="self" type="application/rss+xml"/><item><title>development</title><link>https://ziroday.com/tags/development/</link><pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate><guid>https://ziroday.com/tags/development/</guid><description/></item><item><title>go</title><link>https://ziroday.com/tags/go/</link><pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate><guid>https://ziroday.com/tags/go/</guid><description/></item><item><title>golang</title><link>https://ziroday.com/tags/golang/</link><pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate><guid>https://ziroday.com/tags/golang/</guid><description/></item><item><title>hugo</title><link>https://ziroday.com/tags/hugo/</link><pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate><guid>https://ziroday.com/tags/hugo/</guid><description/></item><item><title>templates</title><link>https://ziroday.com/tags/templates/</link><pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate><guid>https://ziroday.com/tags/templates/</guid><description/></item><item><title>themes</title><link>https://ziroday.com/tags/themes/</link><pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate><guid>https://ziroday.com/tags/themes/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on  Zeroday </title>
+    <link>https://ziroday.ir/tags/</link>
+    <description>Recent content in Tags on  Zeroday </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2020–2021, Mahdi Bakhshi Author; all rights reserved.</copyright>
+    <lastBuildDate>Mon, 08 Feb 2021 19:57:23 +0330</lastBuildDate><atom:link href="https://ziroday.ir/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux</title>
+      <link>https://ziroday.ir/tags/linux/</link>
+      <pubDate>Mon, 08 Feb 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ansible</title>
+      <link>https://ziroday.ir/tags/ansible/</link>
+      <pubDate>Sat, 06 Feb 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/tags/ansible/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Database</title>
+      <link>https://ziroday.ir/tags/database/</link>
+      <pubDate>Sat, 06 Feb 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/tags/database/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>haproxy</title>
+      <link>https://ziroday.ir/tags/haproxy/</link>
+      <pubDate>Sat, 06 Feb 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/tags/haproxy/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

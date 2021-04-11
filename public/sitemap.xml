@@ -1,1 +1,46 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml"><url><loc>https://ziroday.com/post/creating-a-new-theme/</loc><lastmod>2014-09-28T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/</loc><lastmod>2014-09-28T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/post/</loc><lastmod>2014-09-28T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/about/</loc><lastmod>2014-04-09T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/post/goisforlovers/</loc><lastmod>2014-04-02T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/categories/</loc><lastmod>2014-04-02T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/categories/development/</loc><lastmod>2014-04-02T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/tags/development/</loc><lastmod>2014-04-02T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/post/hugoisforlovers/</loc><lastmod>2014-04-02T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/tags/go/</loc><lastmod>2014-04-02T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/tags/golang/</loc><lastmod>2014-04-02T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/categories/golang/</loc><lastmod>2014-04-02T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/tags/hugo/</loc><lastmod>2014-04-02T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/tags/</loc><lastmod>2014-04-02T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/tags/templates/</loc><lastmod>2014-04-02T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/tags/themes/</loc><lastmod>2014-04-02T00:00:00+00:00</lastmod></url><url><loc>https://ziroday.com/post/migrate-from-jekyll/</loc><lastmod>2014-03-10T00:00:00+00:00</lastmod></url></urlset>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://ziroday.ir/</loc>
+    <lastmod>2021-02-08T19:57:23+03:30</lastmod>
+  </url><url>
+    <loc>https://ziroday.ir/tags/linux/</loc>
+    <lastmod>2021-02-08T19:57:23+03:30</lastmod>
+  </url><url>
+    <loc>https://ziroday.ir/post/</loc>
+    <lastmod>2021-02-08T19:57:23+03:30</lastmod>
+  </url><url>
+    <loc>https://ziroday.ir/tags/</loc>
+    <lastmod>2021-02-08T19:57:23+03:30</lastmod>
+  </url><url>
+    <loc>https://ziroday.ir/post/vsftpd/</loc>
+    <lastmod>2021-02-08T19:57:23+03:30</lastmod>
+  </url><url>
+    <loc>https://ziroday.ir/post/swap/</loc>
+    <lastmod>2021-02-07T19:57:23+03:30</lastmod>
+  </url><url>
+    <loc>https://ziroday.ir/tags/ansible/</loc>
+    <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+  </url><url>
+    <loc>https://ziroday.ir/post/ansible-role/</loc>
+    <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+  </url><url>
+    <loc>https://ziroday.ir/tags/database/</loc>
+    <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+  </url><url>
+    <loc>https://ziroday.ir/tags/haproxy/</loc>
+    <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+  </url><url>
+    <loc>https://ziroday.ir/post/haproxy-attack/</loc>
+    <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+  </url><url>
+    <loc>https://ziroday.ir/post/master_slave/</loc>
+    <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+  </url><url>
+    <loc>https://ziroday.ir/post/galera_gcache/</loc>
+    <lastmod>2021-02-05T19:57:23+03:30</lastmod>
+  </url><url>
+    <loc>https://ziroday.ir/categories/</loc>
+  </url>
+</urlset>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on  Zeroday </title>
+    <link>https://ziroday.ir/tags/linux/</link>
+    <description>Recent content in Linux on  Zeroday </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2020–2021, Mahdi Bakhshi Author; all rights reserved.</copyright>
+    <lastBuildDate>Mon, 08 Feb 2021 19:57:23 +0330</lastBuildDate><atom:link href="https://ziroday.ir/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Vsftpd Installation</title>
+      <link>https://ziroday.ir/post/vsftpd/</link>
+      <pubDate>Mon, 08 Feb 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/post/vsftpd/</guid>
+      <description>سرور FTP مخفف (File Transfer Protocol) است كه یک پروتکل شبکه استاندارد بوده و برای انتقال فايل ها به شبکه از راه دور استفاده می شود. برای انتقال امن تر و سریع تر داده ها ، از SCP یا SFTP استفاده کنید. بسیاری از سرورهای منبع باز FTP برای لینوکس در دسترس هستند. محبوب ترین و پرکاربردترین آنها PureFTPd ، ProFTPD و vsftpd است.
+در این مقاله ، نحوه نصب و پیکربندی سرور FTP با VSFTPD در Debian را آموزش مي دهيم.</description>
+    </item>
+    
+    <item>
+      <title>Increase Swap</title>
+      <link>https://ziroday.ir/post/swap/</link>
+      <pubDate>Sun, 07 Feb 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/post/swap/</guid>
+      <description>یه موقع هایی هست که برای انجام کارهای سنگینتون با کامپیوتر رم کم میارید و نیاز شدیدی به فضای بیشتر دارید، اگر هارد ssd داشتیه باشید شما میتونید ازش کمک بگیرید و فضای نسبتا کوچکی رو از هاردتون به رم قرض بدید (با اون قسمت از هارد مثل رم برخورد خواهد شد) که بتونه روش بنویسه و بخونه، اگر هاردتون ssd نیست اصلا بهش فکر نکنید، چون سرعت خواندن و نوشتن رم خیلی فراتر از هارد دیسکی هست و سیستم شما کند میشه.</description>
+    </item>
+    
+  </channel>
+</rss>
