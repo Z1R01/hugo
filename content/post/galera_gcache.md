@@ -6,6 +6,7 @@ toc: false
 image: 'Galera.jpg'
 tags:
   - Database
+categories: [Database]
 dir : "rtl"
 ---
 

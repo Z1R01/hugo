@@ -1,11 +1,12 @@
- ---
-title: "Vsftpd Installation"
+---
+title: "FTP Installation"
 date: 2021-02-08T19:57:23+03:30
 draft: true
 toc: false
 image: 'vsftpd.jpg'
 tags:
   - Linux
+categories: [Linux]
 dir : "rtl"
 ---
 
@@ -64,13 +65,12 @@ local_root=/home/$USER/ftp
 
 ```bash
 allow_writeable_chroot=YES
-
 ```
 به‌صورت پیش‌فرض vsftpd برای سرویس‌دهی روی پروتکل IPv6 پیکربندی شده است. پس در صورتی که در شبکه از IPv6 استفاده نمی‌کنید می‌بایست به‌صورت زیر عمل کنید.
 
- خط زیر را از حالت توضیحات خارج نموده و مقدار آن را به YES تغییر دهید.
 ```bash
 listen=YES  
+listen_ipv6=NO
 ```
 ### محدود کردن ورود کاربر
 برای ورود فقط برخی از کاربران به سرور FTP ، خطوط زیر را در انتهای فايل اضافه کنید:
@@ -120,13 +120,11 @@ connect_from_port_20=YES
 chroot_local_user=YES
 secure_chroot_dir=/var/run/vsftpd/empty
 pam_service_name=vsftpd
-rsa_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
-rsa_private_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+rsa_cert_file=/etc/ssl/private/vsftpd.pem
+rsa_private_key_file=/etc/ssl/private/vsftpd.pem
 ssl_enable=YES
 user_sub_token=$USER
 local_root=/home/$USER/ftp
-pasv_min_port=30000
-pasv_max_port=31000
 userlist_enable=YES
 userlist_file=/etc/vsftpd.user_list
 userlist_deny=NO
@@ -143,7 +141,7 @@ sudo systemctl restart vsftpd
 
 اگر اجازه دهید writeable_chroot = YES را در فايل پیکربندی خود قرار دهید ، از انجام مرحله ۳ صرف نظر كنيد.
 
-۱) کاربر جدیدی بنام newftpuser ایجاد کنید:
+۱) کاربر جدیدی بنام FTP_USER ایجاد کنید:
 ```bash
 sudo adduser FTP_USER
 ```

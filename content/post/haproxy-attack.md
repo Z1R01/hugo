@@ -6,6 +6,7 @@ toc: false
 image: 'HAProxy.png'
 tags:
   - haproxy
+categories: [HAproxy]
 dir : "rtl"
 ---
 
@@ -75,3 +76,4 @@ http-request deny if { req.hdr(user-agent) -i -m sub -f /etc/haproxy/badagents.a
 http-request deny if { src -f /etc/hapee-1.8/blacklist.acl }
 ```
 از متداول ترین آپشن های دیگر می توانیم به **timeout** و **Maxconn** اشاره کنیم.که با کاهش زمان آنها در بهبود امنیت سرور کمک بسزایی انجام دهیم.
+

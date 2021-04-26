@@ -6,6 +6,7 @@ toc: false
 image: 'slave.png'
 tags:
   - Database
+categories: [Database]
 dir : "rtl"
 ---
 

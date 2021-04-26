@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang='en'><head>
+  <title>Mysql Architecture |  Zeroday </title>
+  <meta charset='utf-8'>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+  <meta http-equiv = 'X-UA-Compatible' content = 'IE=edge'>
+<meta property = 'og:locale' content = 'en_US' />
+<meta property="og:type" content="article">
+<meta property = 'og:title' content = 'Mysql Architecture' />
+<meta name="description" content="معماری MySQL چگونگی ارتباط مؤلفه های مختلف با یکدیگر را توصیف می کند. معماری MySQL اساساً یک سیستم کلاینت سروری است و در حالت کلی می توان معماری mysql را به دو …">
+<meta property = 'og:description' content = 'معماری MySQL چگونگی ارتباط مؤلفه های مختلف با یکدیگر را توصیف می کند. معماری MySQL اساساً یک سیستم کلاینت سروری است و در حالت کلی می توان معماری mysql را به دو …'>
+<meta property = 'og:url' content = 'https://ziroday.ir/post/mysql/' />
+<meta property = 'og:image' content = 'https://ziroday.ir/images/mysql_arch.jpg'/>
+<meta name = 'twitter:card' content = 'summary_large_image' />
+<meta name = 'twitter:creator' content = ''>
+<meta name = 'twitter:title' content = 'Mysql Architecture' />
+<meta property = 'twitter:description'  content = 'معماری MySQL چگونگی ارتباط مؤلفه های مختلف با یکدیگر را توصیف می کند. معماری MySQL اساساً یک سیستم کلاینت سروری است و در حالت کلی می توان معماری mysql را به دو …'/>
+<meta name = 'twitter:image' content = 'https://ziroday.ir/images/mysql_arch.jpg' />
+<link rel='apple-touch-icon' sizes='180x180' href='https://ziroday.ir/images/icons/apple-touch-icon.png'>
+<link rel='icon' type='image/png' sizes='32x32' href='https://ziroday.ir/images/icons/favicon-32x32.png'>
+<link rel='icon' type='image/png' sizes='16x16' href='https://ziroday.ir/images/icons/favicon-16x16.png'>
+<link rel='manifest' href='https://ziroday.ir/images/icons/site.webmanifest'>
+
+  <link rel='canonical' href='https://ziroday.ir/post/mysql/'>
+  <link rel = 'stylesheet' href = 'https://ziroday.ir/css/styles.4531cbcd5877eddc9e43fb5754e281c9df181abb3653cd3c64bda43d50abb037c17eea8b1743733d9b651b0b380fec4d53d319000a7ac55940210cb746297dd3.css' integrity = 'sha512-RTHLzVh37dyeQ/tXVOKByd8YGrs2U808ZL2kPVCrsDfBfuqLF0NzPZtlGws4D&#43;xNU9MZAAp6xVlAIQy3Ril90w=='>
+</head>
+
+  <body><div class = 'nav-drop'>
+  <div class = 'nav-body'>
+    
+      <a href = 'https://ziroday.ir/about/' class = 'nav_item'>About</a>
+      <a href = 'https://ziroday.ir/categories/linux/' class = 'nav_item'>Linux</a>
+      <a href = 'https://ziroday.ir/categories/ansible/' class = 'nav_item'>Ansible</a>
+      <a href = 'https://ziroday.ir/categories/database/' class = 'nav_item'>Database</a>
+      <a href = 'https://ziroday.ir/categories/haproxy/' class = 'nav_item'>HAproxy</a>
+    <div class = 'nav-close'></div>
+  </div>
+</div><header class = 'nav' >
+  <nav class = 'nav-menu'>
+    <a href='https://ziroday.ir' class = 'nav-brand nav_item'> Zeroday </a>
+    <div class = 'nav_bar-wrap'>
+      <div class = 'nav_bar'></div>
+    </div>
+  </nav>
+</header>
+
+
+    <main>
+
+<section class = 'post_header' style = 'background-image:url(https://ziroday.ir/images/mysql_arch.jpg);'>
+  <h1 class='post_title'>Mysql Architecture</h1>
+</section>
+<div class = 'post'>
+  <article class='post_content'><p>معماری MySQL چگونگی ارتباط مؤلفه های مختلف با یکدیگر را توصیف می کند. معماری MySQL اساساً یک سیستم کلاینت سروری است و در حالت کلی می توان معماری mysql را به دو بخش تقسیم کرد که شامل:</p>
+<p>۱− معماری منطقی: به نحوه برقراری ارتباط بین کلاینت و سرور mysql می پردازد.</p>
+<p>۲− معماری فیزیکی: به نحوه ذخیره سازی داده ها بر روی دیسک های سخت می پردازد.</p>
+<p>قبل از پرداختن به معماری mysql نیاز است که اجزای تشکیل دهنده آن را بهتر بشناسیم و آن ها را بررسی کنیم تا در ادامه راحت تر بتوانیم کارمان را پیش ببریم.
+لذا اجزای پایگاه داده mysql به قرار زیر است:</p>
+<h3 id="فایل-های-پیکربندی">فایل های پیکربندی:</h3>
+<h4 id="autocnf">auto.cnf:</h4>
+<p>این فایل شامل uuid سرور می باشد.</p>
+<h4 id="mycnf">my.cnf:</h4>
+<p>مهمترین فایل mysql برای پیکربندی فایل ها می باشد.
+توجه داشته باشید پس از اعمال تغییرات در این فایل ها نیاز است که سرویس mysql را با دستور مقابل راه اندازی مجدد کنیم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">systemctl restart mysql
+</code></pre></div><p>در ادامه به بررسی فایل هایی می گردیم که پس از ایجاد تغییرات و ساخت جداول و دیتابیس ایجاد می شود.
+لذا برای بررسی این فایل ها باید به مسیر <strong>/var/lib/mysql</strong> برویم در آنجا مشاهده خواهید کرد که فایل ها و دیتابیس های ایجاد شده موجود است. که درباره هرکدام از آنها توضیح خواهیم داد:</p>
+<h4 id="فایل-های-frm-">فایل های frm. :</h4>
+<p>FRM یک قالب برای فرمت داده ها است که MySQL استفاده می کند. FRM مخفف FoRMat است و از فایل های  FRM برای تعریف قالب جداول استفاده می شود. MySQL یک پایگاه داده رابطه ای متقابل است بدین معنی که بازای هر جدولی که در mysql تعریف می شود یک فایل با پسوند FRM. ساخته خواهد شد.</p>
+<h4 id="فایل-های-par-">فایل های par. :</h4>
+<p>اگر برای دیتابیس خودتان عملیات پارتیشن بندی را انجام دهید سرویس mysql فایلی با پسوند par. ایجاد می کند که مشخص می کند برای جداول به چه صورت پارتیشن بندی صورت گرفته است. دیتابیس این فایل هارا فقط در حالت خواندنی قرار می دهد و قابلیت تغییر در فایل های par. وجود ندارد.</p>
+<h4 id="فایل-های-myd-">فایل های myd. :</h4>
+<p>فایل هایی با پسوند myd شامل کلیه داده هایی می باشد که در دیتابیس شما ذخیره شده است و مختصر عبارت mysql data می باشد. این فایل ها بصورت باینری می باشند و تمام رکورد های جداول mysql در آن ذخیره شده است.</p>
+<h4 id="فایل-های-ibd">فایل های ibd.</h4>
+<p>در این فایل ها جداول دیتابیس برای موتور جست و جو InnoDB وجود دارد و اگر جدولی در دیتابیس شما وجود داشته باشد که از موتور InnoDB استفاده می کند mysql فایلی با پسوند ibd. برای آن جدول ایجاد می کند.
+متغیری تحت عنوان innodb_file_per_table برای موتور InnoDB وجود دارد که اگر فعال باشد بازای هر tablespaces یک فایل ibd ایجاد می کند که مجموع این فایل ها یک دیتابیس واحد را تشکیل می دهد.
+این فایل ها قابلیت باز شدن و  کانورت شدن را ندارند و درصورت بروز مشکل فقط شما می توانید دیتابیس خود را به نحوی طراحی کنید که این فایل ها را بشناسد.
+موقع بک آپ گیری  از این فایل ها باید توجه داشت که پسوند ibd. به ibz. تغییر می کند.</p>
+<h4 id="فایل-های-myi-">فایل های myi. :</h4>
+<p>اگر از موتور ذخیره ساز MyISAM در جداول خود استفاده کرده باشید حتما چنین فایلی را مشاهده خواهید کرد. این فایل ها شامل index هایی می باشد که موتور ذخیره ساز MyISAM برای بررسی آنها از این فایل استفاده می کند. فایل هایی با فرمت myi با SQLite و microsoft SQL نیز قابل باز شدن هستند.</p>
+<h3 id="انواع-فایل-های-لاگ-در-mysql">انواع فایل های لاگ در mysql:</h3>
+<h4 id="error-log">Error log:</h4>
+<p>بطور پیش فرض در mysql این قابلیت فعال است و اتفاقاتی از قبیل از کار افتادن دستگاه و هر نوع خرابی و رویداد های غیر منتظره را در سه سطح note,warning,error تعریف میکند.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Variable : log_error
+
+log-error = mysqld.log 
+</code></pre></div><h4 id="general-log">General log:</h4>
+<p>بطور پیش فرض این دستور لاگ غیرفعال است و ما با فعال کردن آن می توانیم از کویری هایی که کاربر سمت سرور ارسال می کند لاگ بگیریم و برای خطایابی سمت کلاینت بسیار کاربردی است.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Variables : general_log &amp; general_log_file
+</code></pre></div><h4 id="slow-query-log">slow query log:</h4>
+<p>بطور پیش فرض این دستور لاگ غیرفعال است و ما با فعال کردن آن می توانیم از مدت زمان طول کشیدن و آستانه اجرای دستورات در sql بصورت ثانیه ای باخبر شویم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Variables : slow_query_log &amp; slow_query_log_file
+</code></pre></div><h4 id="binary-log">binary log:</h4>
+<p>با نام binlog هم شناخته می شود و شامل رویدادهایی می شود که باعث تغییرات در داده ها و ایجاد جدول ها می شود. این قابلیت بصورت پیش فرض غیرفعال است و اگر از mysql replication بر روی سرور های خود استفاده می کنید حتما این قابلیت را فعال کنید.
+برای مشاهده لاگ های باینری binlog ما می توانیم از ابزار mysqlbinlog استفاده کنیم که فایل های باینری را در قالب متن برای ما نشان می دهد.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Variables : log_bin
+</code></pre></div><p>نکته : برای فعالسازی هرکدام از لاگ های mysql نیاز است که نام variable را در فایل my.cnf تعریف کنیم. برای مثال برای فعالسازی binlog در mysql مراحل زیر را انجام می دهیم:</p>
+<p><img src="https://ziroday.ir/images/mysql.png" alt="mysql"></p>
+<p>برای بررسی اینکه آیا binlog بر روی mysql فعال است دستور بالا را وارد می کنیم. مشاهده می کنید که binlog فعال نیست.
+لذا به مسیر my.cnf رفته و مطابق شکل کد های زیر را وارد می کنیم:</p>
+<p><img src="https://ziroday.ir/images/mysql2.png" alt="mysql"></p>
+<p>در انتها با یکبار ریستارت کردن mysql قطعه کد زیر را مطابق شکل وارد می کنیم:</p>
+<p><img src="https://ziroday.ir/images/mysql3.png" alt="mysql"></p>
+<p>مشاهده خواهید کرد که logbin بر روی سرور mysql فعال شده است و اگر به مسیر /var/lib/mysql بروید تغییرات جدید اعمال شده است.</p>
+<h3 id="معماری-mysql-">معماری Mysql :</h3>
+<p><img src="https://ziroday.ir/images/mysql4.png" alt="mysql"></p>
+<h4 id="لایه-اپلیکیشن">لایه اپلیکیشن:</h4>
+<p>این لایه بالاترین لایه در معماری MySQL است. این لایه شامل برخی از سرویس هایی است که برای اکثر برنامه های کلاینت - سروری مشترک است ، برخی از این سرویس ها شامل:</p>
+<h6 id="connection-handling-">Connection Handling :</h6>
+<p>هنگامی که یک کلاینت به سرور متصل می شود ، کلاینت گره اتصال خود را از سرور می گیرد و کلیه دستورات  مربوط به آن کلاینت در همان گره مشخص شده اجرا می شود. این گره توسط سرور ذخیره می شود ، بنابراین نیازی به ایجاد و از بین بردن هر اتصال جدید نیست.</p>
+<h6 id="authentication-">Authentication :</h6>
+<p>هرگاه کلاینت به یک سرور MySQL متصل شود ، سرور احراز هویت را انجام می دهد. که این احراز هویت بر اساس نام کاربری ، میزبان و رمز عبور کاربر انجام می شود.</p>
+<h6 id="security-">Security :</h6>
+<p>پس از اتصال کلاینت به سرور MySQL ، سرور بررسی می کند که آیا این کلاینت خاص دارای امتیاز صدور پرس و جوهای خاص در برابر سرور MySQL است یا نه. با دستور show privileges در محیط mysql می توانید از سطح دسترسی ها آگاه شوید.</p>
+<h6 id="لایه-سرور-mysql-">لایه سرور mysql :</h6>
+<p>این لایه شامل کلیه عملکردهای منطقی در سیستم مدیریت پایگاه داده رابطه ای MySQL می باشد. مغز سرور MySQL در این لایه ساکن است. لایه منطقی MySQL به اجزای فرعی مختلفی تقسیم می شود که در زیر آورده شده است:</p>
+<h6 id="mysql-services-and-utilities">MySQL services and utilities</h6>
+<p>یکی از دلایل اصلی محبوبیت MySQL خدمات گسترده ای است که ارائه می دهد. این لایه خدمات و برنامه های کاربردی را برای مدیریت و نگهداری سیستم MySQL فراهم می کند که برخی از آنها در زیر ذکر شده است:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Backup &amp; recovery
+Security
+Replication
+Cluster
+Partitioning
+Workbench
+</code></pre></div><p>SQL Interface
+یک زبان پرس و جو است که برای  استفاده از  کویری ها به سرور MySQL استفاده می شود. این ابزار برای تعامل بین کاربر MySQL و سرور است.</p>
+<p>برخی از مؤلفه های رابط SQL شامل:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Data Manipulation Language (DML)
+Data Definition Language (DDL)
+Stored Procedures
+Views
+Triggers
+</code></pre></div><h6 id="sql-parser">SQL Parser</h6>
+<p>برای اینکه کویری های کاربر برای mysql قابل فهم باشد نیاز به یک sql parser داریم که پرس و جو کاربر را می شکند (درخت تجزیه) و آن ها را کام‍پایل می کند که ساختار داخلی آن به صورت زیر می باشد:</p>
+<p>در مرحله اول ، هنگام تجزیه گزاره های منظم ، تجزیه و تحلیل واژگانی(ایجاد کلمات) اجرا می شود. سپس تجزیه و تحلیل نحو (ایجاد &lsquo;جملات&rsquo;) اجرا می شود. سپس تجزیه و تحلیل معنایی (اطمینان از اینکه جمله ها معنی دارد) اجرا و در انتها تولید کد (برای کامپایلرها)  صورت می گیرد.</p>
+<p>Optimizer
+پس از ایجاد درخت تجزیه داخلی ، MySQL انواع تکنیک های بهینه سازی را اعمال می کند. این تکنیک ها ممکن است شامل  بازنویسی پرس و جو ، ترتیب اسکن جداول و انتخاب شاخص های مناسب برای استفاده باشد. در واقع می توانید از سرور بخواهید که جنبه های مختلف بهینه سازی را توضیح دهد.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">EXPLAIN SELECT * FROM test;
+</code></pre></div><p>Caches &amp; buffers
+حافظه کش MySQL مجموعه کامل نتایج را برای عبارات مختلف ذخیره می کند. حتی قبل از تجزیه و تحلیل پرس و جو ، سرور MySQL حافظه کش پرس و جو را بررسی می کند. اگر هر کلاینت یک پرس و جو را که مشابهش در حافظه کش موجود باشد صادر کند ، سرور به سادگی از تجزیه ، بهینه سازی و حتی اجرای آن صرفنظر می کند و فقط خروجی را از حافظه کش نمایش می دهد.</p>
+<h5 id="لایه-موتور-ذخیره-سازی">لایه موتور ذخیره سازی:</h5>
+<p>ویژگی موتور ذخیره سازی قابل تعویض ، MySQL را به عنوان گزینه ای بی نظیر و برتر برای اکثر توسعه دهندگان تبدیل می کند که object های mysql را در سطوح فیزیکی [ذخیره سازی] و منطقی [اجرای] تعریف می کند. موتور ذخیره سازی مسئول اجرای دستورات واکشی داده ها است.</p>
+<p>SQL
+MySQL به ما این امکان را می دهد که موتورهای ذخیره سازی متنوعی را برای شرایط مختلف متناسب با نیازمان انتخاب کنیم. لیست موتورهای ذخیره سازی پشتیبانی شده در زیر ذکر شده است.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">MyISAM
+InnoDB
+Federated
+Blackhole
+CSV
+Memory
+Archive
+</code></pre></div><p>شما می توانید از موتورهای مختلف ذخیره سازی در جدول های گوناگون استفاده کرد. یک دیتابیس می تواند شامل جداول با موتورهای ذخیره سازی چندگانه باشد.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">mysql&gt;SHOW ENGINES \G;
+</code></pre></div><p>این فرمان تمام موتورهای ذخیره سازی پشتیبانی شده توسط سرور شما را فهرست می کند.</p>
+<p>از MySQL 5.5 به بعد ، موتور ذخیره سازی پیش فرض InnoDB است. موتور ذخیره سازی پیش فرض برای MySQL قبل از نسخه 5.5  MyISAM بود. انتخاب موتور مناسب ذخیره سازی یک تصمیم استراتژیک مهم است که بر توسعه و آینده نگری پایگاه داده تان  تأثیر خواهد گذاشت. در ادامه به موتورهای ذخیره سازی MyISAM، InnoDB ، Memory و CSV اشاره خواهیم کرد.</p>
+<h6 id="innodb">InnoDB</h6>
+<p>پرکاربردترین موتور ذخیره سازی با پشتیبانی از تراکنش ها است. این موتور ذخیره ساز سازگار با ACID است. این موتور برای بازیابی خرابی های دیتابیس و کنترل همروند در چند نسخه را پشتیبانی می کند. این تنها موتوری است که یکپارچگی پایگاه داده را با کلیدی خارجی فراهم می کند. اوراکل از موتور InnoDB برای جداولش به جز موارد خاصی استفاده می کند.</p>
+<h6 id="myisam">MyISAM</h6>
+<p>موتور ذخیره ساز قدیمی است و یک موتور ذخیره ساز سریع با سرعت بالا است زیرا از تراکنش ها پشتیبانی نمی کند. MyISAM از table-level locking استفاده می کند که بیشتر در ذخیره سازی داده ها در وب استفاده می شود.</p>
+<h6 id="memory">Memory</h6>
+<p>موتور ذخیره ساز است که جداول را در حافظه ایجاد می کند. این سریعترین موتور ذخیره ساز است و از تراکنش ها پشتیبانی نمی کند. موتور ذخیره ساز Memory برای ایجاد جداول موقت با جستجوی سریع ایده آل است که با راه اندازی مجدد پایگاه داده ، داده ها از بین می روند.</p>
+<h6 id="csv">CSV</h6>
+<p>داده ها را در پرونده های CSV ذخیره می کند. این انعطاف پذیری عالی باعث می شود که  داده ها در این قالب به راحتی در برنامه های دیگر ادغام می شوند.</p>
+<h6 id="archive">Archive</h6>
+<p>موتور ذخیره سازی برای درج با سرعت بالا بهینه شده است که داده ها را همزمان با درج فشرده سازی نیز می کند. این موتور از تراکنش ها پشتیبانی نمی کند و ایده آل برای ذخیره و بازیابی مقادیر زیادی از داده های بایگانی شده که ندرت ارجاع شده است می باشد.</p>
+<h6 id="blackhole">Blackhole</h6>
+<p>موتور ذخیره سازی است که  داده ها را فقط می پذیرد اما ذخیره نمی کند و بازیابی ها همیشه یک مجموعه خالی را برمی گردانند. این قابلیت را می توان در طراحی پایگاه داده توزیع شده استفاده کرد که در آن داده ها بطور خودکار تکثیر می شوند ، اما به صورت محلی ذخیره نمی شوند. این موتور ذخیره سازی می تواند برای انجام تست های عملکرد یا آزمایش های دیگر استفاده شود.</p>
+<h6 id="federated">Federated</h6>
+<p>موتور ذخیره سازی است که  امکان جداسازی سرورهای MySQL را برای ایجاد یک بانک اطلاعاتی منطقی از بسیاری از سرورهای فیزیکی ارائه می دهد. دستوراتی که در سرور محلی اجرا می شود به طور خودکار در جداول از راه دور فدرال اجرا می شود لذا هیچ داده ای روی جداول محلی ذخیره نمی شود که مناسب برای محیط های توزیع شده است.</p>
+<h4 id="نحوه-تغییر-دادن-موتور-های-ذخیره-ساز-برای-جداول-mysql-">نحوه تغییر دادن موتور های ذخیره ساز برای جداول mysql :</h4>
+<p>برای اینکار ابتدا برای بررسی اینکه از چه نوع  موتور ذخیره سازی استفاده می کند مطابق شکل دستور زیر را بر روی جدول مورد نظر خودمان وارد می کنیم:</p>
+<p><img src="https://ziroday.ir/images/mysql5.png" alt="mysql"></p>
+<p>مطابق شکل می بینید که جدول user از موتور MyISAM استفاده می کند. برای تغییر موتور ذخیره ساز کافی است که دستور زیر را وارد کنیم:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">mysql&gt; ALTER TABLE user ENGINE=’InnoDB’;
+</code></pre></div><p>مطابق دستور بالا موتور ذخیره ساز از MyISAM به InnoDB تغییر می کند.</p>
+
+    
+    <div class = 'post_extra'><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+
+    
+  </article>
+  
+  <aside><h3>More from  Zeroday </h3>
+<ul class='posts aside'>
+<li class = 'post_item'>
+  <a class = 'post_card' href='https://ziroday.ir/post/master_slave/' title = 'Master &amp; Slave' style = 'background-image: url(https://ziroday.ir/images/slave.png);'>
+  </a>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_meta'>
+      <a href = 'https://ziroday.ir/tags/database' class = 'post_tag'>Database
+      </a><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+    <h3 class = 'post_link'>
+      <a href='https://ziroday.ir/post/master_slave/'>Master &amp; Slave</a>
+    </h3>
+    <p class = 'pale'>MySQL Replication چیست؟ فرآیندی است که به‌کمک آن می‌توان از اطلاعات دیتابیس به صورت …</p>
+  </div>
+</li>
+
+<li class = 'post_item'>
+  <a class = 'post_card' href='https://ziroday.ir/post/galera_gcache/' title = 'Galera Gcache' style = 'background-image: url(https://ziroday.ir/images/Galera.jpg);'>
+  </a>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_meta'>
+      <a href = 'https://ziroday.ir/tags/database' class = 'post_tag'>Database
+      </a><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+    <h3 class = 'post_link'>
+      <a href='https://ziroday.ir/post/galera_gcache/'>Galera Gcache</a>
+    </h3>
+    <p class = 'pale'>در این مقاله قرار است عمیق تر به ساختار galera cluster بپردازیم. قبل از اینکه بخواهیم با …</p>
+  </div>
+</li>
+
+</ul>
+
+  </aside>
+  
+</div>
+<script src = 'https://ziroday.ir/js/autosize.min.js'></script>
+<script src = 'https://ziroday.ir/js/timeago.js'></script>
+    </main><svg width="0" height="0" class="hidden">
+  <symbol viewBox="0 0 699.428 699.428" xmlns="http://www.w3.org/2000/svg" id="copy">
+    <path d="M502.714 0H240.428C194.178 0 153 42.425 153 87.429l-25.267.59c-46.228 0-84.019 41.834-84.019 86.838V612c0 45.004 41.179 87.428 87.429 87.428H459c46.249 0 87.428-42.424 87.428-87.428h21.857c46.25 0 87.429-42.424 87.429-87.428v-349.19zM459 655.715H131.143c-22.95 0-43.714-21.441-43.714-43.715V174.857c0-22.272 18.688-42.993 41.638-42.993l23.933-.721v393.429C153 569.576 194.178 612 240.428 612h262.286c0 22.273-20.765 43.715-43.714 43.715zm153-131.143c0 22.271-20.765 43.713-43.715 43.713H240.428c-22.95 0-43.714-21.441-43.714-43.713V87.429c0-22.272 20.764-43.714 43.714-43.714H459c-.351 50.337 0 87.975 0 87.975 0 45.419 40.872 86.882 87.428 86.882H612zm-65.572-349.715c-23.277 0-43.714-42.293-43.714-64.981V44.348L612 174.857zm-43.714 131.537H306c-12.065 0-21.857 9.77-21.857 21.835s9.792 21.835 21.857 21.835h196.714c12.065 0 21.857-9.771 21.857-21.835 0-12.065-9.792-21.835-21.857-21.835zm0 109.176H306c-12.065 0-21.857 9.77-21.857 21.834 0 12.066 9.792 21.836 21.857 21.836h196.714c12.065 0 21.857-9.77 21.857-21.836 0-12.064-9.792-21.834-21.857-21.834z"
+    ></path>
+  </symbol>
+  <symbol viewBox="0 0 60.015 60.015" xmlns="http://www.w3.org/2000/svg" id="reply">
+    <path d="M42.007 0h-24c-9.925 0-18 8.075-18 18v14c0 9.59 7.538 17.452 17 17.973v8.344a1.694 1.694 0 0 0 1.699 1.698c.44 0 .873-.173 1.198-.498l1.876-1.876C26.708 52.713 33.259 50 40.227 50h1.78c9.925 0 18-8.075 18-18V18c0-9.925-8.075-18-18-18zm16 32c0 8.822-7.178 16-16 16h-1.78c-7.502 0-14.556 2.921-19.86 8.226l-1.359 1.359V44a1 1 0 1 0-2 0v3.949c-8.356-.52-15-7.465-15-15.949V18c0-8.822 7.178-16 16-16h24c8.822 0 16 7.178 16 16v14z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="scan">
+    <path d="M456.66 0H385c-8.284 0-15 6.716-15 15s6.716 15 15 15h71.66C470.632 30 482 41.368 482 55.341V127c0 8.284 6.716 15 15 15s15-6.716 15-15V55.341C512 24.826 487.174 0 456.66 0zM15 142c8.284 0 15-6.716 15-15V55.341C30 41.368 41.368 30 55.34 30H127c8.284 0 15-6.716 15-15s-6.716-15-15-15H55.34C24.826 0 0 24.826 0 55.341V127c0 8.284 6.716 15 15 15zm112 340H55.34C41.368 482 30 470.632 30 456.659V385c0-8.284-6.716-15-15-15s-15 6.716-15 15v71.659C0 487.174 24.826 512 55.34 512H127c8.284 0 15-6.716 15-15s-6.716-15-15-15zm370-112c-8.284 0-15 6.716-15 15v71.659C482 470.632 470.632 482 456.66 482H385c-8.284 0-15 6.716-15 15s6.716 15 15 15h71.66c30.515 0 55.34-24.826 55.34-55.341V385c0-8.284-6.716-15-15-15zM341.643 110h47.575c6.497 0 11.782 5.285 11.782 11.782v47.574c0 8.284 6.716 15 15 15s15-6.716 15-15v-47.574C431 98.743 412.256 80 389.218 80h-47.575c-8.284 0-15 6.716-15 15s6.716 15 15 15zM81 121.782v47.574c0 8.284 6.716 15 15 15s15-6.716 15-15v-47.574c0-6.497 5.286-11.782 11.782-11.782h47.575c8.284 0 15-6.716 15-15s-6.716-15-15-15h-47.575C99.744 80 81 98.743 81 121.782zM170.357 400h-47.575c-6.497 0-11.782-5.285-11.782-11.782v-47.574c0-8.284-6.716-15-15-15s-15 6.716-15 15v47.574C81 411.257 99.744 430 122.782 430h47.575c8.284 0 15-6.716 15-15s-6.716-15-15-15zM431 388.218v-47.574c0-8.284-6.716-15-15-15s-15 6.716-15 15v47.574c0 6.497-5.286 11.782-11.782 11.782h-47.575c-8.284 0-15 6.716-15 15s6.716 15 15 15h47.575C412.256 430 431 411.257 431 388.218zM1 256c0 8.284 6.716 15 15 15h480c8.284 0 15-6.716 15-15s-6.716-15-15-15H16c-8.284 0-15 6.716-15 15z"></path>
+  </symbol>
+</svg>
+<footer class="footer">
+  <div class="footer_inner wrap pale">
+    <p>&copy;&nbsp;<span class="year"></span>&nbsp; Zeroday .
+    Designed by  <a href = 'https://www.linkedin.com/in/mhdbkhshi/' title = 'Linkedin Profile'>M.bakhshi</a></p>
+  </div>
+</footer><script type="text/javascript" src="https://ziroday.ir/js/bundle.5e0b4c85114cf0b04ee873e699248fdc25fe576c7696dfa64e769392358047c54a5d3cd146642878b99a54694bfafde61088d7a1e98279124e539098db6e557e.js" integrity="sha512-XgtMhRFM8LBO6HPmmSSP3CX&#43;V2x2lt&#43;mTnaTkjWAR8VKXTzRRmQoeLmaVGlL&#43;v3mEIjXoemCeRJOU5CY225Vfg==" crossorigin="anonymous"></script>
+  </body>
+</html>

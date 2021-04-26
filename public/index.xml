@@ -8,7 +8,7 @@
     <copyright>Copyright © 2020–2021, Mahdi Bakhshi Author; all rights reserved.</copyright>
     <lastBuildDate>Mon, 08 Feb 2021 19:57:23 +0330</lastBuildDate><atom:link href="https://ziroday.ir/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Vsftpd Installation</title>
+      <title>FTP Installation</title>
       <link>https://ziroday.ir/post/vsftpd/</link>
       <pubDate>Mon, 08 Feb 2021 19:57:23 +0330</pubDate>
       
@@ -65,6 +65,29 @@
       <description>در این مقاله قرار است عمیق تر به ساختار galera cluster بپردازیم. قبل از اینکه بخواهیم با مفهومی تحت عنوان gcache آشنا شویم. نیازمند این هستیم که با چند اصطلاح و روندکاری در galera آشنا شویم.
 در هنگام کلاسترینگ دیتابیس بین تمام node ها galera برای انتقال دیتای خود از دو روش زیر استفاده می کند.
 1- SST: State Snapshot Transfer 2- IST: Incremental State Transfer SST: در این روش گلرا برای sync کردن و برقرای replication دیتا بین node اهدا کننده یا مستر به node دریافت کننده یک کپی از تمام دیتا موجود خود می گیرد سپس عملیات انتقال را انجام می دهد این فرایند در پس زمینه به طور خودکار انجام می شود و روند کاری همانند پشتیان گیری بین slave و master است.</description>
+    </item>
+    
+    <item>
+      <title>Mysql Architecture</title>
+      <link>https://ziroday.ir/post/mysql/</link>
+      <pubDate>Wed, 06 Jan 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/post/mysql/</guid>
+      <description>معماری MySQL چگونگی ارتباط مؤلفه های مختلف با یکدیگر را توصیف می کند. معماری MySQL اساساً یک سیستم کلاینت سروری است و در حالت کلی می توان معماری mysql را به دو بخش تقسیم کرد که شامل:
+۱− معماری منطقی: به نحوه برقراری ارتباط بین کلاینت و سرور mysql می پردازد.
+۲− معماری فیزیکی: به نحوه ذخیره سازی داده ها بر روی دیسک های سخت می پردازد.
+قبل از پرداختن به معماری mysql نیاز است که اجزای تشکیل دهنده آن را بهتر بشناسیم و آن ها را بررسی کنیم تا در ادامه راحت تر بتوانیم کارمان را پیش ببریم.</description>
+    </item>
+    
+    <item>
+      <title>vmstat Command</title>
+      <link>https://ziroday.ir/post/vmstat/</link>
+      <pubDate>Fri, 06 Mar 2020 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/post/vmstat/</guid>
+      <description>دستور vmstat یا Virtual Memory Statistics ، برای نمایش میزان مصرف حافظه مجازی(virtual memory)، kernerl threads، فضای مصرفی دیسک ها، پردازش های سیستم، بلوک های I/O، وقفه ها، میزان فعالیت CPU و غیره استفاده می شود.
+به طور پیش فرض دستور vmstat در سیستم های لینوکس در دسترس نیست. لذا نیاز به نصب بسته sysstat می باشد که که شامل برنامه vmstat است.
+در تصویر بالا شما نتیجۀ دستور vmstat بدون مشخصۀ a را می بینید که اطلاعات درون ستون هایی دسته بندی شدند.</description>
     </item>
     
   </channel>

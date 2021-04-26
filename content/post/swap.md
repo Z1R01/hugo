@@ -6,6 +6,7 @@ toc: false
 image: 'swap.jpg'
 tags:
   - Linux
+categories: [Linux]
 dir : "rtl"
 ---
 

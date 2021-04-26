@@ -47,14 +47,26 @@ pygmentsCodefencesGuessSyntax = true
     url = "about/"
     weight = 2
   [[menu.main]]
-    name = "Proxmox"
-    url = "categories/development/"
+    name = "Linux"
+    tag = "tags"
+    category = "Linux"
+    url = "categories/linux/"
     weight = 3
   [[menu.main]]
     name = "Ansible"
-    url = "categories/golang/"
+    tag = "tags"
+    category = "Ansible"
+    url = "categories/ansible/"
     weight = 4
   [[menu.main]]
     name = "Database"
-    url = "tags/Ansible/"
+    tag = "tags"
+    category = "Database"
+    url = "categories/database/"
     weight = 5
+  [[menu.main]]
+    name = "HAproxy"
+    tag = "tags"
+    category = "HAproxy"
+    url = "categories/haproxy/"
+    weight = 6

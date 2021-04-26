@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HAproxy on  Zeroday </title>
+    <link>https://ziroday.ir/categories/haproxy/</link>
+    <description>Recent content in HAproxy on  Zeroday </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2020–2021, Mahdi Bakhshi Author; all rights reserved.</copyright>
+    <lastBuildDate>Sat, 06 Feb 2021 19:57:23 +0330</lastBuildDate><atom:link href="https://ziroday.ir/categories/haproxy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HAproxy Detect Attack</title>
+      <link>https://ziroday.ir/post/haproxy-attack/</link>
+      <pubDate>Sat, 06 Feb 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/post/haproxy-attack/</guid>
+      <description>HAproxy ابزاری قدرتمند است که در زمینه load balancing استفاده می شود. اما اگر بتوانید به درستی آن را کانفیگ کنید می توانید بسیاری از حملاتی که در بستر وب به سرور های شما می شود را با یک کانفیگ صحیح شناسایی کنید و سرورهای خودرا امن نگه دارید.
+در این مستند قرار است درباره دستورات و تنظیمات درون HAproxy صحبت کنیم که به شما کمک شایانی برای حفظ امنیت سرورهای خود می کند.</description>
+    </item>
+    
+  </channel>
+</rss>

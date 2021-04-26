@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang='en'><head>
-  <title>Vsftpd Installation |  Zeroday </title>
+  <title>FTP Installation |  Zeroday </title>
   <meta charset='utf-8'>
   <meta name="generator" content="Hugo 0.82.0" />
   <meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
   <meta http-equiv = 'X-UA-Compatible' content = 'IE=edge'>
 <meta property = 'og:locale' content = 'en_US' />
 <meta property="og:type" content="article">
-<meta property = 'og:title' content = 'Vsftpd Installation' />
+<meta property = 'og:title' content = 'FTP Installation' />
 <meta name="description" content="سرور FTP مخفف (File Transfer Protocol) است كه یک پروتکل شبکه استاندارد بوده و برای انتقال فايل ها به شبکه از راه دور استفاده می شود. برای انتقال امن تر و سریع …">
 <meta property = 'og:description' content = 'سرور FTP مخفف (File Transfer Protocol) است كه یک پروتکل شبکه استاندارد بوده و برای انتقال فايل ها به شبکه از راه دور استفاده می شود. برای انتقال امن تر و سریع …'>
 <meta property = 'og:url' content = 'https://ziroday.ir/post/vsftpd/' />
 <meta property = 'og:image' content = 'https://ziroday.ir/images/vsftpd.jpg'/>
 <meta name = 'twitter:card' content = 'summary_large_image' />
 <meta name = 'twitter:creator' content = ''>
-<meta name = 'twitter:title' content = 'Vsftpd Installation' />
+<meta name = 'twitter:title' content = 'FTP Installation' />
 <meta property = 'twitter:description'  content = 'سرور FTP مخفف (File Transfer Protocol) است كه یک پروتکل شبکه استاندارد بوده و برای انتقال فايل ها به شبکه از راه دور استفاده می شود. برای انتقال امن تر و سریع …'/>
 <meta name = 'twitter:image' content = 'https://ziroday.ir/images/vsftpd.jpg' />
 <link rel='apple-touch-icon' sizes='180x180' href='https://ziroday.ir/images/icons/apple-touch-icon.png'>
@@ -30,9 +30,10 @@
   <div class = 'nav-body'>
     
       <a href = 'https://ziroday.ir/about/' class = 'nav_item'>About</a>
-      <a href = 'https://ziroday.ir/categories/development/' class = 'nav_item'>Proxmox</a>
-      <a href = 'https://ziroday.ir/categories/golang/' class = 'nav_item'>Ansible</a>
-      <a href = 'https://ziroday.ir/tags/Ansible/' class = 'nav_item'>Database</a>
+      <a href = 'https://ziroday.ir/categories/linux/' class = 'nav_item'>Linux</a>
+      <a href = 'https://ziroday.ir/categories/ansible/' class = 'nav_item'>Ansible</a>
+      <a href = 'https://ziroday.ir/categories/database/' class = 'nav_item'>Database</a>
+      <a href = 'https://ziroday.ir/categories/haproxy/' class = 'nav_item'>HAproxy</a>
     <div class = 'nav-close'></div>
   </div>
 </div><header class = 'nav' >
@@ -48,7 +49,7 @@
     <main>
 
 <section class = 'post_header' style = 'background-image:url(https://ziroday.ir/images/vsftpd.jpg);'>
-  <h1 class='post_title'>Vsftpd Installation</h1>
+  <h1 class='post_title'>FTP Installation</h1>
 </section>
 <div class = 'post'>
   <article class='post_content'><p>سرور FTP مخفف (File Transfer Protocol) است كه یک پروتکل شبکه استاندارد بوده و برای انتقال فايل ها به شبکه از راه دور استفاده می شود. برای انتقال امن تر و سریع تر داده ها ، از SCP یا SFTP استفاده کنید. بسیاری از سرورهای منبع باز FTP برای لینوکس در دسترس هستند. محبوب ترین و پرکاربردترین آنها PureFTPd ، ProFTPD و vsftpd است.</p>
@@ -80,10 +81,9 @@ local_root<span style="color:#f92672">=</span>/home/$USER/ftp
 </code></pre></div><h4 id="روش-دوم">روش دوم</h4>
 <p>گزینه دیگر اضافه کردن بخشنامه زیر در فايل پیکربندی vsftpd است. اگر می خواهید به کاربر دسترسی پیدا کنید به فهرست خانه خود رفته ، از این گزینه استفاده کنید.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">allow_writeable_chroot<span style="color:#f92672">=</span>YES
-
 </code></pre></div><p>به‌صورت پیش‌فرض vsftpd برای سرویس‌دهی روی پروتکل IPv6 پیکربندی شده است. پس در صورتی که در شبکه از IPv6 استفاده نمی‌کنید می‌بایست به‌صورت زیر عمل کنید.</p>
-<p>خط زیر را از حالت توضیحات خارج نموده و مقدار آن را به YES تغییر دهید.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">listen<span style="color:#f92672">=</span>YES  
+listen_ipv6<span style="color:#f92672">=</span>NO
 </code></pre></div><h3 id="محدود-کردن-ورود-کاربر">محدود کردن ورود کاربر</h3>
 <p>برای ورود فقط برخی از کاربران به سرور FTP ، خطوط زیر را در انتهای فايل اضافه کنید:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">userlist_enable<span style="color:#f92672">=</span>YES
@@ -117,13 +117,11 @@ connect_from_port_20<span style="color:#f92672">=</span>YES
 chroot_local_user<span style="color:#f92672">=</span>YES
 secure_chroot_dir<span style="color:#f92672">=</span>/var/run/vsftpd/empty
 pam_service_name<span style="color:#f92672">=</span>vsftpd
-rsa_cert_file<span style="color:#f92672">=</span>/etc/ssl/certs/ssl-cert-snakeoil.pem
-rsa_private_key_file<span style="color:#f92672">=</span>/etc/ssl/private/ssl-cert-snakeoil.key
+rsa_cert_file<span style="color:#f92672">=</span>/etc/ssl/private/vsftpd.pem
+rsa_private_key_file<span style="color:#f92672">=</span>/etc/ssl/private/vsftpd.pem
 ssl_enable<span style="color:#f92672">=</span>YES
 user_sub_token<span style="color:#f92672">=</span>$USER
 local_root<span style="color:#f92672">=</span>/home/$USER/ftp
-pasv_min_port<span style="color:#f92672">=</span><span style="color:#ae81ff">30000</span>
-pasv_max_port<span style="color:#f92672">=</span><span style="color:#ae81ff">31000</span>
 userlist_enable<span style="color:#f92672">=</span>YES
 userlist_file<span style="color:#f92672">=</span>/etc/vsftpd.user_list
 userlist_deny<span style="color:#f92672">=</span>NO
@@ -133,7 +131,7 @@ userlist_deny<span style="color:#f92672">=</span>NO
 <p>برای تست سرور FTP ما یک کاربر جدید ایجاد خواهیم کرد.</p>
 <p>اگر قبلاً یک کاربر دارید که می خواهید دسترسی FTP را اعطا کنید ، اولین مرحله را پشت سر بگذارد.</p>
 <p>اگر اجازه دهید writeable_chroot = YES را در فايل پیکربندی خود قرار دهید ، از انجام مرحله ۳ صرف نظر كنيد.</p>
-<p>۱) کاربر جدیدی بنام newftpuser ایجاد کنید:</p>
+<p>۱) کاربر جدیدی بنام FTP_USER ایجاد کنید:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo adduser FTP_USER
 </code></pre></div><p>۲) کاربر را به لیست کاربران مجاز FTP اضافه کنید:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#34;FTP_USER&#34;</span> | sudo tee -a /etc/vsftpd.user_list
@@ -183,6 +181,25 @@ sudo usermod FTP_USER -s /bin/ftponly
       <a href='https://ziroday.ir/post/swap/'>Increase Swap</a>
     </h3>
     <p class = 'pale'>یه موقع هایی هست که برای انجام کارهای سنگینتون با کامپیوتر رم کم میارید و نیاز شدیدی به …</p>
+  </div>
+</li>
+
+<li class = 'post_item'>
+  <a class = 'post_card' href='https://ziroday.ir/post/vmstat/' title = 'vmstat Command' style = 'background-image: url(https://ziroday.ir/images/monitor.jpeg);'>
+  </a>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_meta'>
+      <a href = 'https://ziroday.ir/tags/linux' class = 'post_tag'>Linux
+      </a><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+    <h3 class = 'post_link'>
+      <a href='https://ziroday.ir/post/vmstat/'>vmstat Command</a>
+    </h3>
+    <p class = 'pale'>دستور vmstat یا Virtual Memory Statistics ، برای نمایش میزان مصرف حافظه مجازی(virtual …</p>
   </div>
 </li>
 
