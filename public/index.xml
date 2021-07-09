@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title> Zeroday </title>
+    <title>Zeroday</title>
     <link>https://ziroday.ir/</link>
-    <description>Recent content on  Zeroday </description>
+    <description>Recent content on Zeroday</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2020–2021, Mahdi Bakhshi Author; all rights reserved.</copyright>
-    <lastBuildDate>Mon, 08 Feb 2021 19:57:23 +0330</lastBuildDate><atom:link href="https://ziroday.ir/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 May 2021 19:58:23 +0330</lastBuildDate><atom:link href="https://ziroday.ir/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>FTP Installation</title>
+      <title>افزایش و کاهش سایز LVM در لینوکس</title>
+      <link>https://ziroday.ir/post/lvm/</link>
+      <pubDate>Thu, 06 May 2021 19:58:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/post/lvm/</guid>
+      <description>LVM مخفف عبارت Logical Volume Manager است و در لینوکس، دیسک درایوها و سایر دستگاه‌های ذخیره اطلاعات را مدیریت می‌کند. مقصود از عبارت &amp;ldquo;volume&amp;rdquo;، یک درایو دیسک یا پارتیشن آن است. LVM روشی پیشرفته برای مدیریت پارتیشن‌ها و فضای دیسک سخت در لینوکس است که امکانات بسیار گسترده‌تری را نسبت به مدل پارتیشن‌بندی سنتی در اختیار مدیر سیستم می‌گذارد.
+در LVM می‌توان مجموعه‌ای از دیسک‌های سخت و یا پارتیشن‌ها را که Physical Volume نامیده می‌شوند، به‌صورت یک یا چندین دیسک منطقی بزرگ‌تر و یکپارچه با نام Volume Group به وجود آورده و سپس روی این دیسک ایجاد شده پارتیشن‌های خود (که Logical Volume نامیده می‌شود) را ایجاد نمود.</description>
+    </item>
+    
+    <item>
+      <title> بررسی فایروال Iptables</title>
+      <link>https://ziroday.ir/post/iptables/</link>
+      <pubDate>Tue, 06 Apr 2021 19:57:23 +0330</pubDate>
+      
+      <guid>https://ziroday.ir/post/iptables/</guid>
+      <description>IPtables یک فایروال قدرتمند رایگان برای سیستم عامل لینوکس است که امکان اعمال قوانین و محدودیت های خاص برای تبادل اطلاعات در شبکه را برای مدیر سرور فراهم می کند، فایروال IPtables در عین سادگی بسیار توانمند است و اجازه کنترل ترافیک شبکه در لایه چهارم شبکه (transport) و همچنین لایه های بالاتر و پایین تر را به ما می دهد.
+معمولا iptables در زمینه های مختلفی مثل کنترل پکت های ورودی و خروجی سیستم، کنترل و ایجاد دسترسی ها و محدودیت و… استفاده می شود.</description>
+    </item>
+    
+    <item>
+      <title>مراحل راه اندازی FTP سرور</title>
       <link>https://ziroday.ir/post/vsftpd/</link>
       <pubDate>Mon, 08 Feb 2021 19:57:23 +0330</pubDate>
       
@@ -18,7 +38,7 @@
     </item>
     
     <item>
-      <title>Increase Swap</title>
+      <title>افزایش swap در لینوکس</title>
       <link>https://ziroday.ir/post/swap/</link>
       <pubDate>Sun, 07 Feb 2021 19:57:23 +0330</pubDate>
       
@@ -27,7 +47,7 @@
     </item>
     
     <item>
-      <title>Ansible Role</title>
+      <title>آشنایی با Ansible Role</title>
       <link>https://ziroday.ir/post/ansible-role/</link>
       <pubDate>Sat, 06 Feb 2021 19:57:23 +0330</pubDate>
       
@@ -37,7 +57,7 @@
     </item>
     
     <item>
-      <title>HAproxy Detect Attack</title>
+      <title>قوانین امنیتی در HAproxy</title>
       <link>https://ziroday.ir/post/haproxy-attack/</link>
       <pubDate>Sat, 06 Feb 2021 19:57:23 +0330</pubDate>
       
@@ -47,7 +67,7 @@
     </item>
     
     <item>
-      <title>Master &amp; Slave</title>
+      <title>پیاده سازی Master &amp; Slave</title>
       <link>https://ziroday.ir/post/master_slave/</link>
       <pubDate>Sat, 06 Feb 2021 19:57:23 +0330</pubDate>
       
@@ -57,7 +77,7 @@
     </item>
     
     <item>
-      <title>Galera Gcache</title>
+      <title>Galera Gcache چیست؟</title>
       <link>https://ziroday.ir/post/galera_gcache/</link>
       <pubDate>Fri, 05 Feb 2021 19:57:23 +0330</pubDate>
       
@@ -68,7 +88,7 @@
     </item>
     
     <item>
-      <title>Mysql Architecture</title>
+      <title>معماری Mysql</title>
       <link>https://ziroday.ir/post/mysql/</link>
       <pubDate>Wed, 06 Jan 2021 19:57:23 +0330</pubDate>
       
@@ -80,7 +100,7 @@
     </item>
     
     <item>
-      <title>vmstat Command</title>
+      <title>آشنایی با ابزار vmstat</title>
       <link>https://ziroday.ir/post/vmstat/</link>
       <pubDate>Fri, 06 Mar 2020 19:57:23 +0330</pubDate>
       

@@ -1,5 +1,5 @@
  ---
-title: "Increase Swap"
+title: "افزایش swap در لینوکس"
 date: 2021-02-07T19:57:23+03:30
 draft: true
 toc: false

@@ -1,5 +1,5 @@
 ---
-title: "FTP Installation"
+title: "مراحل راه اندازی FTP سرور"
 date: 2021-02-08T19:57:23+03:30
 draft: true
 toc: false

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang='en'><head>
+  <title>Iptables | Zeroday</title>
+  <meta charset='utf-8'>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+  <meta http-equiv = 'X-UA-Compatible' content = 'IE=edge'>
+<meta property = 'og:locale' content = 'en_US' />
+<meta property="og:type" content="article">
+<meta property = 'og:title' content = 'Iptables' />
+<meta name="description" content="IPtables یک فایروال قدرتمند رایگان برای سیستم عامل لینوکس است که امکان اعمال قوانین و محدودیت های خاص برای تبادل اطلاعات در شبکه را برای مدیر سرور فراهم می کند، …">
+<meta property = 'og:description' content = 'IPtables یک فایروال قدرتمند رایگان برای سیستم عامل لینوکس است که امکان اعمال قوانین و محدودیت های خاص برای تبادل اطلاعات در شبکه را برای مدیر سرور فراهم می کند، …'>
+<meta property = 'og:url' content = 'https://ziroday.ir/2021/04/06/' />
+<meta property = 'og:image' content = 'https://ziroday.ir/images/iptables.jpg'/>
+<meta name = 'twitter:card' content = 'summary_large_image' />
+<meta name = 'twitter:creator' content = ''>
+<meta name = 'twitter:title' content = 'Iptables' />
+<meta property = 'twitter:description'  content = 'IPtables یک فایروال قدرتمند رایگان برای سیستم عامل لینوکس است که امکان اعمال قوانین و محدودیت های خاص برای تبادل اطلاعات در شبکه را برای مدیر سرور فراهم می کند، …'/>
+<meta name = 'twitter:image' content = 'https://ziroday.ir/images/iptables.jpg' />
+<link rel='apple-touch-icon' sizes='180x180' href='https://ziroday.ir/images/icons/apple-touch-icon.png'>
+<link rel='icon' type='image/png' sizes='32x32' href='https://ziroday.ir/images/icons/favicon-32x32.png'>
+<link rel='icon' type='image/png' sizes='16x16' href='https://ziroday.ir/images/icons/favicon-16x16.png'>
+<link rel='manifest' href='https://ziroday.ir/images/icons/site.webmanifest'>
+
+  <link rel='canonical' href='https://ziroday.ir/2021/04/06/'>
+  <link rel = 'stylesheet' href = 'https://ziroday.ir/css/styles.4531cbcd5877eddc9e43fb5754e281c9df181abb3653cd3c64bda43d50abb037c17eea8b1743733d9b651b0b380fec4d53d319000a7ac55940210cb746297dd3.css' integrity = 'sha512-RTHLzVh37dyeQ/tXVOKByd8YGrs2U808ZL2kPVCrsDfBfuqLF0NzPZtlGws4D&#43;xNU9MZAAp6xVlAIQy3Ril90w=='>
+</head>
+
+  <body><div class = 'nav-drop'>
+  <div class = 'nav-body'>
+    
+      <a href = 'https://ziroday.ir/about/' class = 'nav_item'>About</a>
+      <a href = 'https://ziroday.ir/categories/linux/' class = 'nav_item'>Linux</a>
+      <a href = 'https://ziroday.ir/categories/ansible/' class = 'nav_item'>Ansible</a>
+      <a href = 'https://ziroday.ir/categories/database/' class = 'nav_item'>Database</a>
+      <a href = 'https://ziroday.ir/categories/haproxy/' class = 'nav_item'>HAproxy</a>
+    <div class = 'nav-close'></div>
+  </div>
+</div><header class = 'nav' >
+  <nav class = 'nav-menu'>
+    <a href='https://ziroday.ir' class = 'nav-brand nav_item'>Zeroday</a>
+    <div class = 'nav_bar-wrap'>
+      <div class = 'nav_bar'></div>
+    </div>
+  </nav>
+</header>
+<head>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K0J9PL1ZX"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-2K0J9PL1ZX', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-2K0J9PL1ZX', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ziroday.ir"
+    },
+    "articleSection" : "post",
+    "name" : "HAproxy Detect Attack",
+    "headline" : "HAproxy Detect Attack",
+    "description" : "HAproxy ابزاری قدرتمند است که در زمینه load balancing استفاده می شود. اما اگر بتوانید به درستی آن را کانفیگ کنید می توانید بسیاری از حملاتی که در بستر وب به سرور های شما می شود را با یک کانفیگ صحیح شناسایی کنید و سرورهای خودرا امن نگه دارید.\nدر این مستند قرار است درباره دستورات و تنظیمات درون HAproxy صحبت کنیم که به شما کمک شایانی برای حفظ امنیت سرورهای خود می کند.",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-02-06 19:57:23 \u002b0330 \u002b0330",
+    "dateModified" : "2021-02-06 19:57:23 \u002b0330 \u002b0330",
+    "url" : "https:\/\/ziroday.ir\/2021\/02\/06\/",
+    "wordCount" : "564",
+    "keywords" : [ "haproxy","Blog" ]
+}
+</script>
+
+
+</head>
+
+
+    <main>
+
+<section class = 'post_header' style = 'background-image:url(https://ziroday.ir/images/iptables.jpg);'>
+  <h1 class='post_title'>Iptables</h1>
+</section>
+<div class = 'post'>
+  <article class='post_content'><p>IPtables یک فایروال قدرتمند رایگان برای سیستم عامل لینوکس است که امکان اعمال قوانین و محدودیت های خاص برای تبادل اطلاعات در شبکه را برای مدیر سرور فراهم می کند، فایروال IPtables در عین سادگی بسیار توانمند است و اجازه کنترل ترافیک شبکه در لایه چهارم شبکه (transport) و همچنین لایه های بالاتر و پایین تر را به ما می دهد.</p>
+<p>معمولا iptables در زمینه های مختلفی مثل کنترل پکت های ورودی و خروجی سیستم، کنترل و ایجاد دسترسی ها و محدودیت و… استفاده می شود. لازم به ذکر می باشد که فایروال IPtables محدود به پروتکل IPv4 بوده و نوع های دیگر این فایروال برای استفاده غیر از IPv4 به اسم های زیر می باشند:</p>
+<p>IP6tables: استفاده برای پروتکل IPv6</p>
+<p>arptables: استفاده برای پروتکل ARP</p>
+<p>برای نصب این فایروال می توانید از دستور زیر استفاده کنید اول repository سیستم را اپدیت می کنیم و سپس اقدام به نصب آن می کنیم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt update
+sudo apt install iptables
+</code></pre></div><p>syntax دستوری این فایروال به این صورت می باشد:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables --table TABLE -A/-C/-D... CHAIN rule --jump Target
+
+
+iptables -A &lt;chain&gt; -i &lt;interface&gt; -p &lt;protocol <span style="color:#f92672">{</span>udp/tcp<span style="color:#f92672">}</span> &gt; -s &lt;source&gt; --dports &lt;port&gt; -j &lt;target&gt;
+</code></pre></div><h3 id="طریقه-کار-iptables">طریقه کار iptables</h3>
+<p>وقتی به لینوکس ما کانکشنی برقرار شد یا اینکه کانکشن خروجی دیگری از سیستم عامل لینوکس به محیط بیرون بخواهد برقرار شود این کانکشن با لیست دستورات iptables بررسی شده و با توجه به پالیسی نوشته شده در فایروال اجازه ورود یا خروج پاکت راخواهد داد و همچنین لازم به ذکر است کلی دستورات به صورت خطی بررسی شده اگر کانکشن با یکی از آنها مطابقت داشت آن دستور در مورد آن کانکشن برقرار خواهد شد اگر به هیچ کدام از دستورات نوشته شده مطابقت نداشت از دستورات پیشفرض نوشته شده در iptable طبعیت خواهد کرد</p>
+<p><img src="https://ziroday.ir/images/iptables2.png" alt="iptables"></p>
+<h3 id="iptables-tables-and-chains">Iptables tables and chains</h3>
+<p>هسته لینوکس با استفاده از امکانات Netfilter به فیلتر کردن بسته، می پردازد و اجازه میدهد بعضی از بسته ها با استفاده از پسورد وارد شود و دیگر بسته اجازه وارد شدن نداشته باشند
+که هسته آن از لینوکس درست شده که در آن پنج جدول از پیش طراحی شده که شامل:</p>
+<p><strong>Filter:</strong></p>
+<p>این جدول به طور پیش فرض برای مدیریت بسته های شبکه است</p>
+<p><strong>NAT:</strong></p>
+<p>برای تغییر بسته برای یک اتصال جدید کاربرد دارد مثلا تبدیل ای پی اینترنت به ای پی شبکه داخلی و برعکس مورد استفاده قرار میگیرد</p>
+<p><strong>Mangle:</strong></p>
+<p>برای تغییر و مارک دار کردن انواع خاصی از بسته با توجه به پالیسی نوشته شده به کار میرود</p>
+<p><strong>Raw:</strong></p>
+<p>عمدتا برای پیکربندی معافیت در طول ردیابی اتصال در ترکیب با هدف NOTRACK است</p>
+<p><strong>Security:</strong></p>
+<p>برای کنترل دسترسی اجباری قوانین شبکه مورد استفاده قرار میگیرد</p>
+<h3 id="filter-table">Filter table</h3>
+<p>Input chain کلیه بسته های ورودی به سیستم عامل</p>
+<p>Output chain کلیه بسته های خروجی از سیستم عامل</p>
+<p>Forward chain کلیه بسته هایی که از طریق این سیستم عامل بخواهد فوروارد شود</p>
+<h3 id="nat-table">NAT table</h3>
+<p>Pre-routing بسته های شبکه را زمانی که آنها می رسند تغییر می دهد و معمولا برای destination network مورد استفاده قرار میگیرد</p>
+<p>Output تغییر میدهد بسته های تولید شده در شبکه داخلی قبل از اینکه خارج شود</p>
+<p>Post-routing تغییر می دهد بسته ها را قبل از اینکه از شبکه خارج شوند</p>
+<h3 id="mangle-table">Mangle table</h3>
+<p>Input بسته های شبکه را برای میزبان تغییر می دهد (مارک دار می کند)</p>
+<p>Output بسته های تولید شده از شبکه را قبل از فرستادن تغییر می دهد (مارک دار می کند)</p>
+<p>Forward تغییر میدهد (مارک دار می کند) پکت های شبکه که می خواهد روت شود به نقطه دیگر</p>
+<p>Pre-routing تغییر میدهد (مارک دار می کند) پکت های شبکه را قبل از اینکه روت شوند</p>
+<p>Post-routing تغییر میدهد (مارک دار می کند) پکت های شبکه را بعد از اینکه روت شوند</p>
+<h3 id="raw-table">Raw table</h3>
+<p>Output اجرا پاکت های که در شبکه داخلی تولید شده اند قبل از اینکه خارج شوند</p>
+<p>Pre-routing اجرای بسته های ورودی قبل از اینکه خارج شوند</p>
+<h3 id="security-table">Security table</h3>
+<p>Input اجرا روی پاکت های که به شبکه وارد می شوند</p>
+<p>Output اجرا روی پاکت های که از شبکه خارج می شوند</p>
+<p>Forward اجرا روی پاکت های که از شبکه می خواهند روت شوند به جای دیگری</p>
+<h3 id="iptables-command-قوانین-و-دستورهای-موجود-در-iptables">Iptables command قوانین و دستورهای موجود در iptables</h3>
+<p>A- برای افزودن دستور به انتهای یک زنجیره از جدول قوانین استفاده می شود.</p>
+<p>D- برای حذف دستور از مکان خاصی از زنجیره جدول قوانین استفاده می شود.</p>
+<p>N- برای ایجاد زنجیر جدید مورد استفاده قرار می¬گیرد که میتوان به آن یک اسم اختصاصی بدهیم</p>
+<p>E- برای تغییر اسم زیر شاخه ساخته شده به کار میرود</p>
+<p>X- برای پاک کردن زیر شاخه تولید شده به کار می رود</p>
+<p>F- برای پاک کردن قوانین مورد استفاده قرار می¬گیرد.</p>
+<p>I- برای وارد کردن دستوری خاص به یک سطر از یک زیر شاخه</p>
+<p>L- لیست کلیه دستورات یک زیر شاخه را لیست خواهد کرد</p>
+<p>P- برای تغییر پالیسی دیفالت استفاده می شود</p>
+<p>R- جایگزین کردن دستوری بهجای دستور قبلی در یک زیر شاخه</p>
+<p>Z- برای صفر کردن کلیه کانتر های داخل فایروال</p>
+<h3 id="iptables-parameter-options">Iptables parameter options</h3>
+<p>p- برای مشخص کردن نوع پروتکل مورد استفاده قرار می¬گیرد.</p>
+<p>s- یا source– برای مشخص کردن شماره ip مبدا مورد استفاده قرار می¬گیرد.</p>
+<p>d- یا destination– برای مشخص کردن شماره ip مقصد مورد استفاده قرار می¬گیرد.</p>
+<p>i- یا in-interface– برای مشخص کردن کارت شبکه ورودی مورد استفاده قرار می¬گیرد.</p>
+<p>o- یا out-interface– برای مشخص کردن کارت شبکه خروجی مورد استفاده قرار می¬گیرد.</p>
+<p>j- مشخص کردن نحوه برخورد با بسته مورد استفاده قرار میگیرد. این سویچ به معنی jump بوده و به موارد DROP ، LOG ، ACCEPT و REJECT اشاره می کند.</p>
+<p>m- برای مشخص کردن ماژول مورد استفاده قرار می گیرد.</p>
+<p>c- این دستور شمارنده های داخل فایروال را فعال می کند که در طول وارد کردن یا اجرا کردن یا جایگزین کردن می باشد
+[!] این دستور در ابتدای پارامتر های فوق دستور را به صورت منفی اجرا خواهد کرد</p>
+<h3 id="saving-rules">Saving rules</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables-save &gt; /etc/iptables.rules
+</code></pre></div><p>برای پشتیبان گیری تنظیمات مورد استفاده قرار می گیرد.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">post-down iptables-save &gt; /etc/iptables.rules
+</code></pre></div><p>برای پشتیبان گیری تنظیمات قبل از هر خاموش شدن سیستم مورد استفاده قرار می گیرد.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables-restore &lt; /etc/iptables.rules
+</code></pre></div><p>برای بازیابی تنظیمات مورد استفاده قرار می گیرد.</p>
+<h3 id="مهم-ترین-و-پرکاربردترین-دستورات-و-تنظیمات-iptables">مهم ترین و پرکاربردترین دستورات و تنظیمات iptables</h3>
+<p>پاک کردن تمام تنظیمات جاری</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Iptables -F
+</code></pre></div><p>ایجاد تنظیمات عمومی و مسدود کردن همه دسترسی ها</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -P INPUT DROP
+
+iptables -P FORWARD DROP
+
+iptables -P OUTPUT DROP
+</code></pre></div><p>مسدود کردن یک ip خاص</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A INPUT -s xxx.xxx.xxx.xxx -j DROP
+</code></pre></div><p>باز کردن پورت SSH برای تمامی ارتباطات ورودی</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A INPUT -i eth0 -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+iptables -A OUTPUT -o eth0 -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div><p>باز کردن پورت ssh برای یک ip یا رنج ip خاص</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A INPUT -i eth0 -p tcp -s xxx.xxx.xxx.xxx/24 --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+iptables -A INPUT -i eth0 -p tcp -s xxx.xxx.xxx.xxx --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+iptables -A OUTPUT -o eth0 -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div><p>باز کردن پورت http</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A INPUT -i eth0 -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+iptables -A OUTPUT -o eth0 -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div><p>باز کردن پورت https</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A INPUT -i eth0 -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+iptables -A OUTPUT -o eth0 -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div><p>باز کردن چند پورت بصورت یکجا</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A INPUT -i eth0 -p tcp -m multiport --dports 22,80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+iptables -A OUTPUT -o eth0 -p tcp -m multiport --sports 22,80,443 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div><p>باز کردن پورت برای ارتباط خروجی ssh</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A OUTPUT -o eth0 -p tcp -d 192.168.101.0/24 --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+iptables -A INPUT -i eth0 -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div><p>باز کردن پورت https برای ارتباطات خروجی</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A OUTPUT -o eth0 -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+iptables -A INPUT -i eth0 -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
+</code></pre></div><p>ایجاد امکان ping از داخل به خارج</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A OUTPUT -p icmp --icmp-type echo-request -j ACCEPT
+</code></pre></div><p>ایجاد امکان ping از خارج به داخل</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+</code></pre></div><p>ایجاد امکان دسترسی loopback</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A INPUT -i lo -j ACCEPT
+
+iptables -A OUTPUT -o lo -j ACCEPT
+</code></pre></div><p>ایجاد امکان دسترسی به شبکه خارجی eth1 از شبکه داخلی eth0</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A FORWARD -i eth0 -o eth1 -j ACCEPT
+</code></pre></div><p>باز کردن دسترسی خروجی پورت dns</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A OUTPUT -p udp -o eth0 --dport 53 -j ACCEPT
+
+iptables -A INPUT -p udp -i eth0 --sport 53 -j ACCEPT
+</code></pre></div><p>ذخیره تغییرات iptables</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">service iptables save
+</code></pre></div><p>فعال کردن IP Forwarding:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">echo &#34;1&#34; &gt; /proc/sys/net/ipv4/ip_forward
+</code></pre></div><h3 id="فعال-کردن-log-در-قوانین-فایروال">فعال کردن LOG در قوانین فایروال</h3>
+<p>برای اینکه مدیریت کامل تری به شبکه خود داشته باشیم و بتوانیم منابعی که در حال اسکن کردن سیستم ما هستند بیابیم و یا در هر حال گزارشی از عملکرد صحیح فایر وال داشته باشیم می توانیم به طرق ذیل Log فایل ها را برای موارد دلخواهمان فعال کنیم:</p>
+<p>فعال کردن Log برای دیدن بسته های ICMP:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A OUTPUT -p icmp -j LOG --log-prefix &#34;PING:&gt; &#34;
+
+iptables -A INPUT -p icmp -j LOG --log-prefix &#34;PING:&gt; &#34;
+</code></pre></div><p>برای دیدن این log ها به این مسیر بروید:</p>
+<p>/var/log/messages</p>
+<p>و خط هایی را که با PING
+شروع شده اند بررسی نمایید.( البته راه ساده تر آن استفاده از دستور فیلتر کننده grep و مختص کردن به log های فایروال می باشد)</p>
+<p>فعال کردن Log برای یک ip خاص:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -t  nat POSTROUTING -s 192.168.0.88 -o eth1 -j LOG --log-prefix &#34; &#34;
+</code></pre></div><p>برای جلوگیری از حجیم شدن لاگ فایل می توان از قابلیت سوکت -m در دستور استفاده کرد که به کمک آن می توان تنظیم نمود که برای مثال در هر 5 دقیقه بیش از 7 مورد را در  لاگ ذخیره ننماید:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -A INPUT -i eth1 -s 10.0.0.0/8 -m limit –limit 5/m –limit-burst 7 -j LOG –log-prefix “IP_SPOOF A: “
+</code></pre></div><p>نمایش وضعیت فایروال:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -L -n -v
+</code></pre></div><p>حذف قوانین و رول های فایروال :</p>
+<p>ابتدا به کمک دستورات زیر شماره خط رول را بدست آورید:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -L INPUT -n –line-numbers
+iptables -L OUTPUT -n –line-numbers
+iptables -L OUTPUT -n –line-numbers | less
+iptables -L OUTPUT -n –line-numbers | grep 202.54.1.1
+</code></pre></div><p>حال به عنوان مثال برای حذف رول موجود در خط شماره 4 می توانید از دستور زیر استفاده فرمائید:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -D INPUT 4
+</code></pre></div><p>و یا از دستور زیر برای حذف قوانین مروبطه به ای پی مورد نظر خود استفاده فرمایید:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptables -D INPUT -s 202.54.1.1 -j DROP
+</code></pre></div><p>اگر بدنبال راهنمای فایروال تنها برای یک دستور خاص هستید نیز سینتکس زیر استفاده فرمائید:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">iptales -j DROP -h
+</code></pre></div>
+    
+    <div id="disqus_thread"></div>
+<script>
+  (function() {
+    if (window.location.hostname == "localhost")
+        return;
+  var d = document, s = d.createElement('script');
+  s.src = 'https://zeroday-ir.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+ 
+    <div class = 'post_extra'><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+
+    
+  </article>
+  
+  <aside><h3>More from Zeroday</h3>
+<ul class='posts aside'>
+<li class = 'post_item'>
+  <a class = 'post_card' href='https://ziroday.ir/2021/02/08/' title = 'FTP Installation' style = 'background-image: url(https://ziroday.ir/images/vsftpd.jpg);'>
+  </a>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_meta'>
+      <a href = 'https://ziroday.ir/tags/linux' class = 'post_tag'>Linux
+      </a><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+    <h3 class = 'post_link'>
+      <a href='https://ziroday.ir/2021/02/08/'>FTP Installation</a>
+    </h3>
+    <p class = 'pale'>سرور FTP مخفف (File Transfer Protocol) است كه یک پروتکل شبکه استاندارد بوده و برای انتقال …</p>
+  </div>
+</li>
+
+<li class = 'post_item'>
+  <a class = 'post_card' href='https://ziroday.ir/2021/02/07/' title = 'Increase Swap' style = 'background-image: url(https://ziroday.ir/images/swap.jpg);'>
+  </a>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_meta'>
+      <a href = 'https://ziroday.ir/tags/linux' class = 'post_tag'>Linux
+      </a><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+    <h3 class = 'post_link'>
+      <a href='https://ziroday.ir/2021/02/07/'>Increase Swap</a>
+    </h3>
+    <p class = 'pale'>یه موقع هایی هست که برای انجام کارهای سنگینتون با کامپیوتر رم کم میارید و نیاز شدیدی به …</p>
+  </div>
+</li>
+
+</ul>
+
+  </aside>
+  
+
+</div>
+<script src = 'https://ziroday.ir/js/autosize.min.js'></script>
+<script src = 'https://ziroday.ir/js/timeago.js'></script>
+    </main><svg width="0" height="0" class="hidden">
+  <symbol viewBox="0 0 699.428 699.428" xmlns="http://www.w3.org/2000/svg" id="copy">
+    <path d="M502.714 0H240.428C194.178 0 153 42.425 153 87.429l-25.267.59c-46.228 0-84.019 41.834-84.019 86.838V612c0 45.004 41.179 87.428 87.429 87.428H459c46.249 0 87.428-42.424 87.428-87.428h21.857c46.25 0 87.429-42.424 87.429-87.428v-349.19zM459 655.715H131.143c-22.95 0-43.714-21.441-43.714-43.715V174.857c0-22.272 18.688-42.993 41.638-42.993l23.933-.721v393.429C153 569.576 194.178 612 240.428 612h262.286c0 22.273-20.765 43.715-43.714 43.715zm153-131.143c0 22.271-20.765 43.713-43.715 43.713H240.428c-22.95 0-43.714-21.441-43.714-43.713V87.429c0-22.272 20.764-43.714 43.714-43.714H459c-.351 50.337 0 87.975 0 87.975 0 45.419 40.872 86.882 87.428 86.882H612zm-65.572-349.715c-23.277 0-43.714-42.293-43.714-64.981V44.348L612 174.857zm-43.714 131.537H306c-12.065 0-21.857 9.77-21.857 21.835s9.792 21.835 21.857 21.835h196.714c12.065 0 21.857-9.771 21.857-21.835 0-12.065-9.792-21.835-21.857-21.835zm0 109.176H306c-12.065 0-21.857 9.77-21.857 21.834 0 12.066 9.792 21.836 21.857 21.836h196.714c12.065 0 21.857-9.77 21.857-21.836 0-12.064-9.792-21.834-21.857-21.834z"
+    ></path>
+  </symbol>
+  <symbol viewBox="0 0 60.015 60.015" xmlns="http://www.w3.org/2000/svg" id="reply">
+    <path d="M42.007 0h-24c-9.925 0-18 8.075-18 18v14c0 9.59 7.538 17.452 17 17.973v8.344a1.694 1.694 0 0 0 1.699 1.698c.44 0 .873-.173 1.198-.498l1.876-1.876C26.708 52.713 33.259 50 40.227 50h1.78c9.925 0 18-8.075 18-18V18c0-9.925-8.075-18-18-18zm16 32c0 8.822-7.178 16-16 16h-1.78c-7.502 0-14.556 2.921-19.86 8.226l-1.359 1.359V44a1 1 0 1 0-2 0v3.949c-8.356-.52-15-7.465-15-15.949V18c0-8.822 7.178-16 16-16h24c8.822 0 16 7.178 16 16v14z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="scan">
+    <path d="M456.66 0H385c-8.284 0-15 6.716-15 15s6.716 15 15 15h71.66C470.632 30 482 41.368 482 55.341V127c0 8.284 6.716 15 15 15s15-6.716 15-15V55.341C512 24.826 487.174 0 456.66 0zM15 142c8.284 0 15-6.716 15-15V55.341C30 41.368 41.368 30 55.34 30H127c8.284 0 15-6.716 15-15s-6.716-15-15-15H55.34C24.826 0 0 24.826 0 55.341V127c0 8.284 6.716 15 15 15zm112 340H55.34C41.368 482 30 470.632 30 456.659V385c0-8.284-6.716-15-15-15s-15 6.716-15 15v71.659C0 487.174 24.826 512 55.34 512H127c8.284 0 15-6.716 15-15s-6.716-15-15-15zm370-112c-8.284 0-15 6.716-15 15v71.659C482 470.632 470.632 482 456.66 482H385c-8.284 0-15 6.716-15 15s6.716 15 15 15h71.66c30.515 0 55.34-24.826 55.34-55.341V385c0-8.284-6.716-15-15-15zM341.643 110h47.575c6.497 0 11.782 5.285 11.782 11.782v47.574c0 8.284 6.716 15 15 15s15-6.716 15-15v-47.574C431 98.743 412.256 80 389.218 80h-47.575c-8.284 0-15 6.716-15 15s6.716 15 15 15zM81 121.782v47.574c0 8.284 6.716 15 15 15s15-6.716 15-15v-47.574c0-6.497 5.286-11.782 11.782-11.782h47.575c8.284 0 15-6.716 15-15s-6.716-15-15-15h-47.575C99.744 80 81 98.743 81 121.782zM170.357 400h-47.575c-6.497 0-11.782-5.285-11.782-11.782v-47.574c0-8.284-6.716-15-15-15s-15 6.716-15 15v47.574C81 411.257 99.744 430 122.782 430h47.575c8.284 0 15-6.716 15-15s-6.716-15-15-15zM431 388.218v-47.574c0-8.284-6.716-15-15-15s-15 6.716-15 15v47.574c0 6.497-5.286 11.782-11.782 11.782h-47.575c-8.284 0-15 6.716-15 15s6.716 15 15 15h47.575C412.256 430 431 411.257 431 388.218zM1 256c0 8.284 6.716 15 15 15h480c8.284 0 15-6.716 15-15s-6.716-15-15-15H16c-8.284 0-15 6.716-15 15z"></path>
+  </symbol>
+</svg>
+<footer class="footer">
+  <div class="footer_inner wrap pale">
+    <p>&copy;&nbsp;<span class="year"></span>&nbsp;Zeroday.
+    Designed by  <a href = 'https://www.linkedin.com/in/mhdbkhshi/' title = 'Linkedin Profile'>M.bakhshi</a></p>
+  </div>
+</footer><script type="text/javascript" src="https://ziroday.ir/js/bundle.5e0b4c85114cf0b04ee873e699248fdc25fe576c7696dfa64e769392358047c54a5d3cd146642878b99a54694bfafde61088d7a1e98279124e539098db6e557e.js" integrity="sha512-XgtMhRFM8LBO6HPmmSSP3CX&#43;V2x2lt&#43;mTnaTkjWAR8VKXTzRRmQoeLmaVGlL&#43;v3mEIjXoemCeRJOU5CY225Vfg==" crossorigin="anonymous"></script>
+  </body>
+</html>

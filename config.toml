@@ -1,15 +1,32 @@
 baseurl = "https://ziroday.ir"  # Include trailing slash
 #title = "Wellcome To My Website"
-title = " Zeroday "
+title = "Zeroday"
 theme = "swift"
 author = "Mahdi Bakhshi"
 copyright = "Copyright © 2020–2021, Mahdi Bakhshi Author; all rights reserved."
 canonifyurls = true
 paginate = 4
+enableRobotsTXT = true
+canonifyURLs = true
 # Enable syntax highlighting
 # comment on delete the following lines 11 ~ 13
 pygmentsCodefences = true
 pygmentsCodefencesGuessSyntax = true
+googleAnalytics = "G-2K0J9PL1ZX"
+#disqusShortname = "zeroday-ir"
+relativeurls = false
+footnotereturnlinkcontents = "↩"
+[sitemap]
+  ChangeFreq = "daily"
+  Priority = "0.5"
+#[permalinks]
+#  post = "/:year/:month/:day/"
+#  post = "*"
+[outputFormats.search]
+  baseName = "search"
+  isPlainText = true
+  mediaType = "application/json"
+  notAlternative = true
 
 [params]
   [params.designer]
@@ -21,7 +38,7 @@ pygmentsCodefencesGuessSyntax = true
     bio = "It's time to flex. Wellcome To My Website."
     photo = "myPhotoFile.jpg"
     url = "http://ziroday.ir"
-  # ga_analytics = "" # google analytics ID e.g UA-116386578-1
+    ga_analytics = "G-2K0J9PL1ZX"
 
   # ga_verify = "" # google verification code e.g 5jb-rxeBfITeJQKOuUss3ud6FPGTxXkCho-ZN5qlrZg
   # twitter = "" # twitter handle e.g @weru

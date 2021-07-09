@@ -1,5 +1,5 @@
 ---
-title: "Master & Slave"
+title: "پیاده سازی Master & Slave"
 date: 2021-02-06T19:57:23+03:30
 draft: true
 toc: false

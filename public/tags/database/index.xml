@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Database on  Zeroday </title>
+    <title>Database on Zeroday</title>
     <link>https://ziroday.ir/tags/database/</link>
-    <description>Recent content in Database on  Zeroday </description>
+    <description>Recent content in Database on Zeroday</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2020–2021, Mahdi Bakhshi Author; all rights reserved.</copyright>
     <lastBuildDate>Sat, 06 Feb 2021 19:57:23 +0330</lastBuildDate><atom:link href="https://ziroday.ir/tags/database/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Master &amp; Slave</title>
+      <title>پیاده سازی Master &amp; Slave</title>
       <link>https://ziroday.ir/post/master_slave/</link>
       <pubDate>Sat, 06 Feb 2021 19:57:23 +0330</pubDate>
       
@@ -18,7 +18,7 @@
     </item>
     
     <item>
-      <title>Galera Gcache</title>
+      <title>Galera Gcache چیست؟</title>
       <link>https://ziroday.ir/post/galera_gcache/</link>
       <pubDate>Fri, 05 Feb 2021 19:57:23 +0330</pubDate>
       
@@ -29,7 +29,7 @@
     </item>
     
     <item>
-      <title>Mysql Architecture</title>
+      <title>معماری Mysql</title>
       <link>https://ziroday.ir/post/mysql/</link>
       <pubDate>Wed, 06 Jan 2021 19:57:23 +0330</pubDate>
       

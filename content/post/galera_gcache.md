@@ -1,5 +1,5 @@
  ---
-title: "Galera Gcache"
+title: "Galera Gcache چیست؟"
 date: 2021-02-05T19:57:23+03:30
 draft: true
 toc: false

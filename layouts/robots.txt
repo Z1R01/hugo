@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /categories/*
+Disallow: /tags/*
+Disallow: /about
+Disallow: /2020/*
+Disallow: /2021/*
+
+Sitemap: {{ "sitemap.xml" | absLangURL }}
+Host: ziroday.ir
+

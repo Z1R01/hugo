@@ -1,5 +1,5 @@
  ---
-title: "vmstat Command"
+title: "آشنایی با ابزار vmstat"
 date: 2020-03-06T19:57:23+03:30
 draft: true
 toc: false

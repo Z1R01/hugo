@@ -1,5 +1,5 @@
  ---
-title: "Mysql Architecture"
+title: "معماری Mysql"
 date: 2021-01-06T19:57:23+03:30
 draft: true
 toc: false

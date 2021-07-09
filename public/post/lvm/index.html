@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang='en'><head>
+  <title>افزایش و کاهش سایز LVM در لینوکس | Zeroday</title>
+  <meta charset='utf-8'>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+  <meta http-equiv = 'X-UA-Compatible' content = 'IE=edge'>
+<meta property = 'og:locale' content = 'en_US' />
+<meta property="og:type" content="article">
+<meta property = 'og:title' content = 'افزایش و کاهش سایز LVM در لینوکس' />
+<meta name="description" content="LVM مخفف عبارت Logical Volume Manager است و در لینوکس، دیسک درایوها و سایر دستگاه‌های ذخیره اطلاعات را مدیریت می‌کند. مقصود از عبارت &ldquo;volume&rdquo;، یک …">
+<meta property = 'og:description' content = 'LVM مخفف عبارت Logical Volume Manager است و در لینوکس، دیسک درایوها و سایر دستگاه‌های ذخیره اطلاعات را مدیریت می‌کند. مقصود از عبارت &ldquo;volume&rdquo;، یک …'>
+<meta property = 'og:url' content = 'https://ziroday.ir/post/lvm/' />
+<meta property = 'og:image' content = 'https://ziroday.ir/images/lvm.jpg'/>
+<meta name = 'twitter:card' content = 'summary_large_image' />
+<meta name = 'twitter:creator' content = ''>
+<meta name = 'twitter:title' content = 'افزایش و کاهش سایز LVM در لینوکس' />
+<meta property = 'twitter:description'  content = 'LVM مخفف عبارت Logical Volume Manager است و در لینوکس، دیسک درایوها و سایر دستگاه‌های ذخیره اطلاعات را مدیریت می‌کند. مقصود از عبارت &ldquo;volume&rdquo;، یک …'/>
+<meta name = 'twitter:image' content = 'https://ziroday.ir/images/lvm.jpg' />
+<link rel='apple-touch-icon' sizes='180x180' href='https://ziroday.ir/images/icons/apple-touch-icon.png'>
+<link rel='icon' type='image/png' sizes='32x32' href='https://ziroday.ir/images/icons/favicon-32x32.png'>
+<link rel='icon' type='image/png' sizes='16x16' href='https://ziroday.ir/images/icons/favicon-16x16.png'>
+<link rel='manifest' href='https://ziroday.ir/images/icons/site.webmanifest'>
+
+  <link rel='canonical' href='https://ziroday.ir/post/lvm/'>
+  <link rel = 'stylesheet' href = 'https://ziroday.ir/css/styles.f902131a9bc53e96d5a55d5700ff3cf5993104aba926c253b30ff2083798138c0389cfe266175d2a5abcf1c68d8796cc0cb9f61b70592a469ef804364a8359b3.css' integrity = 'sha512-&#43;QITGpvFPpbVpV1XAP889ZkxBKupJsJTsw/yCDeYE4wDic/iZhddKlq88caNh5bMDLn2G3BZKkae&#43;AQ2SoNZsw=='>
+</head>
+
+  <body><div class = 'nav-drop'>
+  <div class = 'nav-body'>
+    
+      <a href = 'https://ziroday.ir/about/' class = 'nav_item'>About</a>
+      <a href = 'https://ziroday.ir/categories/linux/' class = 'nav_item'>Linux</a>
+      <a href = 'https://ziroday.ir/categories/ansible/' class = 'nav_item'>Ansible</a>
+      <a href = 'https://ziroday.ir/categories/database/' class = 'nav_item'>Database</a>
+      <a href = 'https://ziroday.ir/categories/haproxy/' class = 'nav_item'>HAproxy</a>
+    <div class = 'nav-close'></div>
+  </div>
+</div><header class = 'nav' >
+  <nav class = 'nav-menu'>
+    <a href='https://ziroday.ir' class = 'nav-brand nav_item'>Zeroday</a>
+    <div class = 'nav_bar-wrap'>
+      <div class = 'nav_bar'></div>
+    </div>
+  </nav>
+</header>
+<head>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K0J9PL1ZX"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-2K0J9PL1ZX', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-2K0J9PL1ZX', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ziroday.ir"
+    },
+    "articleSection" : "post",
+    "name" : " بررسی فایروال Iptables",
+    "headline" : " بررسی فایروال Iptables",
+    "description" : "IPtables یک فایروال قدرتمند رایگان برای سیستم عامل لینوکس است که امکان اعمال قوانین و محدودیت های خاص برای تبادل اطلاعات در شبکه را برای مدیر سرور فراهم می کند، فایروال IPtables در عین سادگی بسیار توانمند است و اجازه کنترل ترافیک شبکه در لایه چهارم شبکه (transport) و همچنین لایه های بالاتر و پایین تر را به ما می دهد.\nمعمولا iptables در زمینه های مختلفی مثل کنترل پکت های ورودی و خروجی سیستم، کنترل و ایجاد دسترسی ها و محدودیت و… استفاده می شود.",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-04-06 19:57:23 \u002b0330 \u002b0330",
+    "dateModified" : "2021-04-06 19:57:23 \u002b0330 \u002b0330",
+    "url" : "https:\/\/ziroday.ir\/post\/iptables\/",
+    "wordCount" : "1758",
+    "keywords" : [ "Linux","Blog" ]
+}
+</script>
+
+  <meta name="robots" content="index, follow, archive">
+
+</head>
+
+
+    <main>
+
+<section class = 'post_header' style = 'background-image:url(https://ziroday.ir/images/lvm.jpg);'>
+  <h1 class='post_title'>افزایش و کاهش سایز LVM در لینوکس</h1>
+</section>
+<div class = 'post'>
+  <article class='post_content'><p>LVM مخفف عبارت Logical Volume Manager است و در لینوکس، دیسک درایوها و سایر دستگاه‌های ذخیره اطلاعات را مدیریت می‌کند. مقصود از عبارت &ldquo;volume&rdquo;، یک درایو دیسک یا پارتیشن آن است. LVM روشی پیشرفته برای مدیریت پارتیشن‌ها و فضای دیسک سخت در لینوکس است که امکانات بسیار گسترده‌تری را نسبت به مدل پارتیشن‌بندی سنتی در اختیار مدیر سیستم می‌گذارد.</p>
+<p>در LVM می‌توان مجموعه‌ای از دیسک‌های سخت و یا پارتیشن‌ها را که Physical Volume نامیده می‌شوند، به‌صورت یک یا چندین دیسک منطقی بزرگ‌تر و یکپارچه با نام Volume Group به وجود آورده و سپس روی این دیسک ایجاد شده پارتیشن‌های خود (که Logical Volume نامیده می‌شود) را ایجاد نمود.</p>
+<p>از جمله مزایای این روش این است زمانی که فضای یکی از پارتیشن‌ها رو به اتمام است به‌راحتی می‌توان به‌صورت پویا و داینامیک فضای بیشتری را به آن تخصیص داد. با این حال، متأسفانه LVM قابلیت تحمل خطاپذیری و بازیابی داده‌ها را همانند RAID ندارد و در صورت خرابی یکی از دیسک‌ها، داده‌ها با احتمال زیاد از بین خواهد رفت.</p>
+<p>در این آموزش نحوه افزایش volume Group و همچنین افزایش و کاهش Logical volume آموزش داده می‌شود. بدین‌صورت می‌توان پارتیشن‌ها را در مدیریت Logical volume مشهور به سیستم فایل فضای انعطاف‌پذیر کاهش و یا افزایش داد.</p>
+<p><img src="https://ziroday.ir/images/lvm1.jpg" alt="lvm"></p>
+<h3 id="چه-زمانی-به-کاهش-فضا-نیاز-است">چه زمانی به کاهش فضا نیاز است؟</h3>
+<p>ممکن است ما به ایجاد یک پارتیشن مجزا برای هر نوع استفاده‌ای نیاز داشته باشیم یا حتی مجبور باشیم تعداد پارتیشن‌ها با فضای کم را گسترش دهیم. در این‌صورت می‌توانیم با کاهش پارتیشن‌ها با Volume بزرگ به راحتی و تنها با اجرای مراحل زیر تعداد پارتیشن‌ها با فضای کم را گسترش دهیم.</p>
+<p>دقت کنید که دستورات ارائه شده در این آموزش، در سیستم عامل CentOS 8 با LVM نصب شده اجرا شده است.</p>
+<h3 id="نحوه-افزایش-volume-group-و-کاهش-logical-volume">نحوه افزایش volume Group و کاهش logical volume</h3>
+<h5 id="افزایش-logical-volume">افزایش logical volume</h5>
+<p>فرض کنید که یک PV، یکVG و دو LV داریم. بیایید آن‌ها را یک به یک با استفاده از دستورات زیر مشاهده کنیم.</p>
+<ol>
+<li>
+<p><strong>pvs</strong></p>
+</li>
+<li>
+<p><strong>vgs</strong></p>
+</li>
+<li>
+<p><strong>lvs</strong></p>
+</li>
+</ol>
+<p><img src="https://ziroday.ir/images/lvm2.jpg" alt="lvm"></p>
+<p>در ابتدا در Physical Volume و Volume group هیچ فضای خالی موجود نیست. بنابراین، اکنون نمی‌توانید اندازه lvm را افزایش دهید، بلکه برای افزایش باید یک Physical Volume (PV) اضافه کرده و سپس Volume Group را با افزایش vg افزایش دهید. بدین صورت، فضای کافی برای افزایش اندازه logical Volume را به دست خواهید آورد. بنابراین ابتدا باید یک Physical Volume اضافه کنید.</p>
+<p>برای افزودن یک PV جدید باید از fdisk استفاده کنید تا پارتیشن LVM ایجاد شود.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">fdisk -cu /dev/sda
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm3.jpg" alt="lvm"></p>
+<p>همانطور که در شکل بالا قابل مشاهده است:</p>
+<p>n: جهت ایجاد یک پارتیشن جدید</p>
+<p>P: جهت ایجاد یک پارتیشن primary</p>
+<p>1: شماره پارتیشن مورد نظر که میتواند بین 1 تا 4 باشد.</p>
+<p>t:  جهت مشخص کردن type  پارتیشن ایجاد شده</p>
+<p>8e: کد مربوط به فرمت LVM</p>
+<p>w: جهت نوشتن و ذخیره کردن تغییرات.</p>
+<p>در صورت نیاز، لازم است تا سیستم جهت خواندن مجدد Partition Table  مجددا راه اندازی گردد.</p>
+<p>در نهایت با دستور  زیر میتوان پارتیشن ایجاد شده را مشاهده نمود.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">fdisk -l /dev/sda
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm4.jpg" alt="lvm"></p>
+<p>سپس، با استفاده از دستور زیر، PV جدید را ایجاد کنید.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pvcreate /dev/sda1
+</code></pre></div><p>Pv را با استفاده از دستور زیر تأیید نمایید.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pvs
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm5.jpg" alt="lvm"></p>
+<h5 id="افزایش-volume-group">افزایش Volume Group</h5>
+<p>این pv را به vg_tecmint vg اضافه کنید تا اندازه یک Volume Group به منظور بدست آوردن فضای بیشتر برای گسترش lv افزایش یابد.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vgextend vg_tecmint /dev/sda1
+</code></pre></div><p>با استفاده از دستور زیر می‌توان اندازه Volume Group استفاده شده در این مثال را بررسی کرد.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">vgs
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm6.jpg" alt="lvm"></p>
+<p>علاوه‌براین، با دستور زیر می‌توان مشاهده نمود که از کدام PV برای ایجاد یک Volume Group خاص استفاده می‌شود.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">pvscan
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm7.jpg" alt="lvm"></p>
+<p>در اینجا قابل مشاهده است که هرکدام از Volume Groupها تحت چه Volume Groupای قرار دارند. در این مثال، تنها یک pv اضافه کرده‌ایم و آن هم کاملاً آزاد است. بیایید اندازه هر Volume Group را قبل از گسترش آن ببینیم.</p>
+<p><img src="https://ziroday.ir/images/lvm8.jpg" alt="lvm"></p>
+<p>همانطور که در شکل بالا قابل مشاهده است:</p>
+<p>LogVol00 برای Swap تعریف شده است.</p>
+<p>LogVol01 برای / تعریف شده است.</p>
+<p>اکنون برای / (root) اندازه 16.50GB را داریم.
+در حال حاضر 4226 Extension Physical (PE) در دسترس است.</p>
+<p>اکنون می‌خواهیم پارتیشن LogVol01 یا به عبارت دیگر / را افزایش دهیم. پس از آن می‌توان اندازه پارتیشن بالا را با سایز جدید مشاهده کرد.</p>
+<p>برای به دست آوردن اندازه physical extend موجود می‌توان از دستور vgdisplay به صورت زیر استفاده نمود.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">vgdisplay
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm9.jpg" alt="lvm"></p>
+<p>همانطور که قابل مشاهده است، در اینجا 4607 فضای آزاد PE در دسترس است. بنابراین می‌توان logical volume خود را تا اندازه 18 گیگابایت افزایش داد. بیایید با استفاده از دستور زیر، از اندازه PE برای گسترش استفاده کنیم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lvextend -l +4607 /dev/vg_tecmint/LogVol01
+</code></pre></div><p>برای اضافه کردن فضای بیشتر از + استفاده نمایید. پس از گسترش، باید اندازه سیستم فایل را با استفاده از دستور زیر مجدد مقداردهی کنیم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">resize2fs /dev/vg_tecmint/LogVol01
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm10.jpg" alt="lvm"></p>
+<p>اکنون می‌توانید نتیجه گسترش را به صورت زیر مشاهده کنید.</p>
+<p><img src="https://ziroday.ir/images/lvm12.jpg" alt="lvm"></p>
+<h5 id="کاهش-logical-volume">کاهش Logical Volume</h5>
+<p>در این بخش می‌خواهیم نحوه کاهش Logical Volume را مشاهده نماییم. کسانی که در این زمینه اطلاعات داشته باشند می‌دانند که انجام این کار بسیار مهم است و ممکن است اجرای این فرایند به فاجعه ختم شود. بااین حال، کاهش lvm از هر بخش دیگری در مدیریت Logical Volume جذاب‌تر است.</p>
+<p>قبل از شروع، بهتر است از داده‌ها یک نسخه پشتیبان تهیه نمایید تا در صورت بروز اشتباه، دچار دردسر نشوید.</p>
+<p>برای کاهش یک Logical Volume، شش مرحله اصلی لازم است که باید با دقت انجام شود.</p>
+<p>اگرچه فرآیند افزایش Volume را می‌توان در زمانی انجام داد که Volume در وضعیت فعال (آنلاین) است؛ اما، برای کاهش Volume باید قبل از کاهش، سیستم فایل را غیرفعال نماییم.</p>
+<p>بیایید نگاهی به این 6 مرحله بیندازیم:</p>
+<p>۱- غیرفعال کردن سیستم فایل برای اجرای فرآیند کاهش Volume.</p>
+<p>۲- بررسی سیستم فایل پس از غیرفعال کردن آن.</p>
+<p>۳- کاهش سیستم فایل.</p>
+<p>۴- کاهش اندازه Logical Volume نسبت به اندازه فعلی.</p>
+<p>۵- بررسی دوباره سیستم فایل به منظور رفع خطاها.</p>
+<p>۶- فعال کردن مجدد سیستم فایل.</p>
+<p>به عنوان مثال، در اینجا یک logical volume و volume group مجزا ایجاد کرده و می‌خواهیم logical volume با نام tecmint_reduce_test را کاهش دهیم. اکنون، اندازه آن 18 گیگابایت است و باید بدون از بین رفتن داده، آن را به 10 گیگابایت کاهش دهیم. این بدان معنی است که باید 8 گیگابایت از 18 گیگابایت را کاهش دهیم. در حال حاضر داده‌های داخل volume، به اندازه 4 گیگابایت فضای آن را اشغال کرده است.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">18GB ---&gt; 10GB
+</code></pre></div><p>بنابراین در فرآیند کاهش volume، باید فقط 8 گیگابایت را کاهش دهیم تا پس از کاهش، به 10 گیگابایت برسد.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lvs
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm13.jpg" alt="lvm"></p>
+<p>در اینجا می‌توانیم اطلاعات مربوط به سیستم فایل را مشاهده کنیم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">df -h
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm14.jpg" alt="lvm"></p>
+<p>همانطور که در شکل بالا قابل مشاهده است:</p>
+<p>اندازه Volume  به اندازه 18 گیگابایت است.</p>
+<p>تاکنون 3.9 گیگابایت استفاده شده است.</p>
+<p>فضای موجود 13 گیگابایت است.</p>
+<p>همانطور که بیان شد، ابتدا سیستم فایل را غیرفعال کنید.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">umount -v /mnt/tecmint_reduce_test/
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm15.jpg" alt="lvm"></p>
+<p>سپس با استفاده از دستور زیر، خطای سیستم فایل را بررسی نمایید.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">e2fsck -ff /dev/vg_tecmint_extra/tecmint_reduce_test
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm16.jpg" alt="lvm"></p>
+<p>توجه: در تمام مراحل باید سیستم فایل را دائماً بررسی کنید که مشکلی در سیستم فایل شما وجود نداشته باشد.</p>
+<p>سپس، سیستم فایل را کاهش دهید.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">lvreduce -L -8G /dev/vg_tecmint_extra/tecmint_reduce_test
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm17.jpg" alt="lvm"></p>
+<p>برای کاهش Logical Volume با استفاده از اندازه PE، باید اندازه پیش فرض PE و اندازه کل PE یک Volume Group را بدانیم تا یک محاسبه کوچک برای اندازه دقیق کاهش بدست آوریم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">lvdisplay vg_tecmint_extra
+</code></pre></div><p>در اینجا باید برای بدست آوردن اندازه PE نسبت به 10 گیگابایت، از دستور bc استفاده نماییم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">1024MB x 10GB = 10240MB or 10GB
+
+10240MB / 4PE = 2048PE
+</code></pre></div><p>برای خروج از BC، کلید‌ترکیبی CRTL+D را فشار دهید.</p>
+<p><img src="https://ziroday.ir/images/lvm18.jpg" alt="lvm"></p>
+<p>اندازه را با استفاده از PE کاهش دهید.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">lvreduce -l -2048 /dev/vg_tecmint_extra/tecmint_reduce_test
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm20.jpg" alt="lvm"></p>
+<p>در این مرحله، اگر خطایی وجود داشته باشد، به این معنی است که سیستم فایل شما خراب شده است؛ بنابراین، باید اندازه آن را دوباره مقداردهی نمایید.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">resize2fs /dev/vg_tecmint_extra/tecmint_reduce_test
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm21.jpg" alt="lvm"></p>
+<p>سیستم فایل را فعال کنید.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">mount /dev/vg_tecmint_extra/tecmint_reduce_test /mnt/tecmint_reduce_test/
+</code></pre></div><p><img src="https://ziroday.ir/images/lvm22.jpg" alt="lvm"></p>
+<p>اندازه پارتیشن و فایل‌ها را بررسی نمایید.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">lvdisplay vg_tecmint_extra
+</code></pre></div><p>در اینجا می‌توان نتیجه نهایی را مشاهده کرد که logical Volume به اندازه 10 گیگابایت کاهش یافته است.
+<img src="https://ziroday.ir/images/lvm23.jpg" alt="lvm"></p>
+<p>منبع:</p>
+<p>‍<a href="https://www.tecmint.com/extend-and-reduce-lvms-in-linux/">https://tecmint.com</a></p>
+
+    
+    <div id="disqus_thread"></div>
+<script>
+  (function() {
+    if (window.location.hostname == "localhost")
+        return;
+  var d = document, s = d.createElement('script');
+  s.src = 'https://zeroday-ir.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+ 
+    <div class = 'post_extra'><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+
+    
+  </article>
+  
+  <aside><h3>More from Zeroday</h3>
+<ul class='posts aside'>
+<li class = 'post_item'>
+  <a class = 'post_card' href='https://ziroday.ir/post/iptables/' title = ' بررسی فایروال Iptables' style = 'background-image: url(https://ziroday.ir/images/iptables.jpg);'>
+  </a>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_meta'>
+      <a href = 'https://ziroday.ir/tags/linux' class = 'post_tag'>Linux
+      </a><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+    <h3 class = 'post_link'>
+      <a href='https://ziroday.ir/post/iptables/'> بررسی فایروال Iptables</a>
+    </h3>
+    <p class = 'pale'>IPtables یک فایروال قدرتمند رایگان برای سیستم عامل لینوکس است که امکان اعمال قوانین و …</p>
+  </div>
+</li>
+
+<li class = 'post_item'>
+  <a class = 'post_card' href='https://ziroday.ir/post/vsftpd/' title = 'مراحل راه اندازی FTP سرور' style = 'background-image: url(https://ziroday.ir/images/vsftpd.jpg);'>
+  </a>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_meta'>
+      <a href = 'https://ziroday.ir/tags/linux' class = 'post_tag'>Linux
+      </a><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+    <h3 class = 'post_link'>
+      <a href='https://ziroday.ir/post/vsftpd/'>مراحل راه اندازی FTP سرور</a>
+    </h3>
+    <p class = 'pale'>سرور FTP مخفف (File Transfer Protocol) است كه یک پروتکل شبکه استاندارد بوده و برای انتقال …</p>
+  </div>
+</li>
+
+</ul>
+
+  </aside>
+  
+
+</div>
+<script src = 'https://ziroday.ir/js/autosize.min.js'></script>
+<script src = 'https://ziroday.ir/js/timeago.js'></script>
+    </main><svg width="0" height="0" class="hidden">
+  <symbol viewBox="0 0 699.428 699.428" xmlns="http://www.w3.org/2000/svg" id="copy">
+    <path d="M502.714 0H240.428C194.178 0 153 42.425 153 87.429l-25.267.59c-46.228 0-84.019 41.834-84.019 86.838V612c0 45.004 41.179 87.428 87.429 87.428H459c46.249 0 87.428-42.424 87.428-87.428h21.857c46.25 0 87.429-42.424 87.429-87.428v-349.19zM459 655.715H131.143c-22.95 0-43.714-21.441-43.714-43.715V174.857c0-22.272 18.688-42.993 41.638-42.993l23.933-.721v393.429C153 569.576 194.178 612 240.428 612h262.286c0 22.273-20.765 43.715-43.714 43.715zm153-131.143c0 22.271-20.765 43.713-43.715 43.713H240.428c-22.95 0-43.714-21.441-43.714-43.713V87.429c0-22.272 20.764-43.714 43.714-43.714H459c-.351 50.337 0 87.975 0 87.975 0 45.419 40.872 86.882 87.428 86.882H612zm-65.572-349.715c-23.277 0-43.714-42.293-43.714-64.981V44.348L612 174.857zm-43.714 131.537H306c-12.065 0-21.857 9.77-21.857 21.835s9.792 21.835 21.857 21.835h196.714c12.065 0 21.857-9.771 21.857-21.835 0-12.065-9.792-21.835-21.857-21.835zm0 109.176H306c-12.065 0-21.857 9.77-21.857 21.834 0 12.066 9.792 21.836 21.857 21.836h196.714c12.065 0 21.857-9.77 21.857-21.836 0-12.064-9.792-21.834-21.857-21.834z"
+    ></path>
+  </symbol>
+  <symbol viewBox="0 0 60.015 60.015" xmlns="http://www.w3.org/2000/svg" id="reply">
+    <path d="M42.007 0h-24c-9.925 0-18 8.075-18 18v14c0 9.59 7.538 17.452 17 17.973v8.344a1.694 1.694 0 0 0 1.699 1.698c.44 0 .873-.173 1.198-.498l1.876-1.876C26.708 52.713 33.259 50 40.227 50h1.78c9.925 0 18-8.075 18-18V18c0-9.925-8.075-18-18-18zm16 32c0 8.822-7.178 16-16 16h-1.78c-7.502 0-14.556 2.921-19.86 8.226l-1.359 1.359V44a1 1 0 1 0-2 0v3.949c-8.356-.52-15-7.465-15-15.949V18c0-8.822 7.178-16 16-16h24c8.822 0 16 7.178 16 16v14z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="scan">
+    <path d="M456.66 0H385c-8.284 0-15 6.716-15 15s6.716 15 15 15h71.66C470.632 30 482 41.368 482 55.341V127c0 8.284 6.716 15 15 15s15-6.716 15-15V55.341C512 24.826 487.174 0 456.66 0zM15 142c8.284 0 15-6.716 15-15V55.341C30 41.368 41.368 30 55.34 30H127c8.284 0 15-6.716 15-15s-6.716-15-15-15H55.34C24.826 0 0 24.826 0 55.341V127c0 8.284 6.716 15 15 15zm112 340H55.34C41.368 482 30 470.632 30 456.659V385c0-8.284-6.716-15-15-15s-15 6.716-15 15v71.659C0 487.174 24.826 512 55.34 512H127c8.284 0 15-6.716 15-15s-6.716-15-15-15zm370-112c-8.284 0-15 6.716-15 15v71.659C482 470.632 470.632 482 456.66 482H385c-8.284 0-15 6.716-15 15s6.716 15 15 15h71.66c30.515 0 55.34-24.826 55.34-55.341V385c0-8.284-6.716-15-15-15zM341.643 110h47.575c6.497 0 11.782 5.285 11.782 11.782v47.574c0 8.284 6.716 15 15 15s15-6.716 15-15v-47.574C431 98.743 412.256 80 389.218 80h-47.575c-8.284 0-15 6.716-15 15s6.716 15 15 15zM81 121.782v47.574c0 8.284 6.716 15 15 15s15-6.716 15-15v-47.574c0-6.497 5.286-11.782 11.782-11.782h47.575c8.284 0 15-6.716 15-15s-6.716-15-15-15h-47.575C99.744 80 81 98.743 81 121.782zM170.357 400h-47.575c-6.497 0-11.782-5.285-11.782-11.782v-47.574c0-8.284-6.716-15-15-15s-15 6.716-15 15v47.574C81 411.257 99.744 430 122.782 430h47.575c8.284 0 15-6.716 15-15s-6.716-15-15-15zM431 388.218v-47.574c0-8.284-6.716-15-15-15s-15 6.716-15 15v47.574c0 6.497-5.286 11.782-11.782 11.782h-47.575c-8.284 0-15 6.716-15 15s6.716 15 15 15h47.575C412.256 430 431 411.257 431 388.218zM1 256c0 8.284 6.716 15 15 15h480c8.284 0 15-6.716 15-15s-6.716-15-15-15H16c-8.284 0-15 6.716-15 15z"></path>
+  </symbol>
+</svg>
+<footer class="footer">
+  <div class="footer_inner wrap pale">
+    <p>&copy;&nbsp;<span class="year"></span>&nbsp;Zeroday.
+    Designed by  <a href = 'https://www.linkedin.com/in/mhdbkhshi/' title = 'Linkedin Profile'>M.bakhshi</a></p>
+  </div>
+</footer><script type="text/javascript" src="https://ziroday.ir/js/bundle.5e0b4c85114cf0b04ee873e699248fdc25fe576c7696dfa64e769392358047c54a5d3cd146642878b99a54694bfafde61088d7a1e98279124e539098db6e557e.js" integrity="sha512-XgtMhRFM8LBO6HPmmSSP3CX&#43;V2x2lt&#43;mTnaTkjWAR8VKXTzRRmQoeLmaVGlL&#43;v3mEIjXoemCeRJOU5CY225Vfg==" crossorigin="anonymous"></script>
+  </body>
+</html>

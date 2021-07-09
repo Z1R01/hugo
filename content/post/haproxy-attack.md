@@ -1,5 +1,5 @@
  ---
-title: "HAproxy Detect Attack"
+title: "قوانین امنیتی در HAproxy"
 date: 2021-02-06T19:57:23+03:30
 draft: true
 toc: false

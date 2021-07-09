@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang='en'><head>
+  <title>FTP Installation | Zeroday</title>
+  <meta charset='utf-8'>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+  <meta http-equiv = 'X-UA-Compatible' content = 'IE=edge'>
+<meta property = 'og:locale' content = 'en_US' />
+<meta property="og:type" content="article">
+<meta property = 'og:title' content = 'FTP Installation' />
+<meta name="description" content="سرور FTP مخفف (File Transfer Protocol) است كه یک پروتکل شبکه استاندارد بوده و برای انتقال فايل ها به شبکه از راه دور استفاده می شود. برای انتقال امن تر و سریع …">
+<meta property = 'og:description' content = 'سرور FTP مخفف (File Transfer Protocol) است كه یک پروتکل شبکه استاندارد بوده و برای انتقال فايل ها به شبکه از راه دور استفاده می شود. برای انتقال امن تر و سریع …'>
+<meta property = 'og:url' content = 'https://ziroday.ir/2021/02/08/' />
+<meta property = 'og:image' content = 'https://ziroday.ir/images/vsftpd.jpg'/>
+<meta name = 'twitter:card' content = 'summary_large_image' />
+<meta name = 'twitter:creator' content = ''>
+<meta name = 'twitter:title' content = 'FTP Installation' />
+<meta property = 'twitter:description'  content = 'سرور FTP مخفف (File Transfer Protocol) است كه یک پروتکل شبکه استاندارد بوده و برای انتقال فايل ها به شبکه از راه دور استفاده می شود. برای انتقال امن تر و سریع …'/>
+<meta name = 'twitter:image' content = 'https://ziroday.ir/images/vsftpd.jpg' />
+<link rel='apple-touch-icon' sizes='180x180' href='https://ziroday.ir/images/icons/apple-touch-icon.png'>
+<link rel='icon' type='image/png' sizes='32x32' href='https://ziroday.ir/images/icons/favicon-32x32.png'>
+<link rel='icon' type='image/png' sizes='16x16' href='https://ziroday.ir/images/icons/favicon-16x16.png'>
+<link rel='manifest' href='https://ziroday.ir/images/icons/site.webmanifest'>
+
+  <link rel='canonical' href='https://ziroday.ir/2021/02/08/'>
+  <link rel = 'stylesheet' href = 'https://ziroday.ir/css/styles.4531cbcd5877eddc9e43fb5754e281c9df181abb3653cd3c64bda43d50abb037c17eea8b1743733d9b651b0b380fec4d53d319000a7ac55940210cb746297dd3.css' integrity = 'sha512-RTHLzVh37dyeQ/tXVOKByd8YGrs2U808ZL2kPVCrsDfBfuqLF0NzPZtlGws4D&#43;xNU9MZAAp6xVlAIQy3Ril90w=='>
+</head>
+
+  <body><div class = 'nav-drop'>
+  <div class = 'nav-body'>
+    
+      <a href = 'https://ziroday.ir/about/' class = 'nav_item'>About</a>
+      <a href = 'https://ziroday.ir/categories/linux/' class = 'nav_item'>Linux</a>
+      <a href = 'https://ziroday.ir/categories/ansible/' class = 'nav_item'>Ansible</a>
+      <a href = 'https://ziroday.ir/categories/database/' class = 'nav_item'>Database</a>
+      <a href = 'https://ziroday.ir/categories/haproxy/' class = 'nav_item'>HAproxy</a>
+    <div class = 'nav-close'></div>
+  </div>
+</div><header class = 'nav' >
+  <nav class = 'nav-menu'>
+    <a href='https://ziroday.ir' class = 'nav-brand nav_item'>Zeroday</a>
+    <div class = 'nav_bar-wrap'>
+      <div class = 'nav_bar'></div>
+    </div>
+  </nav>
+</header>
+<head>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2K0J9PL1ZX"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-2K0J9PL1ZX', { 'anonymize_ip': false });
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-2K0J9PL1ZX', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  <script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ziroday.ir"
+    },
+    "articleSection" : "post",
+    "name" : "HAproxy Detect Attack",
+    "headline" : "HAproxy Detect Attack",
+    "description" : "HAproxy ابزاری قدرتمند است که در زمینه load balancing استفاده می شود. اما اگر بتوانید به درستی آن را کانفیگ کنید می توانید بسیاری از حملاتی که در بستر وب به سرور های شما می شود را با یک کانفیگ صحیح شناسایی کنید و سرورهای خودرا امن نگه دارید.\nدر این مستند قرار است درباره دستورات و تنظیمات درون HAproxy صحبت کنیم که به شما کمک شایانی برای حفظ امنیت سرورهای خود می کند.",
+    "inLanguage" : "en-US",
+    "author" : "",
+    "creator" : "",
+    "publisher": "",
+    "accountablePerson" : "",
+    "copyrightHolder" : "",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-02-06 19:57:23 \u002b0330 \u002b0330",
+    "dateModified" : "2021-02-06 19:57:23 \u002b0330 \u002b0330",
+    "url" : "https:\/\/ziroday.ir\/2021\/02\/06\/",
+    "wordCount" : "564",
+    "keywords" : [ "haproxy","Blog" ]
+}
+</script>
+
+
+</head>
+
+
+    <main>
+
+<section class = 'post_header' style = 'background-image:url(https://ziroday.ir/images/vsftpd.jpg);'>
+  <h1 class='post_title'>FTP Installation</h1>
+</section>
+<div class = 'post'>
+  <article class='post_content'><p>سرور FTP مخفف (File Transfer Protocol) است كه یک پروتکل شبکه استاندارد بوده و برای انتقال فايل ها به شبکه از راه دور استفاده می شود. برای انتقال امن تر و سریع تر داده ها ، از SCP یا SFTP استفاده کنید. بسیاری از سرورهای منبع باز FTP برای لینوکس در دسترس هستند. محبوب ترین و پرکاربردترین آنها PureFTPd ، ProFTPD و vsftpd است.</p>
+<p>در این مقاله ، نحوه نصب و پیکربندی سرور FTP با VSFTPD در Debian را آموزش مي دهيم.  ما همچنین به شما نشان خواهیم داد که چگونه vsftpd را پیکربندی کنید تا کاربران را در فهرست خود محدود کنید و کل انتقال را با SSL / TLS رمزگذاری کنید.</p>
+<p>برای نصب بسته vsftpd دستور زیر را وارد می‌کنیم.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install vsftpd  
+</code></pre></div><h3 id="پیکربندی-vsftpd">پیکربندی vsftpd</h3>
+<p>سرور vsftpd را می توان با تغییر فايل vsftpd.conf ، که در فهرست / etc یافت می شود ، پیکربندی کرد.</p>
+<p>بسیاری از تنظیمات در فايل پیکربندی به خوبی ثبت شده اند. برای همه گزینه های موجود به صفحه رسمی vsftpd مراجعه کنید.</p>
+<p>در بخش های بعدی برخی از تنظیمات مهم مورد نیاز برای پیکربندی نصب امن vsftpd را مرور خواهیم کرد.</p>
+<p>با باز کردن فايل پیکربندی vsftpd شروع کنید:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo nano /etc/vsftpd.conf
+</code></pre></div><h3 id="دسترسی-ftp">دسترسی FTP</h3>
+<p>دستورالعمل های Anonymous_enable و local_enable را پیدا کنید و مطابقت پیکربندی خود را با خطوط زیر بررسی کنید:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">anonymous_enable<span style="color:#f92672">=</span>NO
+local_enable<span style="color:#f92672">=</span>YES
+</code></pre></div><p>این تضمین می کند که فقط کاربران محلی می توانند به سرور FTP دسترسی پیدا کنند.</p>
+<h3 id="فعال-کردن-بارگذاری-ها">فعال کردن بارگذاری ها</h3>
+<p>تنظیمات write_enable را لغو کنید تا تغییراتی در سیستم فایل مانند ، آپلود و حذف فايل ها انجام شود.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">write_enable<span style="color:#f92672">=</span>YES
+</code></pre></div><p>برای جلوگیری از دسترسی کاربران FTP به هر فايلي در خارج از دایرکتوری خود دستور زیر را اضافه می کنیم:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chroot_local_user<span style="color:#f92672">=</span>YES
+</code></pre></div><p>به طور پیش فرض برای جلوگیری از آسیب پذیری امنیتی ، هنگامی که chroot فعال است ، vsftpd در صورت نوشتن فهرستی که کاربران قفل شده اند ، از آپلود فايل خودداری می کند.</p>
+<p>از یکی از روشهای زیر استفاده کنید تا دانلود در هنگام فعال شدن chroot آپلود شود.</p>
+<h4 id="روش-اول">روش اول</h4>
+<p>روش پیشنهادی برای اجازه آپلود ، فعال کردن chroot و پیکربندی دایرکتوری های FTP است.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">user_sub_token<span style="color:#f92672">=</span>$USER
+local_root<span style="color:#f92672">=</span>/home/$USER/ftp
+</code></pre></div><h4 id="روش-دوم">روش دوم</h4>
+<p>گزینه دیگر اضافه کردن بخشنامه زیر در فايل پیکربندی vsftpd است. اگر می خواهید به کاربر دسترسی پیدا کنید به فهرست خانه خود رفته ، از این گزینه استفاده کنید.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">allow_writeable_chroot<span style="color:#f92672">=</span>YES
+</code></pre></div><p>به‌صورت پیش‌فرض vsftpd برای سرویس‌دهی روی پروتکل IPv6 پیکربندی شده است. پس در صورتی که در شبکه از IPv6 استفاده نمی‌کنید می‌بایست به‌صورت زیر عمل کنید.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">listen<span style="color:#f92672">=</span>YES  
+listen_ipv6<span style="color:#f92672">=</span>NO
+</code></pre></div><h3 id="محدود-کردن-ورود-کاربر">محدود کردن ورود کاربر</h3>
+<p>برای ورود فقط برخی از کاربران به سرور FTP ، خطوط زیر را در انتهای فايل اضافه کنید:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">userlist_enable<span style="color:#f92672">=</span>YES
+userlist_file<span style="color:#f92672">=</span>/etc/vsftpd.user_list
+userlist_deny<span style="color:#f92672">=</span>NO
+</code></pre></div><p>وقتی این گزینه فعال شد ، باید صریحاً مشخص کنید که کاربران با اضافه کردن نامهای کاربر به فايل /etc/vsftpd.user_list (یک کاربر در هر خط) می توانند وارد سیستم شوند.</p>
+<h3 id="انتقال-با-ssl--tls">انتقال با SSL / TLS</h3>
+<p>برای رمزگذاری انتقال FTP با SSL / TLS ، برای استفاده از آن باید یک گواهی SSL داشته باشید و سرور FTP را پیکربندی کنید.</p>
+<p>می توانید از یک گواهی SSL موجود که توسط یک مجوز معتبر گواهی امضا شده استفاده شده یا یک گواهی خود امضا شده استفاده کنید.</p>
+<p>اگر دامنه یا زیر دامنه ای دارید که به آدرس IP سرور FTP ، می توانید به راحتی یک مجوز رمزگذاری SSL رایگان ایجاد کنید.</p>
+<p>در این آموزش ، ما با استفاده از دستور opensl یک گواهی SSL خود امضا تولید می کنیم.</p>
+<p>دستور زیر یک کلید خصوصی ۲۰۴۸ بیتی و گواهی خود امضا شده برای ۱۰ سال ایجاد می کند. کلید خصوصی و گواهینامه در یک فايل ذخیره می شوند:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo opensssl req -x509 -nodes -days <span style="color:#ae81ff">3650</span> -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.pem -out /etc/ssl/private/vsftpd.pem
+</code></pre></div><p>پس از ایجاد گواهینامه SSL پرونده پیکربندی vsftpd را باز کنید و دستورالعمل های rsa_cert_file و rsa_private_key_file را پیدا کنید ، مقادیر آنها را در مسیر فایل pam تغییر دهید و دستورالعمل ssl_enable را در YES تنظیم کنید:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo nano /etc/vsftpd.conf
+---
+rsa_cert_file<span style="color:#f92672">=</span>/etc/ssl/private/vsftpd.pem
+rsa_private_key_file<span style="color:#f92672">=</span>/etc/ssl/private/vsftpd.pem
+ssl_enable<span style="color:#f92672">=</span>YES
+</code></pre></div><p>اگر در غیر این صورت فرايند پيش رفت ، سرور FTP برای برقراری اتصالات ایمن فقط از TLS استفاده می کند.</p>
+<p>پس از انجام ویرایش ، فایل پیکربندی vsftpd (به استثنای نظرات) باید چیزی شبیه به این باشد:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">listen<span style="color:#f92672">=</span>YES
+listen_ipv6<span style="color:#f92672">=</span>NO
+anonymous_enable<span style="color:#f92672">=</span>NO
+local_enable<span style="color:#f92672">=</span>YES
+write_enable<span style="color:#f92672">=</span>YES
+dirmessage_enable<span style="color:#f92672">=</span>YES
+use_localtime<span style="color:#f92672">=</span>YES
+xferlog_enable<span style="color:#f92672">=</span>YES
+connect_from_port_20<span style="color:#f92672">=</span>YES
+chroot_local_user<span style="color:#f92672">=</span>YES
+secure_chroot_dir<span style="color:#f92672">=</span>/var/run/vsftpd/empty
+pam_service_name<span style="color:#f92672">=</span>vsftpd
+rsa_cert_file<span style="color:#f92672">=</span>/etc/ssl/private/vsftpd.pem
+rsa_private_key_file<span style="color:#f92672">=</span>/etc/ssl/private/vsftpd.pem
+ssl_enable<span style="color:#f92672">=</span>YES
+user_sub_token<span style="color:#f92672">=</span>$USER
+local_root<span style="color:#f92672">=</span>/home/$USER/ftp
+userlist_enable<span style="color:#f92672">=</span>YES
+userlist_file<span style="color:#f92672">=</span>/etc/vsftpd.user_list
+userlist_deny<span style="color:#f92672">=</span>NO
+</code></pre></div><p>فایل را ذخیره کرده و سرویس vsftpd را مجدداً برای تغییر اعمال کنید:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl restart vsftpd
+</code></pre></div><h3 id="ایجاد-کاربر-ftp">ایجاد کاربر FTP</h3>
+<p>برای تست سرور FTP ما یک کاربر جدید ایجاد خواهیم کرد.</p>
+<p>اگر قبلاً یک کاربر دارید که می خواهید دسترسی FTP را اعطا کنید ، اولین مرحله را پشت سر بگذارد.</p>
+<p>اگر اجازه دهید writeable_chroot = YES را در فايل پیکربندی خود قرار دهید ، از انجام مرحله ۳ صرف نظر كنيد.</p>
+<p>۱) کاربر جدیدی بنام FTP_USER ایجاد کنید:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo adduser FTP_USER
+</code></pre></div><p>۲) کاربر را به لیست کاربران مجاز FTP اضافه کنید:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#34;FTP_USER&#34;</span> | sudo tee -a /etc/vsftpd.user_list
+</code></pre></div><p>۳) پوشه FTP را ایجاد کنید و مجوزهای صحیح را تنظیم کنید:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo mkdir -p /home/FTP_USER/ftp/upload
+sudo chmod <span style="color:#ae81ff">550</span> /home/FTP_USER/ftp
+sudo chmod <span style="color:#ae81ff">750</span> /home/FTP_USER/ftp/upload
+sudo chown -R FTP_USER: /home/FTP_USER/ftp
+</code></pre></div><p>همانطور که در بخش قبلی بحث شد کاربر قادر خواهد بود فايل های خود را در فهرست upload/ آپلود کند.</p>
+<p>در این مرحله ، سرور FTP شما کاملاً کاربردی است و شما باید بتوانید با استفاده از هر كاربر FTP که برای استفاده از رمزگذاری TLS مانند FileZilla پیکربندی شده است ، به سرور خود متصل شوید.</p>
+<h3 id="غیرفعال-کردن-دسترسی-shell">غیرفعال کردن دسترسی Shell</h3>
+<p>به طور پیش فرض ، هنگام ایجاد کاربر ، اگر صریحا مشخص نشده باشد ، کاربر SSH به سرور دسترسی خواهد داشت.</p>
+<p>برای غیرفعال کردن دسترسی به پوسته ، ما یک پوسته جدید ایجاد خواهیم کرد که به سادگی پیامی را چاپ خواهد کرد که به کاربر می گوید حساب آنها فقط به دسترسی FTP محدود است.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo -e <span style="color:#e6db74">&#39;#!/bin/sh\necho &#34;This account is limited to FTP access only.&#34;&#39;</span> | sudo tee -a  /bin/ftponly
+
+sudo chmod a+x /bin/ftponly
+
+sudo usermod FTP_USER -s /bin/ftponly
+</code></pre></div><p>برای تغییر پوسته کلیه کاربرانی که می خواهید فقط به FTP دسترسی داشته باشید ، از همان دستور استفاده کنید.</p>
+
+    
+    <div id="disqus_thread"></div>
+<script>
+  (function() {
+    if (window.location.hostname == "localhost")
+        return;
+  var d = document, s = d.createElement('script');
+  s.src = 'https://zeroday-ir.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+ 
+    <div class = 'post_extra'><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+
+    
+  </article>
+  
+  <aside><h3>More from Zeroday</h3>
+<ul class='posts aside'>
+<li class = 'post_item'>
+  <a class = 'post_card' href='https://ziroday.ir/2021/04/06/' title = 'Iptables' style = 'background-image: url(https://ziroday.ir/images/iptables.jpg);'>
+  </a>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_meta'>
+      <a href = 'https://ziroday.ir/tags/linux' class = 'post_tag'>Linux
+      </a><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+    <h3 class = 'post_link'>
+      <a href='https://ziroday.ir/2021/04/06/'>Iptables</a>
+    </h3>
+    <p class = 'pale'>IPtables یک فایروال قدرتمند رایگان برای سیستم عامل لینوکس است که امکان اعمال قوانین و …</p>
+  </div>
+</li>
+
+<li class = 'post_item'>
+  <a class = 'post_card' href='https://ziroday.ir/2021/02/07/' title = 'Increase Swap' style = 'background-image: url(https://ziroday.ir/images/swap.jpg);'>
+  </a>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_meta'>
+      <a href = 'https://ziroday.ir/tags/linux' class = 'post_tag'>Linux
+      </a><div class = 'copy' data-share = 'Copy' data-copied = 'Copied'><svg>
+  <use xlink:href="#copy"></use>
+</svg>
+</div>
+
+    </div>
+    <h3 class = 'post_link'>
+      <a href='https://ziroday.ir/2021/02/07/'>Increase Swap</a>
+    </h3>
+    <p class = 'pale'>یه موقع هایی هست که برای انجام کارهای سنگینتون با کامپیوتر رم کم میارید و نیاز شدیدی به …</p>
+  </div>
+</li>
+
+</ul>
+
+  </aside>
+  
+
+</div>
+<script src = 'https://ziroday.ir/js/autosize.min.js'></script>
+<script src = 'https://ziroday.ir/js/timeago.js'></script>
+    </main><svg width="0" height="0" class="hidden">
+  <symbol viewBox="0 0 699.428 699.428" xmlns="http://www.w3.org/2000/svg" id="copy">
+    <path d="M502.714 0H240.428C194.178 0 153 42.425 153 87.429l-25.267.59c-46.228 0-84.019 41.834-84.019 86.838V612c0 45.004 41.179 87.428 87.429 87.428H459c46.249 0 87.428-42.424 87.428-87.428h21.857c46.25 0 87.429-42.424 87.429-87.428v-349.19zM459 655.715H131.143c-22.95 0-43.714-21.441-43.714-43.715V174.857c0-22.272 18.688-42.993 41.638-42.993l23.933-.721v393.429C153 569.576 194.178 612 240.428 612h262.286c0 22.273-20.765 43.715-43.714 43.715zm153-131.143c0 22.271-20.765 43.713-43.715 43.713H240.428c-22.95 0-43.714-21.441-43.714-43.713V87.429c0-22.272 20.764-43.714 43.714-43.714H459c-.351 50.337 0 87.975 0 87.975 0 45.419 40.872 86.882 87.428 86.882H612zm-65.572-349.715c-23.277 0-43.714-42.293-43.714-64.981V44.348L612 174.857zm-43.714 131.537H306c-12.065 0-21.857 9.77-21.857 21.835s9.792 21.835 21.857 21.835h196.714c12.065 0 21.857-9.771 21.857-21.835 0-12.065-9.792-21.835-21.857-21.835zm0 109.176H306c-12.065 0-21.857 9.77-21.857 21.834 0 12.066 9.792 21.836 21.857 21.836h196.714c12.065 0 21.857-9.77 21.857-21.836 0-12.064-9.792-21.834-21.857-21.834z"
+    ></path>
+  </symbol>
+  <symbol viewBox="0 0 60.015 60.015" xmlns="http://www.w3.org/2000/svg" id="reply">
+    <path d="M42.007 0h-24c-9.925 0-18 8.075-18 18v14c0 9.59 7.538 17.452 17 17.973v8.344a1.694 1.694 0 0 0 1.699 1.698c.44 0 .873-.173 1.198-.498l1.876-1.876C26.708 52.713 33.259 50 40.227 50h1.78c9.925 0 18-8.075 18-18V18c0-9.925-8.075-18-18-18zm16 32c0 8.822-7.178 16-16 16h-1.78c-7.502 0-14.556 2.921-19.86 8.226l-1.359 1.359V44a1 1 0 1 0-2 0v3.949c-8.356-.52-15-7.465-15-15.949V18c0-8.822 7.178-16 16-16h24c8.822 0 16 7.178 16 16v14z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="scan">
+    <path d="M456.66 0H385c-8.284 0-15 6.716-15 15s6.716 15 15 15h71.66C470.632 30 482 41.368 482 55.341V127c0 8.284 6.716 15 15 15s15-6.716 15-15V55.341C512 24.826 487.174 0 456.66 0zM15 142c8.284 0 15-6.716 15-15V55.341C30 41.368 41.368 30 55.34 30H127c8.284 0 15-6.716 15-15s-6.716-15-15-15H55.34C24.826 0 0 24.826 0 55.341V127c0 8.284 6.716 15 15 15zm112 340H55.34C41.368 482 30 470.632 30 456.659V385c0-8.284-6.716-15-15-15s-15 6.716-15 15v71.659C0 487.174 24.826 512 55.34 512H127c8.284 0 15-6.716 15-15s-6.716-15-15-15zm370-112c-8.284 0-15 6.716-15 15v71.659C482 470.632 470.632 482 456.66 482H385c-8.284 0-15 6.716-15 15s6.716 15 15 15h71.66c30.515 0 55.34-24.826 55.34-55.341V385c0-8.284-6.716-15-15-15zM341.643 110h47.575c6.497 0 11.782 5.285 11.782 11.782v47.574c0 8.284 6.716 15 15 15s15-6.716 15-15v-47.574C431 98.743 412.256 80 389.218 80h-47.575c-8.284 0-15 6.716-15 15s6.716 15 15 15zM81 121.782v47.574c0 8.284 6.716 15 15 15s15-6.716 15-15v-47.574c0-6.497 5.286-11.782 11.782-11.782h47.575c8.284 0 15-6.716 15-15s-6.716-15-15-15h-47.575C99.744 80 81 98.743 81 121.782zM170.357 400h-47.575c-6.497 0-11.782-5.285-11.782-11.782v-47.574c0-8.284-6.716-15-15-15s-15 6.716-15 15v47.574C81 411.257 99.744 430 122.782 430h47.575c8.284 0 15-6.716 15-15s-6.716-15-15-15zM431 388.218v-47.574c0-8.284-6.716-15-15-15s-15 6.716-15 15v47.574c0 6.497-5.286 11.782-11.782 11.782h-47.575c-8.284 0-15 6.716-15 15s6.716 15 15 15h47.575C412.256 430 431 411.257 431 388.218zM1 256c0 8.284 6.716 15 15 15h480c8.284 0 15-6.716 15-15s-6.716-15-15-15H16c-8.284 0-15 6.716-15 15z"></path>
+  </symbol>
+</svg>
+<footer class="footer">
+  <div class="footer_inner wrap pale">
+    <p>&copy;&nbsp;<span class="year"></span>&nbsp;Zeroday.
+    Designed by  <a href = 'https://www.linkedin.com/in/mhdbkhshi/' title = 'Linkedin Profile'>M.bakhshi</a></p>
+  </div>
+</footer><script type="text/javascript" src="https://ziroday.ir/js/bundle.5e0b4c85114cf0b04ee873e699248fdc25fe576c7696dfa64e769392358047c54a5d3cd146642878b99a54694bfafde61088d7a1e98279124e539098db6e557e.js" integrity="sha512-XgtMhRFM8LBO6HPmmSSP3CX&#43;V2x2lt&#43;mTnaTkjWAR8VKXTzRRmQoeLmaVGlL&#43;v3mEIjXoemCeRJOU5CY225Vfg==" crossorigin="anonymous"></script>
+  </body>
+</html>

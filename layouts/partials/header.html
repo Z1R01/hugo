@@ -1,0 +1,16 @@
+<header class = 'nav' >
+  <nav class = 'nav-menu'>
+    <a href='{{ absURL "" }}' class = 'nav-brand nav_item'>{{ .Site.Title }}</a>
+    <div class = 'nav_bar-wrap'>
+      <div class = 'nav_bar'></div>
+    </div>
+  </nav>
+</header>
+<head>
+  {{ template "_internal/google_analytics.html" . }}
+  {{ template "_internal/google_analytics_async.html" . }}
+  {{ template "_internal/disqus.html" . }}
+  {{ partial "seo_schema" . }}
+  {{ with .Params.robotsdisallow }}<meta name="robots" content="noindex, nofollow, noarchive">{{ else }}<meta name="robots" content="index, follow, archive">{{ end }}
+
+</head>

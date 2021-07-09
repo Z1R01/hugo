@@ -2,64 +2,114 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://ziroday.ir/</loc>
-    <lastmod>2021-02-08T19:57:23+03:30</lastmod>
-  </url><url>
     <loc>https://ziroday.ir/categories/</loc>
-    <lastmod>2021-02-08T19:57:23+03:30</lastmod>
+    <lastmod>2021-05-06T19:58:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ziroday.ir/tags/linux/</loc>
+    <lastmod>2021-05-06T19:58:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ziroday.ir/categories/linux/</loc>
+    <lastmod>2021-05-06T19:58:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ziroday.ir/post/</loc>
+    <lastmod>2021-05-06T19:58:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ziroday.ir/tags/</loc>
+    <lastmod>2021-05-06T19:58:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ziroday.ir/</loc>
+    <lastmod>2021-05-06T19:58:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ziroday.ir/post/lvm/</loc>
+    <lastmod>2021-05-06T19:58:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ziroday.ir/post/iptables/</loc>
+    <lastmod>2021-04-06T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://ziroday.ir/post/vsftpd/</loc>
     <lastmod>2021-02-08T19:57:23+03:30</lastmod>
-  </url><url>
-    <loc>https://ziroday.ir/tags/linux/</loc>
-    <lastmod>2021-02-08T19:57:23+03:30</lastmod>
-  </url><url>
-    <loc>https://ziroday.ir/categories/linux/</loc>
-    <lastmod>2021-02-08T19:57:23+03:30</lastmod>
-  </url><url>
-    <loc>https://ziroday.ir/post/</loc>
-    <lastmod>2021-02-08T19:57:23+03:30</lastmod>
-  </url><url>
-    <loc>https://ziroday.ir/tags/</loc>
-    <lastmod>2021-02-08T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://ziroday.ir/post/swap/</loc>
     <lastmod>2021-02-07T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://ziroday.ir/tags/ansible/</loc>
     <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://ziroday.ir/categories/ansible/</loc>
     <lastmod>2021-02-06T19:57:23+03:30</lastmod>
-  </url><url>
-    <loc>https://ziroday.ir/post/ansible-role/</loc>
-    <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://ziroday.ir/tags/database/</loc>
     <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://ziroday.ir/categories/database/</loc>
     <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://ziroday.ir/categories/haproxy/</loc>
     <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://ziroday.ir/tags/haproxy/</loc>
     <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ziroday.ir/post/ansible-role/</loc>
+    <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://ziroday.ir/post/haproxy-attack/</loc>
     <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://ziroday.ir/post/master_slave/</loc>
     <lastmod>2021-02-06T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://ziroday.ir/post/galera_gcache/</loc>
     <lastmod>2021-02-05T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://ziroday.ir/post/mysql/</loc>
     <lastmod>2021-01-06T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://ziroday.ir/post/vmstat/</loc>
     <lastmod>2020-03-06T19:57:23+03:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>
